@@ -1,0 +1,9 @@
+/* Top-level shared styles */
+/* You can keep styles that are shared by different components here */
+
+html, body {
+  height: 100%;
+  margin: 0;
+  background-size: 100%;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+}

@@ -1,0 +1,28 @@
+.singleitem{
+    position:relative; 
+    margin-bottom: 30px;
+    display: inline-block;
+    margin-left: 20px;
+  }
+  
+  .name{
+    text-align: center;
+    color: #FF5A00;
+  }
+  .price{
+    text-align: center;
+    color: #FF5A00;
+  }
+
+  .img-1{
+    height: 150px;
+    width: 230px;
+  }
+
+  .singleitem:hover{
+	-webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+	-moz-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+	-ms-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+	-o-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}

@@ -1,0 +1,63 @@
+.header {
+  margin-top: 30px;
+  width: 100%;
+}
+
+.headDiv {
+  width: 70%;
+  float: left;
+}
+.menuDiv {
+  font-size: 20px;
+  margin-top: 30px;
+  width: 30%;
+  float: left;
+}
+
+.logo {
+  margin-top: 30px;
+  margin-left: 100px;
+  float: left;
+  width: 8%;
+}
+.title{
+  color: white;
+  font-size: 50px;
+  float: left;
+  margin-left: 250px;
+}
+
+.menu {
+  list-style-type: none;
+  float: right;
+  padding: 3px;
+  margin-top: 20px;
+}
+
+.menu li {
+  background-color: transparent;
+margin-right: 20px;
+font-weight: bold;
+list-style: none; /* Gets rid of list bullet points */
+text-align: center;
+display: inline-block;		
+}
+
+.menu li a{
+  color: white;
+  text-decoration: none;
+  padding: 5px 10px;	
+}
+
+.menu li a:hover{
+  color: orange;	
+}
+
+#mainTextDiv{
+  font-size: 50px;
+  margin-top: 50px;
+  color: white;
+  width: 100%;
+  float: left;
+  text-align: center;
+}
