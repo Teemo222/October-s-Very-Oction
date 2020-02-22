@@ -18,9 +18,21 @@
   background: white;
   left: 20%;
   top: 20%;
-  width: 60%;
-  height: 60%;
+  width: 50%;
+  height: 40%;
 } 
+
+.signup-popup form {
+  padding:10%;
+}
+
+.signup-popup form > * {
+  margin: 1em;
+}
+
+.signup-popup input {
+  font-size: 1.4em;
+}
 
 .signup-popup-background {
   position: absolute;
