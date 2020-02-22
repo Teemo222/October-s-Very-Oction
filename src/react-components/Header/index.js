@@ -4,6 +4,7 @@ import "./styles.css";
 
 import { Link } from "react-router-dom";
 import SignUp from './../SignUp';
+import Login from './../Login';
 
 /* The Header Component */
 class Header extends React.Component {
@@ -37,12 +38,10 @@ class Header extends React.Component {
               <a href="">About us</a>
             </li>
             <li>
-              <a href="SignUp">Sign Up</a>
+              <SignUp/>
             </li>
             <li>
-              <a 
-                href=""
-                onClick = {handleClick}>My account</a>
+             <Login/>
             </li>
           </ul>
         </div>  

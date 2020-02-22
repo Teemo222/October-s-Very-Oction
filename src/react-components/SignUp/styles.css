@@ -12,3 +12,21 @@
   height: 100%;
   background-color: beige;
 }
+
+.signup-popup {
+  position: fixed;
+  background: white;
+  left: 20%;
+  top: 20%;
+  width: 60%;
+  height: 60%;
+} 
+
+.signup-popup-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.4);
+}

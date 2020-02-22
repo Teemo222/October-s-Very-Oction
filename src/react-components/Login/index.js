@@ -16,9 +16,8 @@ class Login extends React.Component {
     } = this.props;
     
     return (  
-      <div className="login__bg-image center">  
-        <Header currentUser = {currentUser}/>
-        
+      <div>
+        <p>Login In</p>          
       </div>  
     );  
   }   
