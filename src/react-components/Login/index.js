@@ -6,6 +6,10 @@ import Header from '../Header';
 
 /* The SignUp Component */
 class Login extends React.Component {
+  handleInputChange(e){
+
+  }
+
   render() {  
     const {
       currentUser,
@@ -14,6 +18,7 @@ class Login extends React.Component {
     return (  
       <div className="login__bg-image center">  
         <Header currentUser = {currentUser}/>
+        
       </div>  
     );  
   }   

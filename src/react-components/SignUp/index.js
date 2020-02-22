@@ -6,6 +6,10 @@ import Header from '../Header';
 
 /* The SignUp Component */
 class SignUp extends React.Component {
+  handleInputChange(e){
+
+  }
+
   render() {  
     const {
       currentUser,
@@ -14,6 +18,26 @@ class SignUp extends React.Component {
     return (  
       <div className="signup__bg-image center">  
         <Header currentUser = {currentUser}/>
+        <form id = "sign-up-form" >
+          <input
+            type="text" 
+            placeholder="Username" 
+            name="Username"
+            onChange = {this.handleInputChange}
+          />      
+          <input
+            type="text" 
+            placeholder="email" 
+            name="email"
+            onChange = {this.handleInputChange}
+          />    
+           <input
+            type="text" 
+            placeholder="password" 
+            name="password"
+            onChange = {this.handleInputChange}
+          />    
+        </form>
       </div>  
     );  
   }   
