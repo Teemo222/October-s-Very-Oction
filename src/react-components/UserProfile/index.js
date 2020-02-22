@@ -14,6 +14,9 @@ class UserProfile extends React.Component {
     return (  
       <div className="userprofile__bg-image center">  
          <Header currentUser = {currentUser}/>
+         <div>
+          <h1>Welcome, Mr.Nobody</h1>
+         </div>
       </div>  
     );  
   }   

@@ -20,7 +20,8 @@ class Login extends React.Component {
   showLogin = () => {
     const { shown } = this.state;
     this.setState({
-      shown: true
+      shown: true,
+      logged: false
     });
   }
 
@@ -33,19 +34,25 @@ class Login extends React.Component {
     }
   }
 
+  handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("submitted");
+    window.location.href="/UserProfile";
+  }
+
   render() {  
     const {
       currentUser,
     } = this.props;
 
-    const { showLogin, cancelPopUp } = this;
+    const { showLogin, cancelPopUp, handleSubmit } = this;
     const { shown } = this.state;
     let popup;
     if(shown) {
       popup = (
         <div className="signup-popup-background" id="background-div" onClick={cancelPopUp}>
           <div className="signup-popup" id="signup-div">
-          <form>
+          <form onSubmit={handleSubmit}>
             <label htmlFor="username">Username</label>
             <input type="text" id="username" name="username"></input><br />
             <label htmlFor="password">Password</label>
