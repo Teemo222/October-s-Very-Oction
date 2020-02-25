@@ -12,8 +12,17 @@ class Header extends React.Component {
   render() {
     const {
       currentUser,
-      handleUserLogIn
     } = this.props;
+
+    function handleClick(event) {
+      event.preventDefault()
+      if (currentUser == null){
+        window.location.href="Login"
+      }
+      else{
+        window.location.href="UserProfile"
+      }
+    }
 
     return (
       <div className="header">
@@ -29,12 +38,10 @@ class Header extends React.Component {
               <a href="">About us</a>
             </li>
             <li>
-              <SignUp />
+              <SignUp/>
             </li>
             <li>
-             <Login handleUserLogIn = {handleUserLogIn}
-                    currentUser = {currentUser}
-            />
+             <Login/>
             </li>
           </ul>
         </div>  

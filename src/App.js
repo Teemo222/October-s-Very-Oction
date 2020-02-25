@@ -34,25 +34,6 @@ class App extends React.Component {
 
   };
 
-  handleUserLogIn = (event, callback) => {
-    event.preventDefault();
-    const target = event.target;
-   
-    const username = target.querySelector("#username").value;
-    const password = target.querySelector("#password").value;
-
-    setTimeout(callback, 3000)
-    //find user based on username and password
-
-    this.setState({
-      ["currentUser"]: 1
-    });
-
-    
-    
-  };
-
-
   loadMerchandises = function () {
     this.state.merchandises.push(new Merchandise(1, "Nike Kobe 7", "Sneaker", "fucking good", "/img/kobe.jpg"))
   }
@@ -70,7 +51,6 @@ class App extends React.Component {
               render={() => (<HomePage 
                 currentUser = {this.state.currentUser}
                 handleInputChange = {this.handleInputChange}
-                handleUserLogIn = {this.handleUserLogIn}
                 //more attributes
                 
                 />)} />
@@ -78,7 +58,7 @@ class App extends React.Component {
               render={() => (<ItemPage 
                 currentUser = {this.state.currentUser}
                 item = {this.state.merchandises[0]}
-                handleUserLogIn = {this.handleUserLogIn}
+          
                 //more attributes
                 
                 />)}/>
@@ -86,14 +66,25 @@ class App extends React.Component {
               render={() => (<SearchPage 
                 currentUser = {this.state.currentUser}
                 searchInput = {this.state.searchInput}
-                handleUserLogIn = {this.handleUserLogIn}
                 //more attributes
                 
                 />)}/>
+            <Route exact path='/SignUp' 
+              render={() => (<SignUp 
+                currentUser = {this.state.currentUser}
+                
+                //more attributes
+                
+                />)}/>
+            <Route exact path='/Login' 
+              render={() => (<Login 
+                currentUser = {this.state.currentUser}
+                
+                //more attributes
+                />)}/>
             <Route exact path='/UserProfile' 
               render={() => (<UserProfile 
-                currentUser = {this.state.currentUser}  
-                handleUserLogIn = {this.handleUserLogIn}             
+                currentUser = {this.state.currentUser}               
                 //more attributes
                 
                 />)}/>

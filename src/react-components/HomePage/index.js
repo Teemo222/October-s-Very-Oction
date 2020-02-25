@@ -11,8 +11,7 @@ class HomePage extends React.Component {
   render() {
     const {
       currentUser,
-      handleInputChange,
-      handleUserLogIn
+      handleInputChange
     } = this.props;
 
     document.title = "October's Very Oction";
@@ -20,7 +19,6 @@ class HomePage extends React.Component {
       <div className = "home__bg-image center"> 
         <Header 
           currentUser = {currentUser}
-          handleUserLogIn = {handleUserLogIn}
         />
         <div id="mainTextDiv">
           Buy & Sell <br/>
