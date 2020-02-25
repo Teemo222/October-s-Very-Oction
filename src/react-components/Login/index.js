@@ -1,7 +1,6 @@
 import React from "react";
 
 import "./styles.css";
-import Header from '../Header';
 
 
 /* The Login Component */
@@ -13,60 +12,72 @@ class Login extends React.Component {
     };
   }
 
-  handleInputChange(e){
-
-  }
-
   showLogin = () => {
-    const { shown } = this.state;
     this.setState({
       shown: true,
-      logged: false
+    });
+  }
+
+  closeLogin = () => {
+    this.setState({
+      shown: false,
     });
   }
 
   cancelPopUp = (e) => {
     const backgroundDiv = document.querySelector("#background-div");
     if(e.target === backgroundDiv) {
-      this.setState({
-        shown: false
-      });
+      this.closeLogin()
     }
   }
 
-  handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("submitted");
-    window.location.href="/UserProfile";
-  }
-
   render() {  
-    const {
-      currentUser,
+
+    const { cancelPopUp } = this;
+    const { shown } = this.state;
+    const {handleUserLogIn,
+          currentUser
     } = this.props;
 
-    const { showLogin, cancelPopUp, handleSubmit } = this;
-    const { shown } = this.state;
+    const submit = (event) => {
+      handleUserLogIn(event, this.closeLogin);
+    }
+
+    const logInOrProfile = (event) => {
+      if (currentUser == null){
+        this.showLogin()
+      }
+      else{
+        window.location.href='/userProfile';
+      }
+    }
+
     let popup;
     if(shown) {
       popup = (
         <div className="signup-popup-background" id="background-div" onClick={cancelPopUp}>
           <div className="signup-popup" id="signup-div">
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={submit}>
             <label htmlFor="username">Username</label>
             <input type="text" id="username" name="username"></input><br />
             <label htmlFor="password">Password</label>
             <input type="password" id="password" name="password"></input><br />
-            <button>Login</button>        
+            <button type = "submit">Login</button>        
           </form>
         </div>
         </div>
       );
     }
 
+    let button = (<a id = "LogInButton"onClick={logInOrProfile}>Login</a>);
+    
+    if (currentUser != null){
+      document.querySelector("#LogInButton").innerText = "My Account";
+    }
+
     return (  
      <div>
-       <a onClick={showLogin}>Login</a>
+       {button}
        {popup }
      </div>
     );  
