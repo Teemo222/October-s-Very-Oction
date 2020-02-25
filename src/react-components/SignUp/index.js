@@ -1,10 +1,9 @@
 import React from "react";
 
 import "./styles.css";
-import Header from '../Header';
 
 
-/* The SignUp Component */
+/* The Login Component */
 class SignUp extends React.Component {
   constructor(props) {
     super(props);
@@ -13,53 +12,69 @@ class SignUp extends React.Component {
     };
   }
 
-  handleInputChange(e){
-
+  showSignUp = () => {
+    this.setState({
+      shown: true,
+    });
   }
 
-  showSignUp = () => {
-    const { shown } = this.state;
+  closeSignUp = () => {
     this.setState({
-      shown: true
+      shown: false,
     });
   }
 
   cancelPopUp = (e) => {
     const backgroundDiv = document.querySelector("#background-div");
     if(e.target === backgroundDiv) {
-      this.setState({
-        shown: false
-      });
+      this.closeSignUp()
     }
   }
 
+  showMessage = (success) => {
+    if (success){
+      alert("sign up successfully")
+    }
+    else{
+      alert("fuck you")
+    }
+    setTimeout(this.closeSignUp, 1000);
+  }
+
   render() {  
-    const {
-      currentUser,
+
+    const { cancelPopUp } = this;
+    const { shown } = this.state;
+    const {handleUserSignUp
     } = this.props;
 
-    const { showSignUp, cancelPopUp } = this;
-    const { shown } = this.state;
+    const submit = (event) => {
+      event.preventDefault()
+      handleUserSignUp(event, this.showMessage);
+    }
+
     let popup;
     if(shown) {
       popup = (
         <div className="signup-popup-background" id="background-div" onClick={cancelPopUp}>
-          <div className="signup-popup" id="signup-div">
-          <form>
+          <div className="signup-popup" id="login-div">
+          <form onSubmit={submit}>
             <label htmlFor="username">Username</label>
             <input type="text" id="username" name="username"></input><br />
             <label htmlFor="password">Password</label>
             <input type="password" id="password" name="password"></input><br />
-            <button>Signup</button>        
+            <button type = "submit">Sign Up</button>        
           </form>
         </div>
         </div>
       );
     }
 
+    let button = (<a onClick={this.showSignUp}>Sign Up</a>);
+
     return (  
      <div>
-       <a onClick={showSignUp}>Sign Up</a>
+       {button}
        {popup }
      </div>
     );  

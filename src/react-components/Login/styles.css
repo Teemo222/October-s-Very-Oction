@@ -1,4 +1,4 @@
-.signup-popup {
+.login-popup {
   position: fixed;
   background: white;
   top: 35%;
@@ -8,19 +8,19 @@
   transform: translateX(-50%);
 } 
 
-.signup-popup form {
+.login-popup form {
   padding:10px;
 }
 
-.signup-popup form > * {
+.login-popup form > * {
   margin: 1em;
 }
 
-.signup-popup form input {
+.login-popup form input {
   font-size: 1em;
 }
 
-.signup-popup-background {
+.login-popup-background {
   position: absolute;
   top: 0;
   left: 0;

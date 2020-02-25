@@ -31,16 +31,29 @@ class Login extends React.Component {
     }
   }
 
+  showMessage = (success) => {
+    if (success){
+      alert("log in successfully")
+    }
+    else{
+      alert("fuck you")
+    }
+    setTimeout(this.closeLogin, 1000);
+  }
+
   render() {  
+
+    
 
     const { cancelPopUp } = this;
     const { shown } = this.state;
-    const {handleUserLogIn,
-          currentUser
+    const {currentUser,
+          handleUserLogIn
     } = this.props;
 
     const submit = (event) => {
-      handleUserLogIn(event, this.closeLogin);
+      event.preventDefault()
+      handleUserLogIn(event, this.showMessage);
     }
 
     const logInOrProfile = (event) => {
@@ -55,8 +68,8 @@ class Login extends React.Component {
     let popup;
     if(shown) {
       popup = (
-        <div className="signup-popup-background" id="background-div" onClick={cancelPopUp}>
-          <div className="signup-popup" id="signup-div">
+        <div className="login-popup-background" id="background-div" onClick={cancelPopUp}>
+          <div className="login-popup" id="login-div">
           <form onSubmit={submit}>
             <label htmlFor="username">Username</label>
             <input type="text" id="username" name="username"></input><br />

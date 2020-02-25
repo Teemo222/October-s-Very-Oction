@@ -8,18 +8,15 @@ import ItemPage from './react-components/ItemPage';
 import SearchPage from './react-components/SearchPage';
 import { Route, Switch, BrowserRouter} from 'react-router-dom';
 import Merchandise from './Model/Merchandise';
-import {User, addUser} from './Model/User';
+import {User, addUser, getUser} from './Model/User';
 import UserProfile from './react-components/UserProfile';
-import SignUp from './react-components/SignUp';
-import Login from './react-components/Login/';
 
 class App extends React.Component {
 
   state = {
     searchInput : "",
-    users: [],
-    merchandises : [],
-    currentUser: null
+    currentUser: null,
+    merchandises: []
   }
 
   handleInputChange = (event) => {
@@ -41,15 +38,28 @@ class App extends React.Component {
    
     const username = target.querySelector("#username").value;
     const password = target.querySelector("#password").value;
+    const user = getUser(username, password);
 
-    addUser(1, username, password)
+    if (user != null){
+      this.setState({
+        ["currentUser"]: user
+      });
+      callback(true)
+    }
+    else{
+      callback(false)
+    }
+  };
 
-    this.setState({
-      ["currentUser"]: 1
-    });
-
-    setTimeout(callback, 1000)
-    //find user based on username and password
+  handleUserSignUp = (event, callback) => {
+    event.preventDefault();
+    const target = event.target;
+   
+    const username = target.querySelector("#username").value;
+    const password = target.querySelector("#password").value;
+    
+    callback(addUser(username, password));
+  
   };
 
 
@@ -61,6 +71,7 @@ class App extends React.Component {
 
   render() {
     this.loadMerchandises();
+    console.log(this.state)
     return (
       <div> 
        <BrowserRouter>
@@ -70,6 +81,8 @@ class App extends React.Component {
               render={() => (<HomePage 
                 currentUser = {this.state.currentUser}
                 handleInputChange = {this.handleInputChange}
+                handleUserLogIn = {this.handleUserLogIn}
+                handleUserSignUp = {this.handleUserSignUp}
                 //more attributes
                 
                 />)} />
@@ -77,6 +90,8 @@ class App extends React.Component {
               render={() => (<ItemPage 
                 currentUser = {this.state.currentUser}
                 item = {this.state.merchandises[0]}
+                handleUserLogIn = {this.handleUserLogIn}
+                handleUserSignUp = {this.handleUserSignUp}
           
                 //more attributes
                 
@@ -85,25 +100,16 @@ class App extends React.Component {
               render={() => (<SearchPage 
                 currentUser = {this.state.currentUser}
                 searchInput = {this.state.searchInput}
+                handleUserLogIn = {this.handleUserLogIn}
+                handleUserSignUp = {this.handleUserSignUp}
                 //more attributes
                 
-                />)}/>
-            <Route exact path='/SignUp' 
-              render={() => (<SignUp 
-                currentUser = {this.state.currentUser}
-                
-                //more attributes
-                
-                />)}/>
-            <Route exact path='/Login' 
-              render={() => (<Login 
-                currentUser = {this.state.currentUser}
-                
-                //more attributes
                 />)}/>
             <Route exact path='/UserProfile' 
               render={() => (<UserProfile 
-                currentUser = {this.state.currentUser}               
+                currentUser = {this.state.currentUser}  
+                handleUserLogIn = {this.handleUserLogIn}  
+                handleUserSignUp = {this.handleUserSignUp}           
                 //more attributes
                 
                 />)}/>
