@@ -10,6 +10,8 @@ import { Route, Switch, BrowserRouter} from 'react-router-dom';
 import Merchandise from './Model/Merchandise';
 import {User, addUser} from './Model/User';
 import UserProfile from './react-components/UserProfile';
+import SignUp from './react-components/SignUp';
+import Login from './react-components/Login/';
 
 class App extends React.Component {
 

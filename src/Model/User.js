@@ -1,3 +1,4 @@
+
 class User{
   constructor(userId, username, password) {
     this.userId = userId;
@@ -5,19 +6,21 @@ class User{
     this.password = password;
   }
 }
+const users = [
+  new User(1, 'zhaowe58', 'adsfoisjfdjf'),
+  new User(2, 'wangs415', 'aoaiuwjfoijfwe'),
+  new User(3, 'Mark', 'sfdsjfidfjdi')
+];
+
+const admin = [
+  
+];
 
 export function addUser(userId, username, password){
-  const fs = require('fs');
-  let users;
-  const result = fs.readFileSync("user.json")
-  users = JSON.parse(result);
   users.push(new User(userId, username, password));
-  fs.writeFileSync("user.json", JSON.stringify(users));
 
   console.log(users)
 }
-
-
 
 
 export default User;
