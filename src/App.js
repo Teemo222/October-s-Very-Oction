@@ -1,5 +1,5 @@
 /* New cleaned up version of App.js */
-import React from 'react';
+import React, { useDebugValue } from 'react';
 
 // Importing react-router-dom to use the React Router
 import './App.css';
@@ -8,8 +8,7 @@ import ItemPage from './react-components/ItemPage';
 import SearchPage from './react-components/SearchPage';
 import { Route, Switch, BrowserRouter} from 'react-router-dom';
 import Merchandise from './Model/Merchandise';
-import SignUp from './react-components/SignUp';
-import Login from './react-components/Login';
+import {User, addUser} from './Model/User';
 import UserProfile from './react-components/UserProfile';
 
 class App extends React.Component {
@@ -41,15 +40,14 @@ class App extends React.Component {
     const username = target.querySelector("#username").value;
     const password = target.querySelector("#password").value;
 
-    setTimeout(callback, 3000)
-    //find user based on username and password
+    addUser(1, username, password)
 
     this.setState({
       ["currentUser"]: 1
     });
 
-    
-    
+    setTimeout(callback, 1000)
+    //find user based on username and password
   };
 
 
