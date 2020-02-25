@@ -9,14 +9,18 @@ import ItemView from '../ItemView';
 class ItemPage extends React.Component {
 
   render() {
-    const {
-      currentUser,
-      item} = this.props;
+    const {currentUser, 
+          item,
+          handleUserLogIn,
+          handleUserSignUp
+        } = this.props;
     
     return (
       <div className="item__bg-image center">
         <Header
           currentUser = {currentUser}
+          handleUserLogIn = {handleUserLogIn}
+          handleUserSignUp = {handleUserSignUp}
         />
         <ItemView 
           item = {item}

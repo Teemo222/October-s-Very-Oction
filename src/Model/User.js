@@ -6,24 +6,29 @@ class User{
     this.password = password;
   }
 }
-const users = [
-  new User(1, 'zhaowe58', 'adsfoisjfdjf'),
-  new User(2, 'wangs415', 'aoaiuwjfoijfwe'),
-  new User(3, 'Mark', 'sfdsjfidfjdi')
-];
+let count = 0
+const users = [];
+const admin = [];
 
-const admin = [
-  
-];
-
-export function addUser(userId, username, password){
-  users.push(new User(userId, username, password));
-
-  console.log(users)
+export function addUser(username, password){
+  for (let i = 0; i < users.length; i++){
+    if (users[i].username == username){
+      return false;
+    }
+  }
+  users.push(new User(count, username, password));
+  count ++;
+  return true;
 }
 
+export function getUser(username, password){
+  for (let i = 0; i < users.length; i++){
+    if (users[i].username == username && users[i].password == password){
+      return users[i]
+    }
+  }
+  return null;
+}
 
 export default User;
-
-addUser(1, "a", "b");
 

@@ -1,6 +1,7 @@
 import React from "react";
 
 import "./styles.css";
+import { Link } from "react-router-dom";
 
 
 /* The Login Component */
@@ -42,9 +43,6 @@ class Login extends React.Component {
   }
 
   render() {  
-
-    
-
     const { cancelPopUp } = this;
     const { shown } = this.state;
     const {currentUser,
@@ -58,10 +56,8 @@ class Login extends React.Component {
 
     const logInOrProfile = (event) => {
       if (currentUser == null){
+        event.preventDefault()
         this.showLogin()
-      }
-      else{
-        window.location.href='/userProfile';
       }
     }
 
@@ -82,11 +78,18 @@ class Login extends React.Component {
       );
     }
 
-    let button = (<a id = "LogInButton"onClick={logInOrProfile}>Login</a>);
-    
+    let buttonText;
+
     if (currentUser != null){
-      document.querySelector("#LogInButton").innerText = "My Account";
+      buttonText = "My Account";
     }
+    else{
+      buttonText = "Login";
+    }
+
+  
+
+  let button = (<Link to={"/UserProfile"}><a id = "LogInButton" onClick={logInOrProfile}>{buttonText}</a></Link>);
 
     return (  
      <div>

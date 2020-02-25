@@ -63,7 +63,10 @@ class UserProfile extends React.Component {
   render() {  
     const {
       currentUser,
+      handleUserLogIn,  
+      handleUserSignUp        
     } = this.props;
+
     let setActive = this.setActive.bind(this);
     let items = [
       (<MenuItem name="Profile" onClick={e=>{setActive(ProfileDetail)}}/>),
@@ -75,7 +78,10 @@ class UserProfile extends React.Component {
     return (  
       <div>
          <div className="userprofile__bg-image center">  
-           <Header currentUser = {currentUser}/>
+           <Header currentUser = {currentUser}
+                  handleUserLogIn = {handleUserLogIn}
+                  handleUserSignUp = {handleUserSignUp}
+           />
            <br/>
            <div className="profile-content">
            {menu}

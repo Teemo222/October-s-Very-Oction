@@ -71,7 +71,10 @@ class App extends React.Component {
 
   render() {
     this.loadMerchandises();
-    console.log(this.state)
+    console.log("@@@@@@@@@@@@@@@@@@@@@@@")
+    console.log(this.state.currentUser)
+    console.log(this.state.searchInput)
+    console.log("@@@@@@@@@@@@@@@@@@@@@@@")
     return (
       <div> 
        <BrowserRouter>

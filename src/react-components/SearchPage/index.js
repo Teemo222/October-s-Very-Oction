@@ -13,6 +13,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import { posts } from "./posts.js";
 
+
 /* The SearchPage Component */
 class SearchPage extends React.Component {
 
@@ -21,12 +22,18 @@ class SearchPage extends React.Component {
   }
   
   render() {
-    const {currentUser,
-           searchInput} = this.props;
-    
+    const { currentUser,
+            searchInput,
+            handleUserLogIn,
+            handleUserSignUp
+          } = this.props;
+
     return (
         <div className="search__bg-image center">
-          <Header currentUser = {currentUser}/>
+          <Header currentUser = {currentUser}
+                  handleUserLogIn = {handleUserLogIn}
+                  handleUserSignUp = {handleUserSignUp}
+          />
           <body>
             <div>
             <Grid container spacing={40} justify="center">

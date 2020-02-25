@@ -1,7 +1,7 @@
 import React from "react";
 
 import "./styles.css";
-
+import { Link } from "react-router-dom";
 
 /* The ItemPage Component */
 class SearchItem extends React.Component {
@@ -11,6 +11,7 @@ class SearchItem extends React.Component {
     
     return (
         <div>
+            <Link to={"/itemPage"}>
             <div class="singleitem">
                 <div class="item-image">
                     <img class="img-1" src="./46457.jpg"/>
@@ -20,6 +21,7 @@ class SearchItem extends React.Component {
                     <div class="price">$170.00</div>
                 </div>
              </div>
+             </Link>
         </div>
     );
   }
