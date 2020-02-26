@@ -14,10 +14,22 @@ import {addItem, getAllItems, filterByKeyword, filterByCategory} from './Model/M
 class App extends React.Component {
 
   state = {
+    item: null,
     searchInput : "",
     currentUser: null,
     merchandises: []
   }
+
+  handleSelectItem = (event, item) => {
+    event.preventDefault();
+    
+    this.setState({
+      ["item"]: item
+    });
+    
+  };
+
+
 
   handleInputChange = (event) => {
     event.preventDefault();
@@ -91,7 +103,7 @@ class App extends React.Component {
             <Route exact path='/ItemPage' 
               render={() => (<ItemPage 
                 currentUser = {this.state.currentUser}
-                item = {this.state.merchandises[0]}
+                item = {this.state.item}
                 handleUserLogIn = {this.handleUserLogIn}
                 handleUserSignUp = {this.handleUserSignUp}
           
@@ -104,7 +116,8 @@ class App extends React.Component {
                 searchInput = {this.state.searchInput}
                 handleUserLogIn = {this.handleUserLogIn}
                 handleUserSignUp = {this.handleUserSignUp}
-                merchandises = {this.merchandises}
+                merchandises = {this.state.merchandises}
+                handleSelectItem = {this.handleSelectItem}
                 //more attributes
                 
                 />)}/>

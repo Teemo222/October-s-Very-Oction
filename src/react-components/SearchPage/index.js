@@ -15,8 +15,11 @@ import { posts } from "./posts.js";
 /* The SearchPage Component */
 class SearchPage extends React.Component {
 
-  renderItems() {
-    return <SearchItem />;
+  renderItems(merchandises) {
+    for(let i = 0; i < merchandises.length; i++){
+      return <SearchItem merchandise = {merchandises[i]}/>;
+    }
+    
   }
   
   renderFilter(){
@@ -45,10 +48,7 @@ class SearchPage extends React.Component {
               {this.renderFilter()}
             </div>
             <div class="right">
-              {this.renderItems()} 
-              {this.renderItems()} 
-              {this.renderItems()} 
-              {this.renderItems()}     
+              {this.renderItems(merchandises)}
             </div>
             </div>
         </div> 

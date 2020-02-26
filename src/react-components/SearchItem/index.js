@@ -9,7 +9,8 @@ class SearchItem extends React.Component {
   render() {
     const {merchandise} = this.props;
     
-    return (
+    console.log(11111)
+    return (   
       <Link to={"/itemPage"}>
             <div class="singleitem">
               
