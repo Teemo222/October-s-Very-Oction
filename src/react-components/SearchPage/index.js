@@ -14,6 +14,10 @@ import Filter from '../Filter';
 /* The SearchPage Component */
 class SearchPage extends React.Component {
 
+  state={
+    displayed:[]
+  }
+
   renderItems(merchandise) {
     return <SearchItem merchandise = {merchandise}/>;
   }
@@ -21,6 +25,7 @@ class SearchPage extends React.Component {
   renderFilter(){
     return <Filter />;
   }
+
 
   render() {
     const { currentUser,
@@ -30,6 +35,8 @@ class SearchPage extends React.Component {
             merchandises,
             handleSelectItem
           } = this.props;
+    
+    displayed = [...merchandises]
           
     return (
 
@@ -44,7 +51,8 @@ class SearchPage extends React.Component {
               {this.renderFilter()}
             </div>
             <div class="right">
-              {merchandises.map((item) => {        
+
+              {displayed.map((item) => {        
                 return this.renderItems(item);
               })}
             </div>
