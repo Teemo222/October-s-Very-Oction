@@ -7,22 +7,24 @@ import { Link } from "react-router-dom";
 class SearchItem extends React.Component {
 
   render() {
-    const {item} = this.props;
+    const {merchandise} = this.props;
     
     return (
-        <div>
-            <Link to={"/itemPage"}>
+      <Link to={"/itemPage"}>
             <div class="singleitem">
+              
                 <div class="item-image">
-                    <img class="img-1" src="./46457.jpg"/>
+                    <img class="img-1" src={merchandise.itemImageSrc}/>
                 </div>
                 <div class="item-info">
-                    <h3 class="name">Nike Air Force 1 Low</h3>
+                  <h3 class="name">{merchandise.itemName}</h3>
                     <div class="price">$170.00</div>
                 </div>
+               
              </div>
              </Link>
-        </div>
+             
+
     );
   }
 }

@@ -43,13 +43,10 @@ class SearchPage extends React.Component {
               {this.renderFilter()}
             </div>
             <div class="right">
-              <Grid container spacing={40} justify="center">
-        	      {posts.map(post => (
-          	     <Grid item key={post.name}>
-                   {this.renderItems()}
-                  </Grid>
-                ))}
-              </Grid>
+              {this.renderItems()} 
+              {this.renderItems()} 
+              {this.renderItems()} 
+              {this.renderItems()}     
             </div>
             </div>
         </div> 

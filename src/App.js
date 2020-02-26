@@ -104,6 +104,7 @@ class App extends React.Component {
                 searchInput = {this.state.searchInput}
                 handleUserLogIn = {this.handleUserLogIn}
                 handleUserSignUp = {this.handleUserSignUp}
+                merchandises = {this.merchandises}
                 //more attributes
                 
                 />)}/>
