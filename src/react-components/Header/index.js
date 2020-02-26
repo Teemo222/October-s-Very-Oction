@@ -20,11 +20,14 @@ class Header extends React.Component {
 
     return (
       <div className="header">
-        <div className = "headDiv" >
-          <Link to={"/"}>
-            <img className = "logo" src="/img/logo.png"></img>
-            <h1 className = "title">October's Very Oction</h1>
+        <div className = "logoDiv" >
+        <Link to={"/"}>
+          <img className = "logo" src="/img/logo.png"></img>
           </Link> 
+        </div>
+
+        <div className = "headDiv" >        
+            <h1 className = "title">October's Very Oction</h1>
         </div>
         <div className = "menuDiv">
           <ul className="menu">

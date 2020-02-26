@@ -2,12 +2,13 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
 
 .content{
-  position: relative;
-  
+  width: 100%;
+  margin: 0 auto;
+  padding: 15px;
+  display: flex;
 }
 
 .left{
-  position: relative;
   float: left;
   width: 30%;
   
