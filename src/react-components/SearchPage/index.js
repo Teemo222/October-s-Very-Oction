@@ -9,23 +9,18 @@ import Button from "@material-ui/core/Button";
 import SearchBox from '../SearchBox';
 import Filter from '../Filter';
 
-import { posts } from "./posts.js";
 
 
 /* The SearchPage Component */
 class SearchPage extends React.Component {
 
-  renderItems(merchandises) {
-    for(let i = 0; i < merchandises.length; i++){
-      return <SearchItem merchandise = {merchandises[i]}/>;
-    }
-    
+  renderItems(merchandise) {
+    return <SearchItem merchandise = {merchandise}/>;
   }
   
   renderFilter(){
     return <Filter />;
   }
-
 
   render() {
     const { currentUser,
@@ -35,8 +30,9 @@ class SearchPage extends React.Component {
             merchandises,
             handleSelectItem
           } = this.props;
-
+          
     return (
+
         <div className="search__bg-image center">
           <Header currentUser = {currentUser}
                   handleUserLogIn = {handleUserLogIn}
@@ -48,7 +44,9 @@ class SearchPage extends React.Component {
               {this.renderFilter()}
             </div>
             <div class="right">
-              {this.renderItems(merchandises)}
+              {merchandises.map((item) => {        
+                return this.renderItems(item);
+              })}
             </div>
             </div>
         </div> 

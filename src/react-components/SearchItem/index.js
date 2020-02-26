@@ -5,12 +5,10 @@ import { Link } from "react-router-dom";
 
 /* The ItemPage Component */
 class SearchItem extends React.Component {
-
   render() {
     const {merchandise} = this.props;
-    
-    console.log(11111)
-    return (   
+    console.log('111111')
+    return (
       <Link to={"/itemPage"}>
             <div class="singleitem">
               
@@ -24,8 +22,6 @@ class SearchItem extends React.Component {
                
              </div>
              </Link>
-             
-
     );
   }
 }
