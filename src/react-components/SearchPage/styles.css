@@ -1,10 +1,21 @@
 /* Styles for the Home React component */
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
 
-.right{
+.content{
   position: relative;
-  margin-left: 330px;
-  margin-top: 50px;
+  
+}
+
+.left{
+  position: relative;
+  float: left;
+  width: 30%;
+  
+}
+
+.right{
+  width: 70%;
+
 }
 
 .center {
