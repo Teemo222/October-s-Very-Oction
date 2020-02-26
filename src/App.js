@@ -7,9 +7,9 @@ import HomePage from './react-components/HomePage';
 import ItemPage from './react-components/ItemPage';
 import SearchPage from './react-components/SearchPage';
 import { Route, Switch, BrowserRouter} from 'react-router-dom';
-import Merchandise from './Model/Merchandise';
-import {User, addUser, getUser} from './Model/User';
+import {addUser, getUser} from './Model/User';
 import UserProfile from './react-components/UserProfile';
+import {addItem, getAllItems, filterByKeyword, filterByCategory} from './Model/Merchandise';
 
 class App extends React.Component {
 
@@ -25,11 +25,20 @@ class App extends React.Component {
     const value = target.value;
     const name = target.name;
 
+    console.log(value)
+    console.log(getAllItems())
+
     // 'this' is bound to the component in this arrow function.
     this.setState({
       [name]: value // [name] sets the object property name to the value of the 'name' variable.
     });
 
+    const items = filterByKeyword(getAllItems(), value);
+    console.log(items)
+    this.setState({
+      ["merchandises"]: items 
+    });
+    
   };
 
   handleUserLogIn = (event, callback) => {
@@ -59,22 +68,12 @@ class App extends React.Component {
     const password = target.querySelector("#password").value;
     
     callback(addUser(username, password));
-  
-  };
-
-
-  loadMerchandises = function () {
-    this.state.merchandises.push(new Merchandise(1, "Nike Kobe 7", "Sneaker", "fucking good", "/img/kobe.jpg"))
-  }
-    
-  
+  };  
 
   render() {
-    this.loadMerchandises();
-    console.log("@@@@@@@@@@@@@@@@@@@@@@@")
-    console.log(this.state.currentUser)
-    console.log(this.state.searchInput)
-    console.log("@@@@@@@@@@@@@@@@@@@@@@@")
+
+    console.log(this.state.merchandises)
+
     return (
       <div> 
        <BrowserRouter>
