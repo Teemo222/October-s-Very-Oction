@@ -27,7 +27,8 @@ class SearchPage extends React.Component {
             searchInput,
             handleUserLogIn,
             handleUserSignUp,
-            merchandises
+            merchandises,
+            handleSelectItem
           } = this.props;
           
     return (
