@@ -21,15 +21,12 @@ class App extends React.Component {
   }
 
   handleSelectItem = (event, item) => {
-    event.preventDefault();
     
     this.setState({
       ["item"]: item
     });
     
   };
-
-
 
   handleInputChange = (event) => {
     event.preventDefault();

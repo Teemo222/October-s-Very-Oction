@@ -24,6 +24,7 @@ class ItemPage extends React.Component {
         />
         <ItemView 
           item = {item}
+          currentUser = {currentUser}
         />
 
       </div>

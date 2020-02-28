@@ -5,11 +5,19 @@ import { Link } from "react-router-dom";
 
 /* The ItemPage Component */
 class SearchItem extends React.Component {
+
   render() {
-    const {merchandise} = this.props;
+    const {merchandise,
+      handleSelectItem} = this.props;
     console.log('111111')
+
+    const submit = (event) => {
+      handleSelectItem(event, merchandise);
+    }
+
+
     return (
-      <Link to={"/itemPage"}>
+      <Link to={"/itemPage"} onClick = {submit}>
             <div class="singleitem">
               
                 <div class="item-image">

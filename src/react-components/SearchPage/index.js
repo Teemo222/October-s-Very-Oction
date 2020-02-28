@@ -14,8 +14,10 @@ import Filter from '../Filter';
 /* The SearchPage Component */
 class SearchPage extends React.Component {
 
-  renderItems(merchandise) {
-    return <SearchItem merchandise = {merchandise}/>;
+  renderItems(merchandise, handleSelectItem) {
+    return <SearchItem merchandise = {merchandise}
+                      handleSelectItem = {handleSelectItem}
+    />;
   }
   
   renderFilter(){
@@ -45,7 +47,7 @@ class SearchPage extends React.Component {
             </div>
             <div class="right">
               {merchandises.map((item) => {        
-                return this.renderItems(item);
+                return this.renderItems(item, handleSelectItem);
               })}
             </div>
             </div>
