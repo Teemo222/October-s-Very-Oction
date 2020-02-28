@@ -68,7 +68,8 @@ class SearchPage extends React.Component {
             searchInput,
             handleUserLogIn,
             handleUserSignUp,
-            handleSelectItem
+            handleSelectItem,
+            handleUserSignOut
           } = this.props;
     
     
@@ -80,11 +81,11 @@ class SearchPage extends React.Component {
                   handleUserLogIn = {handleUserLogIn}
                   handleUserSignUp = {handleUserSignUp}
           />
-          
-          <div class = "content">
-            <div>
+          <div>
             {this.renderSearchBox()}
             </div>
+          <div class = "content">
+            
             <div class="left">
               {this.renderFilter()}
             </div>

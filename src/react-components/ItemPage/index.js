@@ -12,7 +12,8 @@ class ItemPage extends React.Component {
     const {currentUser, 
           item,
           handleUserLogIn,
-          handleUserSignUp
+          handleUserSignUp,
+          handleUserSignOut
         } = this.props;
     
         console.log(item)

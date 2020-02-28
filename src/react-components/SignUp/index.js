@@ -45,12 +45,23 @@ class SignUp extends React.Component {
 
     const { cancelPopUp } = this;
     const { shown } = this.state;
-    const {handleUserSignUp
+    const {handleUserSignUp,
+            handleUserSignOut,
+            currentUser
     } = this.props;
 
     const submit = (event) => {
       event.preventDefault()
       handleUserSignUp(event, this.showMessage);
+    }
+
+    const SignUpOrSignOut = (event) => {
+      if (currentUser == null){
+        event.preventDefault()
+        this.showSignUp()
+      }else{
+        handleUserSignOut(event);
+      }
     }
 
     let popup;
@@ -70,7 +81,17 @@ class SignUp extends React.Component {
       );
     }
 
-    let button = (<a onClick={this.showSignUp}>Sign Up</a>);
+    let buttonText;
+
+    if (currentUser == null){
+      buttonText = "Sign Up";
+    }
+    else{
+      buttonText = "Sign Out";
+    }
+    
+  
+    let button = (<a onClick={SignUpOrSignOut}>{buttonText}</a>);
 
     return (  
      <div>

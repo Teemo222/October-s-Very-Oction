@@ -9,7 +9,7 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      shown: false
+      shown: false,
     };
   }
 
@@ -24,6 +24,7 @@ class Login extends React.Component {
       shown: false,
     });
   }
+
 
   cancelPopUp = (e) => {
     const backgroundDiv = document.querySelector("#background-div");
@@ -79,16 +80,17 @@ class Login extends React.Component {
     }
 
     let buttonText;
+    let buttonText2;
 
     if (currentUser != null){
       buttonText = "My Account";
+      buttonText2 = "Log Out"
     }
     else{
       buttonText = "Login";
+      buttonText2 = "Sign Up"
     }
-
-  
-
+    
   let button = (<Link to={"/UserProfile"}><a id = "LogInButton" onClick={logInOrProfile}>{buttonText}</a></Link>);
 
     return (  
