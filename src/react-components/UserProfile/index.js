@@ -4,15 +4,6 @@ import "./styles.css";
 import Header from '../Header';
 
 
-class Menu extends React.Component{
-  render() {
-    const {items } = this.props;
-    return (<div className="profile-menu">
-        {items}
-    </div>);
-  }
-}
-
 class MenuItem extends React.Component {
   render(){
     const { name, onClick } =this.props;
@@ -49,6 +40,17 @@ class SellingHistory extends React.Component {
   }
 }
 
+class Menu extends React.Component{
+  render() {
+    const {onClick } = this.props;
+    return (<div className="profile-menu">
+      <MenuItem name="Profile" onClick={e=>{onClick(ProfileDetail)}}/>
+      <MenuItem name="Purchase History" onClick={e=>{onClick(PurchaseHistory)}}/>
+      <MenuItem name="Selling History" onClick={e=>{onClick(SellingHistory)}}/>
+    </div>);
+  }
+}
+
 /* The SignUp Component */
 class UserProfile extends React.Component {
   constructor(){
@@ -68,12 +70,6 @@ class UserProfile extends React.Component {
     } = this.props;
 
     let setActive = this.setActive.bind(this);
-    let items = [
-      (<MenuItem name="Profile" onClick={e=>{setActive(ProfileDetail)}}/>),
-      (<MenuItem name="Purchase History" onClick={e=>{setActive(PurchaseHistory)}}/>),
-      (<MenuItem name="Selling History" onClick={e=>{setActive(SellingHistory)}}/>),
-    ];
-    let menu = (<Menu items={items}></Menu>);
 
     return (  
       <div>
@@ -84,7 +80,7 @@ class UserProfile extends React.Component {
            />
            <br/>
            <div className="profile-content">
-           {menu}
+            <Menu onClick={setActive} />
            <div>
              <this.state.activePage />
            </div>
