@@ -18,9 +18,12 @@ class MenuItem extends React.Component {
 }
 
 class ProfileDetail extends React.Component {
+  
   render(){
+    const { currentUser } = this.props;
+    // console.log(this.props);
     return (<div>
-      Detail
+      <h2>Hello, {currentUser.username} </h2>
     </div>);
   }
 }
@@ -131,7 +134,7 @@ class UserProfile extends React.Component {
            <div className="profile-content">
             <Menu onClick={setActive} />
            <div>
-             <this.state.activePage />
+             <this.state.activePage currentUser={currentUser}/>
            </div>
           </div>          
         </div>         

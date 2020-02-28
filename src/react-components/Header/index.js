@@ -32,7 +32,7 @@ class Header extends React.Component {
         <div className = "menuDiv">
           <ul className="menu">
             <li>
-              <a href="">About us</a>
+              <a href="/">About us</a>
             </li>
             <li>
               <SignUp handleUserSignUp = {handleUserSignUp}
