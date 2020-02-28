@@ -48,9 +48,9 @@ export function filterByCategory(originalList, category){
   return result;
 }
 
-addItem("a", "b", "c", "d");
-addItem("a1", "b1", "c1", "d1");
-addItem("a2", "b2", "c2", "d2");
+addItem("a3", "SNEAKERS", "c", "d");
+addItem("a1", "WATCHES", "c1", "d1");
+addItem("a2", "BAGS", "c2", "d2");
 console.log(allItems)
 
 export default Merchandise

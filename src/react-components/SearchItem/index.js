@@ -6,18 +6,17 @@ import { Link } from "react-router-dom";
 /* The ItemPage Component */
 class SearchItem extends React.Component {
   render() {
-    const {merchandise} = this.props;
-    console.log('111111')
+    const {merchandise, handleSelectItem} = this.props;
     return (
+
       <Link to={"/itemPage"}>
-            <div class="singleitem">
+            <div class="singleitem" onMouseOver={handleSelectItem}>
               
                 <div class="item-image">
                     <img class="img-1" src={merchandise.itemImageSrc}/>
                 </div>
                 <div class="item-info">
                   <h3 class="name">{merchandise.itemName}</h3>
-                    <div class="price">$170.00</div>
                 </div>
                
              </div>

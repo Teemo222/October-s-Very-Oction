@@ -19,15 +19,15 @@ class App extends React.Component {
     currentUser: null,
     merchandises: []
   }
-
-  handleSelectItem = (event, item) => {
-    event.preventDefault();
+  handleSelectItem = (item) => {
+    return (event) => {
+      event.preventDefault();
     
-    this.setState({
-      ["item"]: item
-    });
-    
-  };
+      this.setState({
+        ["item"]: item
+      });
+    }
+};
 
 
 
@@ -84,7 +84,7 @@ class App extends React.Component {
 
   render() {
 
-    console.log(this.state.merchandises)
+    console.log(this.state.item)
 
     return (
       <div> 
@@ -116,8 +116,8 @@ class App extends React.Component {
                 searchInput = {this.state.searchInput}
                 handleUserLogIn = {this.handleUserLogIn}
                 handleUserSignUp = {this.handleUserSignUp}
-                merchandises = {this.state.merchandises}
                 handleSelectItem = {this.handleSelectItem}
+                
                 //more attributes
                 
                 />)}/>

@@ -18,12 +18,11 @@ class SearchBox extends React.Component {
         type="text" 
         placeholder="Search.." 
         name="searchInput"
-        
       />
-      
-        <button 
+        <input type="submit"
         id = "searchBoxButton" 
         type="submit" 
+        value="GO!"
         onClick = {handleInputChange}
         />
       
