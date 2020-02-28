@@ -36,7 +36,7 @@ class SearchPage extends React.Component {
             handleSelectItem
           } = this.props;
     
-    displayed = [...merchandises]
+    const displayed = [...merchandises]
           
     return (
 
