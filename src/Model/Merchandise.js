@@ -62,6 +62,7 @@ class Merchandise{
 
   addAsk = function(price, user){
     if (this.bids.length > 0 && price <= this.getHighestBid()){
+      console.log("fuck")
       const buyer = this.getHighestBidBuyer();
       const price = this.getHighestBid();
       for (let i = 0; i < this.bids[price].length; i++){

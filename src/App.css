@@ -3,7 +3,8 @@
 
 html, body {
   height: 100%;
-  margin: 0;
-  background-size: 100%;
+  margin: 100;
+  background-size: cover;
   font-family: "Helvetica Neue", Helvetica, sans-serif;
+  background-repeat: repeat-x;
 }
