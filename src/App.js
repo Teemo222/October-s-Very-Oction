@@ -72,8 +72,7 @@ class App extends React.Component {
     callback(addUser(username, password));
   };  
   
-  handleUserSignOut = (event) =>{
-    
+  handleUserSignOut = () =>{
     this.setState({
       ["currentUser"]: null
     });
