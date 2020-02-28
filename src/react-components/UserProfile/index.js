@@ -21,10 +21,18 @@ class ProfileDetail extends React.Component {
   
   render(){
     const { currentUser } = this.props;
-    // console.log(this.props);
-    return (<div>
-      <h2>Hello, {currentUser.username} </h2>
-    </div>);
+    if(currentUser) {
+      // console.log(this.props);
+      return (<div>
+        <h2>Hello, {currentUser.username} </h2>
+      </div>);      
+    } else {
+      return (
+        <div>
+          <h2>Hello, Mr. A</h2>
+        </div>
+      )
+    }
   }
 }
 
