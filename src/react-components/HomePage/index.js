@@ -13,7 +13,8 @@ class HomePage extends React.Component {
       currentUser,
       handleInputChange,
       handleUserLogIn,
-      handleUserSignUp
+      handleUserSignUp,
+      handleUserSignOut
     } = this.props;
 
     document.title = "October's Very Oction";

@@ -13,7 +13,8 @@ class Header extends React.Component {
     const {
       currentUser,
       handleUserLogIn,
-      handleUserSignUp
+      handleUserSignUp,
+      handleUserSignOut
     } = this.props;
 
 
@@ -34,7 +35,9 @@ class Header extends React.Component {
               <a href="/">About us</a>
             </li>
             <li>
-              <SignUp handleUserSignUp = {handleUserSignUp}
+              <SignUp handleUserSignUp = {handleUserSignUp} 
+                      handleUserSignOut = {handleUserSignOut} 
+                      currentUser = {currentUser}
               />
             </li>
             <li>

@@ -1,3 +1,8 @@
+const ORDERPLACED = 0;
+const AUTHENTICATING = 1;
+const DELIVERING =2;
+const RETURNING = 3;
+
 class Order {
     constructor(item, buyer, seller, price) {
         this.item = item;

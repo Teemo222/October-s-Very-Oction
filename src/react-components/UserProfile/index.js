@@ -161,7 +161,8 @@ class UserProfile extends React.Component {
     const {
       currentUser,
       handleUserLogIn,  
-      handleUserSignUp        
+      handleUserSignUp,
+      handleUserSignOut        
     } = this.props;
 
     let setActive = this.setActive.bind(this);

@@ -6,6 +6,7 @@ import './App.css';
 import HomePage from './react-components/HomePage';
 import ItemPage from './react-components/ItemPage';
 import SearchPage from './react-components/SearchPage';
+import ManagerProfile from './react-components/ManagerProfile';
 import { Route, Switch, BrowserRouter} from 'react-router-dom';
 import {addUser, getUser} from './Model/User';
 import UserProfile from './react-components/UserProfile';
@@ -70,10 +71,15 @@ class App extends React.Component {
     
     callback(addUser(username, password));
   };  
+  
+  handleUserSignOut = (event) =>{
+    event.preventDefault();
+    this.setState({
+      ["currentUser"]: null
+    });
+  }
 
   render() {
-
-    console.log(this.state.item)
 
     return (
       <div> 
@@ -86,6 +92,7 @@ class App extends React.Component {
                 handleInputChange = {this.handleInputChange}
                 handleUserLogIn = {this.handleUserLogIn}
                 handleUserSignUp = {this.handleUserSignUp}
+                handleUserSignOut = {this.handleUserSignOut}
                 //more attributes
                 
                 />)} />
@@ -95,7 +102,7 @@ class App extends React.Component {
                 item = {this.state.item}
                 handleUserLogIn = {this.handleUserLogIn}
                 handleUserSignUp = {this.handleUserSignUp}
-          
+                handleUserSignOut = {this.handleUserSignOut}
                 //more attributes
                 
                 />)}/>
@@ -106,7 +113,7 @@ class App extends React.Component {
                 handleUserLogIn = {this.handleUserLogIn}
                 handleUserSignUp = {this.handleUserSignUp}
                 handleSelectItem = {this.handleSelectItem}
-                
+                handleUserSignOut = {this.handleUserSignOut}
                 //more attributes
                 
                 />)}/>
@@ -114,9 +121,17 @@ class App extends React.Component {
               render={() => (<UserProfile 
                 currentUser = {this.state.currentUser}  
                 handleUserLogIn = {this.handleUserLogIn}  
-                handleUserSignUp = {this.handleUserSignUp}           
+                handleUserSignUp = {this.handleUserSignUp}
+                handleUserSignOut = {this.handleUserSignOut}           
                 //more attributes
                 
+                />)}/>
+            <Route exact path='/ManagerProfile' 
+              render={() => (<ManagerProfile 
+                currentUser = {this.state.currentUser}
+                handleUserLogIn = {this.handleUserLogIn}  
+                handleUserSignUp = {this.handleUserSignUp}
+                handleUserSignOut = {this.handleUserSignOut}
                 />)}/>
           </Switch>
         </BrowserRouter>
