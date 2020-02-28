@@ -80,6 +80,7 @@ class SearchPage extends React.Component {
           <Header currentUser = {currentUser}
                   handleUserLogIn = {handleUserLogIn}
                   handleUserSignUp = {handleUserSignUp}
+                  handleUserSignOut = {handleUserSignOut}
           />
           <div>
             {this.renderSearchBox()}

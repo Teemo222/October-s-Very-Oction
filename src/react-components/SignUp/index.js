@@ -60,7 +60,7 @@ class SignUp extends React.Component {
         event.preventDefault()
         this.showSignUp()
       }else{
-        handleUserSignOut(event);
+        handleUserSignOut();
       }
     }
 

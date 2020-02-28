@@ -73,7 +73,7 @@ class App extends React.Component {
   };  
   
   handleUserSignOut = (event) =>{
-    event.preventDefault();
+    
     this.setState({
       ["currentUser"]: null
     });

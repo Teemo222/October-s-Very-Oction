@@ -24,6 +24,7 @@ class HomePage extends React.Component {
           currentUser = {currentUser}
           handleUserLogIn = {handleUserLogIn}
           handleUserSignUp = {handleUserSignUp}
+          handleUserSignOut = {handleUserSignOut}
         />
         <div id="mainTextDiv">
           Buy & Sell <br/>

@@ -23,6 +23,7 @@ class ItemPage extends React.Component {
           currentUser = {currentUser}
           handleUserLogIn = {handleUserLogIn}
           handleUserSignUp = {handleUserSignUp}
+          handleUserSignOut = {handleUserSignOut}
         />
         <ItemView 
           item = {item}
