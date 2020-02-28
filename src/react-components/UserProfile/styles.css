@@ -37,3 +37,10 @@
   top: 30%;
   border: solid 1px;
 }
+
+.purchase {
+  float: left;
+  margin: 10px 0px 0px 15px;
+  width: 50%;
+  /* background-color: rgb(207, 207, 124); */
+}
