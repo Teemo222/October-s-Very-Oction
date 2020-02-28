@@ -63,6 +63,8 @@ class ItemView extends React.Component {
       else{
         item.addAsk(price, currentUser)
       }
+      alert("good");
+      this.closePopUp()
     };
 
 
