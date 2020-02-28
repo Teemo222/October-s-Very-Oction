@@ -57,9 +57,6 @@ class Merchandise{
     }  
     console.log(this.asks)  
   }
-
-
-
 }
 
 let count = 0;
@@ -103,8 +100,9 @@ export function filterByCategory(originalList, category){
   return result;
 }
 
-addItem("a3", "SNEAKERS", "c", "d");
-addItem("a1", "WATCHES", "c1", "d1");
-addItem("a2", "BAGS", "c2", "d2");
+addItem("Nike Kobe 7", "SNEAKERS", "This shoe is really cool", "/img/kobe.jpg");
+addItem("DW Watch", "WATCHES", "WOW I love it so much", "/img/14355271t.jpg");
+addItem("Nike Bag", "BAGS", "Beautiful", "/img/img01.jpg");
+console.log(allItems)
 
 export default Merchandise

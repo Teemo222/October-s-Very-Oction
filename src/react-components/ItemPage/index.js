@@ -15,6 +15,7 @@ class ItemPage extends React.Component {
           handleUserSignUp
         } = this.props;
     
+        console.log(item)
     return (
       <div className="item__bg-image center">
         <Header
