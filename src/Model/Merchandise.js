@@ -1,4 +1,4 @@
-import Order, { addOrder } from "./Order";
+import { addOrder } from "./Order";
 
 class Merchandise{
   constructor(itemId, itemName, itemCategory, itemDescription, itemImageSrc) {
@@ -13,7 +13,6 @@ class Merchandise{
 
   getLowestAsk = function (){
     const arr = Object.keys(this.asks);
-    console.log(arr)
     const result =  Math.min(arr)
     if (result != Infinity){return result;}
     else{return "N/A"}
@@ -26,7 +25,6 @@ class Merchandise{
 
   getHighestBid = function(){
     const arr = Object.keys(this.bids);
-    console.log(arr)
     const result =  Math.max(arr)
     if (result != Infinity){return result;}
     else{return "N/A"}
@@ -38,7 +36,7 @@ class Merchandise{
   }
 
   addBid = function(price, user){
-    if (this.asks.length > 0 && price >= this.getLowestAsk()){
+    if (Object.keys(this.asks).length > 0 && price >= this.getLowestAsk()){
       const seller = this.getLowestAskSeller();
       const price = this.getLowestAsk();
       for (let i = 0; i < this.asks[price].length; i++){
@@ -47,7 +45,7 @@ class Merchandise{
           break;
         }
       }
-      addOrder(this.itemId, user, seller, price)
+      addOrder(this, user, seller, price)
     }
     else{
       if(price in this.bids){
@@ -61,17 +59,23 @@ class Merchandise{
   }
 
   addAsk = function(price, user){
-    if (this.bids.length > 0 && price <= this.getHighestBid()){
+    if (Object.keys(this.bids).length > 0 && price <= this.getHighestBid()){
       console.log("fuck")
       const buyer = this.getHighestBidBuyer();
+      console.log(buyer)
       const price = this.getHighestBid();
+      console.log(price)
       for (let i = 0; i < this.bids[price].length; i++){
         if (this.bids[price][i] === buyer){
           this.bids[price].splice(i, 1)
           break;
         }
       }
-      addOrder(this.itemId, buyer, user, price)
+      if(this.bids[price].length == 0){
+        delete this.bids[price]
+      }
+      console.log(this.bids)
+      addOrder(this, buyer, user, price)
     }
     else{
       if(price in this.asks){

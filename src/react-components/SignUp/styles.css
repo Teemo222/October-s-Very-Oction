@@ -1,11 +1,12 @@
 .signup-popup {
   position: absolute;
-  background: white;
+  background: orange;
   top: 35%;
   left: 50%;
   width: 30%;
   height: 30%;
   transform: translateX(-50%);
+  z-index: 1;
 } 
 
 .signup-popup form {

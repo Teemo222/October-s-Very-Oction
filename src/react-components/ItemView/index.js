@@ -1,7 +1,7 @@
 import React from "react";
 
 import "./styles.css";
-
+import {getAllItems} from '../../Model/Merchandise';
 
 /* The ItemView Component */
 class ItemView extends React.Component {
@@ -45,10 +45,14 @@ class ItemView extends React.Component {
 
 
   render() {
-    const {
+    let {
       item,
       currentUser
     } = this.props;
+
+    if(item == null){
+      item = getAllItems()[0];
+    }
 
     const submit = (e) => {
       e.preventDefault();

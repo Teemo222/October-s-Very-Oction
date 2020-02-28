@@ -54,14 +54,13 @@ class Purchase extends React.Component {
   render() {
     const { order } = this.props;
     const { item, buyer, seller, transactionTime, price} = order;
-    const { itemName, itemCategory,  itemDescription} = item;
     return (
     <div className="purchase">
-      <h4>Item name: {itemName}</h4>
+      <h4>Item name: {item.itemName}</h4>
       <p>Purchase time: {this.formatDate(transactionTime)}</p>
       <p>Price: {Number.parseFloat(price).toFixed(2)}</p>
-      <p>Category: {itemCategory}</p>
-      <p>Description: {itemDescription}</p>
+      <p>Category: {item.itemCategory}</p>
+      <p>Description: {item.itemDescription}</p>
     </div>)
   }
 }
@@ -84,14 +83,14 @@ class Selling extends React.Component {
  render() {
    const { order } = this.props;
    const { item, buyer, seller, transactionTime, price} = order;
-   const { itemName, itemCategory,  itemDescription} = item;
+
    return (
    <div className="purchase">
-     <h4>Item name: {itemName}</h4>
+     <h4>Item name: {item.itemName}</h4>
      <p>Purchase time: {this.formatDate(transactionTime)}</p>
      <p>Price: {Number.parseFloat(price).toFixed(2)}</p>
-     <p>Category: {itemCategory}</p>
-     <p>Description: {itemDescription}</p>
+     <p>Category: {item.itemCategory}</p>
+     <p>Description: {item.itemDescription}</p>
    </div>)
  }
 }

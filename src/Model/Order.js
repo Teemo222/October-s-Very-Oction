@@ -15,8 +15,8 @@ class Order {
 
 const allOrders = [];
 
-export function addOrder(itemId, buyer, seller, price) {
-    allOrders.push(new Order(itemId, buyer, seller, price));
+export function addOrder(item, buyer, seller, price) {
+    allOrders.push(new Order(item, buyer, seller, price));
 }
 
 export function getOrderByBuyer(buyer) {
