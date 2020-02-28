@@ -2,7 +2,7 @@ import React from "react";
 
 import "./styles.css";
 import Header from '../Header';
-import { addOrder, getOrderByUser, Order} from '../../Model/Order'
+import { getOrderBySeller, getOrderByBuyer} from '../../Model/Order'
 import { getAllItems } from '../../Model/Merchandise'
 
 
@@ -53,12 +53,12 @@ class Purchase extends React.Component {
 
   render() {
     const { order } = this.props;
-    const { item, price, purchaseTime } = order;
+    const { item, buyer, seller, transactionTime, price} = order;
     const { itemName, itemCategory,  itemDescription} = item;
     return (
     <div className="purchase">
       <h4>Item name: {itemName}</h4>
-      <p>Purchase time: {this.formatDate(purchaseTime)}</p>
+      <p>Purchase time: {this.formatDate(transactionTime)}</p>
       <p>Price: {Number.parseFloat(price).toFixed(2)}</p>
       <p>Category: {itemCategory}</p>
       <p>Description: {itemDescription}</p>
@@ -66,22 +66,51 @@ class Purchase extends React.Component {
   }
 }
 
-// temporary function for hardcoding order
-function hardcordOrder(user) {
-  const orders = getOrderByUser(user);
-  const items = getAllItems();
-  if(orders.length === 0) {
-      for(let i = 0; i < 3 && i < items.length; i++) {
-        addOrder(items[i], user, Math.random() * 100);
-      }
-  }
+class Selling extends React.Component {
+  formatDate(date) {
+   var d = new Date(date),
+       month = '' + (d.getMonth() + 1),
+       day = '' + d.getDate(),
+       year = d.getFullYear();
+
+   if (month.length < 2) 
+       month = '0' + month;
+   if (day.length < 2) 
+       day = '0' + day;
+
+   return [year, month, day].join('-');
 }
+
+ render() {
+   const { order } = this.props;
+   const { item, buyer, seller, transactionTime, price} = order;
+   const { itemName, itemCategory,  itemDescription} = item;
+   return (
+   <div className="purchase">
+     <h4>Item name: {itemName}</h4>
+     <p>Purchase time: {this.formatDate(transactionTime)}</p>
+     <p>Price: {Number.parseFloat(price).toFixed(2)}</p>
+     <p>Category: {itemCategory}</p>
+     <p>Description: {itemDescription}</p>
+   </div>)
+ }
+}
+
+// // temporary function for hardcoding order
+// function hardcordOrder(user) {
+//   const orders = getOrderByUser(user);
+//   const items = getAllItems();
+//   if(orders.length === 0) {
+//       for(let i = 0; i < 3 && i < items.length; i++) {
+//         addOrder(items[i], user, Math.random() * 100);
+//       }
+//   }
+// }
 
 class PurchaseHistory extends React.Component {
   render(){
     const { currentUser } = this.props;
-    hardcordOrder(currentUser);
-    const purchases = getOrderByUser(currentUser);
+    const purchases = getOrderByBuyer(currentUser);
     return (
     <div>
       { purchases.map((purchase, index) => {
@@ -94,9 +123,15 @@ class PurchaseHistory extends React.Component {
 
 class SellingHistory extends React.Component {
   render(){
-    return (<div>
-      SellingHistory
-    </div>);
+    const { currentUser } = this.props;
+    const sellings = getOrderBySeller(currentUser);
+    return (
+      <div>
+        { sellings.map((selling, index) => {
+          return (<Selling order={selling} key={index}/>);
+        })
+      }
+      </div>);
   }
 }
 

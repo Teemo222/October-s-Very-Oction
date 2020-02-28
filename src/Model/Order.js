@@ -1,22 +1,33 @@
 class Order {
-    constructor(item, user, price) {
+    constructor(item, buyer, seller, price) {
         this.item = item;
-        this.user = user;
-        this.purchaseTime = new Date();
+        this.buyer = buyer;
+        this.seller = seller;
+        this.transactionTime = new Date();
         this.price = price;
     }
 }
 
 const allOrders = [];
 
-export function addOrder(item, user, price) {
-    allOrders.push(new Order(item, user, price));
+export function addOrder(itemId, buyer, seller, price) {
+    allOrders.push(new Order(itemId, buyer, seller, price));
 }
 
-export function getOrderByUser(user) {
+export function getOrderByBuyer(buyer) {
     const result = [];
     for(let i = 0; i < allOrders.length; i++) {
-        if(allOrders[i].user === user) {
+        if(allOrders[i].buyer === buyer) {
+            result.push(allOrders[i]);
+        }
+    }
+    return result;
+}
+
+export function getOrderBySeller(seller) {
+    const result = [];
+    for(let i = 0; i < allOrders.length; i++) {
+        if(allOrders[i].seller === seller) {
             result.push(allOrders[i]);
         }
     }

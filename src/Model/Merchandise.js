@@ -1,3 +1,5 @@
+import Order, { addOrder } from "./Order";
+
 class Merchandise{
   constructor(itemId, itemName, itemCategory, itemDescription, itemImageSrc) {
     this.itemId = itemId;
@@ -17,6 +19,11 @@ class Merchandise{
     else{return "N/A"}
   }
 
+  getLowestAskSeller = function (){
+    const price = this.getLowestAsk();
+    return this.asks[price][0]
+  }
+
   getHighestBid = function(){
     const arr = Object.keys(this.bids);
     console.log(arr)
@@ -25,10 +32,22 @@ class Merchandise{
     else{return "N/A"}
   }
 
+  getHighestBidBuyer = function (){
+    const price = this.getHighestBid();
+    return this.bids[price][0]
+  }
+
   addBid = function(price, user){
-    console.log(price)
     if (this.asks.length > 0 && price >= this.getLowestAsk()){
-      //create order
+      const seller = this.getLowestAskSeller();
+      const price = this.getLowestAsk();
+      for (let i = 0; i < this.asks[price].length; i++){
+        if (this.asks[price][i] === seller){
+          this.asks[price].splice(i, 1)
+          break;
+        }
+      }
+      addOrder(this.itemId, user, seller, price)
     }
     else{
       if(price in this.bids){
@@ -42,10 +61,16 @@ class Merchandise{
   }
 
   addAsk = function(price, user){
-    console.log('fuck zw')
-    console.log(price)
     if (this.bids.length > 0 && price <= this.getHighestBid()){
-      //create order
+      const buyer = this.getHighestBidBuyer();
+      const price = this.getHighestBid();
+      for (let i = 0; i < this.bids[price].length; i++){
+        if (this.bids[price][i] === buyer){
+          this.bids[price].splice(i, 1)
+          break;
+        }
+      }
+      addOrder(this.itemId, buyer, user, price)
     }
     else{
       if(price in this.asks){

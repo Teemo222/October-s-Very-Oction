@@ -1,6 +1,6 @@
 .login-popup {
-  position: fixed;
-  background: white;
+  position: absolute;
+  background: orange;
   top: 35%;
   left: 50%;
   width: 30%;
