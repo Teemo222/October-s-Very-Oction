@@ -36,7 +36,7 @@ class SignUp extends React.Component {
       alert("sign up successfully")
     }
     else{
-      alert("fuck you")
+      alert("login failed")
     }
     setTimeout(this.closeSignUp, 1000);
   }

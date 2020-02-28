@@ -29,8 +29,6 @@ class App extends React.Component {
     }
 };
 
-
-
   handleInputChange = (event) => {
     event.preventDefault();
     const target = event.target;

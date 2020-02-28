@@ -5,7 +5,61 @@ class Merchandise{
     this.itemCategory = itemCategory;
     this.itemDescription = itemDescription;
     this.itemImageSrc = itemImageSrc;
+    this.bids = {};
+    this.asks = {};
   }
+
+  getLowestAsk = function (){
+    const arr = Object.keys(this.asks);
+    console.log(arr)
+    const result =  Math.min(arr)
+    if (result != Infinity){return result;}
+    else{return "N/A"}
+  }
+
+  getHighestBid = function(){
+    const arr = Object.keys(this.bids);
+    console.log(arr)
+    const result =  Math.max(arr)
+    if (result != Infinity){return result;}
+    else{return "N/A"}
+  }
+
+  addBid = function(price, user){
+    console.log(price)
+    if (this.asks.length > 0 && price >= this.getLowestAsk()){
+      //create order
+    }
+    else{
+      if(price in this.bids){
+        this.bids.push(user)
+      }
+      else{
+        this.bids[price] = [user]
+      }
+    }    
+    console.log(this.bids)  
+  }
+
+  addAsk = function(price, user){
+    console.log('fuck zw')
+    console.log(price)
+    if (this.bids.length > 0 && price <= this.getHighestBid()){
+      //create order
+    }
+    else{
+      if(price in this.asks){
+        this.asks.push(user)
+      }
+      else{
+        this.asks[price] = [user]
+      }
+    }  
+    console.log(this.asks)  
+  }
+
+
+
 }
 
 let count = 0;

@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 
 /* The ItemPage Component */
 class SearchItem extends React.Component {
+
   render() {
     const {merchandise, handleSelectItem} = this.props;
     return (

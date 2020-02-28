@@ -106,3 +106,33 @@
 .sell-btn:hover {
   background-color: #c40707;
 }
+
+.popup {
+  position: fixed;
+  background: white;
+  top: 35%;
+  left: 50%;
+  width: 30%;
+  height: 30%;
+  transform: translateX(-50%);
+} 
+
+.popup form {
+  padding:10px;
+}
+
+.popup form > * {
+  margin: 1em;
+}
+
+.popup form input {
+  font-size: 1em;
+}
+
+.popup-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}

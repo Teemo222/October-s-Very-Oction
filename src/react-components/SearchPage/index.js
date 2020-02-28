@@ -64,7 +64,6 @@ class SearchPage extends React.Component {
             handleUserSignUp,
             handleSelectItem
           } = this.props;
-
           
     return (
 
