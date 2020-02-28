@@ -16,7 +16,6 @@ class Header extends React.Component {
       handleUserSignUp
     } = this.props;
 
-    console.log(currentUser)
 
     return (
       <div className="header">

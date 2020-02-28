@@ -18,6 +18,7 @@ class SearchPage extends React.Component {
   state={
     displayed:[],
     searched:[],
+    searchString:""
   }
 
   renderItems(merchandise, handleSelectItem) {
@@ -29,24 +30,28 @@ class SearchPage extends React.Component {
   }
 
   renderSearchBox(){
-    return <SearchBox handleInputChange={this.handleInputChange}/>;
+    return <SearchBox handleInputChange={this.handleInputChange} searchInput={this.state.searchString} handleClick={this.handleClick}/>;
   }
 
   handleInputChange = (event) => {
     event.preventDefault();
-    const target = event.target.previousSibling;
+    const target = event.target;
     const value = target.value;
-    
-    // 'this' is bound to the component in this arrow function.
-    let lst = filterByKeyword(getAllItems(), value);
     this.setState({
-      ["displayed"]: lst,
-      ["searched"]:lst
+      ["searchString"]: value
     })
-    console.log(value);
-    console.log(this.state.displayed)
      
   };
+
+  handleClick = (event) => {
+    event.preventDefault();
+    let lst = filterByKeyword(getAllItems(), this.state.searchString);
+    this.setState({
+      ["displayed"]: lst,
+      ["searched"]: lst,
+    })
+  }
+
   handleFilterChange = (cat) =>{
     return (event) => {
       event.preventDefault();
@@ -54,6 +59,7 @@ class SearchPage extends React.Component {
       this.setState({
         ["displayed"]: lst,
       });
+      console.log(lst)
     }
   }
 
@@ -64,6 +70,8 @@ class SearchPage extends React.Component {
             handleUserSignUp,
             handleSelectItem
           } = this.props;
+    
+    
           
     return (
 

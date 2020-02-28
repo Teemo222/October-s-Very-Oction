@@ -4,7 +4,7 @@ import React from 'react';
 // Importing react-router-dom to use the React Router
 import './styles.css';
 import Header from './../Header';
-import SearchBox from './../SearchBox';
+import SearchBoxMainPage from '../SearchBoxMainPage';
 
 class HomePage extends React.Component {
 
@@ -28,7 +28,7 @@ class HomePage extends React.Component {
           Buy & Sell <br/>
           Authenticate Sneakers
         </div>
-        <SearchBox 
+        <SearchBoxMainPage 
           handleInputChange = {handleInputChange}
         />
       </div>

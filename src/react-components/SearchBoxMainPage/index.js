@@ -4,12 +4,10 @@ import "./styles.css";
 import { Link } from "react-router-dom";
 
 /* The Header Component */
-class SearchBox extends React.Component {
+class SearchBoxMainPage extends React.Component {
   render() {
     const {
-      searchInput,
-      handleInputChange,
-      handleClick
+      handleInputChange
     } = this.props;
 
     return (
@@ -18,17 +16,17 @@ class SearchBox extends React.Component {
       <input
         id = "searchBoxInput" 
         type="text" 
-        placeholder={searchInput}
-        onChange={handleInputChange}
+        placeholder="Search.." 
         name="searchInput"
+        onChange = {handleInputChange}
       />
+      <Link to={"/SearchPage"}>
         <input type="submit"
         id = "searchBoxButton" 
         type="submit" 
         value="GO!"
-        onClick = {handleClick}
         />
-      
+      </Link>
       
      </form>
      </div>
@@ -36,4 +34,4 @@ class SearchBox extends React.Component {
   }
 }
 
-export default SearchBox;
+export default SearchBoxMainPage;

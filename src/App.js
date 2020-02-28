@@ -33,22 +33,13 @@ class App extends React.Component {
     event.preventDefault();
     const target = event.target;
     const value = target.value;
-    const name = target.name;
-
-    console.log(value)
-    console.log(getAllItems())
-
-    // 'this' is bound to the component in this arrow function.
-    this.setState({
-      [name]: value // [name] sets the object property name to the value of the 'name' variable.
-    });
-
-    const items = filterByKeyword(getAllItems(), value);
-    console.log(items)
-    this.setState({
-      ["merchandises"]: items 
-    });
     
+    this.setState({
+      ["searchInput"]: value // [name] sets the object property name to the value of the 'name' variable.
+    });
+
+
+
   };
 
   handleUserLogIn = (event, callback) => {
