@@ -2,6 +2,7 @@ import React from "react";
 
 import "./styles.css";
 import {getAllItems} from '../../Model/Merchandise';
+import ItemData from '../ItemData';
 
 /* The ItemView Component */
 class ItemView extends React.Component {
@@ -90,31 +91,36 @@ class ItemView extends React.Component {
     
 
     return (
-      <div className="container">
-        <div className="left-column">
-                <img src={item.itemImageSrc}/>
-            </div>
-      
-            
-            <div className="right-column">
-           
-                <div className="product-description">
-                    <span>{item.itemCategory}</span>
-                    <h1>{item.itemName}</h1>
-                    <p>{item.itemDescription} </p>
-                </div>
-
-            
-                <div className="product-price">
-                    <span id = "bidPrice">{"$" + item.getLowestAsk()}</span>
-                    <a className="buy-btn" onClick = {this.showPopUp}>Bid</a>
-                    <span id = "sellPrice">{"$" + item.getHighestBid()}</span>
-                    <a className="sell-btn" onClick = {this.showPopUp}>Sell</a>
-                </div>
-            </div>
+      <div>
+        <div className="container">
+          <div className="left-column">
+                  <img src={item.itemImageSrc}/>
+              </div>
         
+              
+              <div className="right-column">
+            
+                  <div className="product-description">
+                      <span>{item.itemCategory}</span>
+                      <h1>{item.itemName}</h1>
+                      <p>{item.itemDescription} </p>
+                  </div>
 
-            {popup}
+              
+                  <div className="product-price">
+                      <span id = "bidPrice">{"$" + item.getLowestAsk()}</span>
+                      <a className="buy-btn" onClick = {this.showPopUp}>Bid</a>
+                      <span id = "sellPrice">{"$" + item.getHighestBid()}</span>
+                      <a className="sell-btn" onClick = {this.showPopUp}>Sell</a>
+                  </div>
+              </div>
+          
+
+              {popup}
+
+        
+        </div>
+        <ItemData/>
       </div>
 
     );

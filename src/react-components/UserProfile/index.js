@@ -172,6 +172,7 @@ class UserProfile extends React.Component {
            <Header currentUser = {currentUser}
                   handleUserLogIn = {handleUserLogIn}
                   handleUserSignUp = {handleUserSignUp}
+                  handleUserSignOut={handleUserSignOut}
            />
            <br/>
            <div className="profile-content">
