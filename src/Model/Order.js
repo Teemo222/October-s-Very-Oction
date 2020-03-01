@@ -3,6 +3,20 @@ const AUTHENTICATING = 1;
 const DELIVERING =2;
 const RETURNING = 3;
 
+// function formatDate(date) {
+//     var d = new Date(date),
+//         month = '' + (d.getMonth() + 1),
+//         day = '' + d.getDate(),
+//         year = d.getFullYear();
+
+//     if (month.length < 2) 
+//         month = '0' + month;
+//     if (day.length < 2) 
+//         day = '0' + day;
+
+//     return [year, month, day].join('-');
+// }
+
 class Order {
     constructor(item, buyer, seller, price) {
         this.item = item;
@@ -16,7 +30,9 @@ class Order {
 const allOrders = [];
 
 export function addOrder(item, buyer, seller, price) {
-    allOrders.push(new Order(item, buyer, seller, price));
+    const order = new Order(item, buyer, seller, price);
+    allOrders.push(order);
+    return order;
 }
 
 export function getOrderByBuyer(buyer) {

@@ -9,68 +9,90 @@ import {Line} from 'react-chartjs-2';
 class DataBox extends React.Component {
 
   render(){
+
+    const {dataName,
+           stats} = this.props;
+        
+
     return(<div className = "databox">
-        <h2 className = "dataName">Total sales</h2>
-        <h2 className = "data">1000</h2>
+        <h2 className = "dataName">{dataName}</h2>
+        <h2 className = "data">{stats}</h2>
     </div>)
   }
 }
-
-// let list = []
-// let make = function(){for (let i = 0; i < 100; i++){list.push(i)}}
-
-// make();
-
-const x = new Date(2017, 1, 1);
-const y = new Date(2017, 1, 1);
-
 
 
 /* The ItemData Component */
 class ItemData extends React.Component {
 
-  state = {
-    data: {
-      labels: [x,y],
+  render() {
+    let {
+      item
+    } = this.props;
+
+    const data = {
+      labels: [],
       datasets: [
         {label: "purchases",
         fill: false, 
         borderColor: "purple",
         backgroundColor: "pink", 
-        data: [{
-          x: x,
-          y: 100
-      }, {
-          x: y,
-          y: 3000
-      }]
+        data: []
         }
       ]
     }
-  };
 
-  render() {
-    let {
-      
-    } = this.props;
+    const itemHistory = item.orderHistory;
 
-   
+    function processItemOrderHistory(){
+      console.log(item)
+      for (let i = 0; i<itemHistory.length; i++){
+        const order = itemHistory[i]
+        data.labels.push(order.transactionTime)
+        data.datasets[0].data.push({x: order.transactionTime, y: order.price})
+      }
+
+    }
+
+    processItemOrderHistory()
+
+    const averagePrice = function(){
+      let count = 0;
+      let acc= 0
+      for (let i = 0; i<itemHistory.length; i++){
+        const order = itemHistory[i]
+        console.log()
+        acc += order.price;
+        count += 1;
+      }
+      console.log(acc)
+      console.log(count)
+      if (count == 0){return 0.0}
+      return acc / count
+    }
+
+    console.log(averagePrice())
+    console.log(data)
+    console.log("fuckfuckfuck")
+
     return (
       <div className="wrapper">
         <div className="leftPart">
                <Line
                 options = {{reponsive: true}}
-                data = {this.state.data}
+                data = {data}
                />
         
               
         </div>
       
         <div className="rightPart">
-          <DataBox/>
-          <DataBox/>
-          <DataBox/>
-          <DataBox/>
+          <DataBox dataName = {"Total Sales"}
+                   stats = {item.orderHistory.length}
+          />
+          <DataBox dataName = {"Average Price"}
+                   stats = {averagePrice()}
+          />
         </div>
         
       </div>
