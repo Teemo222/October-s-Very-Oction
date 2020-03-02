@@ -20,14 +20,94 @@ class MenuItem extends React.Component {
   }
 }
 
+class UserInfo extends React.Component {
+  
+  state = {
+    showInfo: true,
+    showEdit: false
+  }
+
+  displayInfo = (event, currentUser) => {
+    console.log(event.target)
+    const email = document.querySelector("#email").value;
+    const address = document.querySelector("#address").value;
+    const card = document.querySelector("#card").value;
+    currentUser.email = email
+    currentUser.address = address
+    currentUser.creditCardNumber = card
+
+    this.setState({
+      showInfo: true,
+      showEdit: false,
+    });
+  }
+
+  displayEdit = (event) => {
+    event.preventDefault();
+    this.setState({
+      showInfo: false,
+      showEdit: true,
+    });
+  }
+
+  render(){
+    const { currentUser } = this.props;
+    const {showInfo, showEdit} = this.state;
+    let info;
+    let edit;
+
+
+
+    const update = (event) =>{
+      event.preventDefault()
+      this.displayInfo(event, currentUser)
+    }
+
+    if (showInfo){
+      info = (<div>
+                    <span>Username: {currentUser.username}</span>  <br/>
+                    <span>Email: {currentUser.email}</span> <br/>
+                    <span>Address: {currentUser.address}</span> <br/>
+                    <span>Card Number: {currentUser.creditCardNumber}</span> <br/>
+                    <button onClick = {this.displayEdit}>Edit</button> 
+                  </div>);
+    }
+
+    if(showEdit){
+      edit = (<form onSubmit={update}>
+        <label>Username: {currentUser.username}</label><br/>
+        <label>Email  </label>
+        <input id="email"></input><br/>
+        <label>Address  </label>
+        <input id="address"></input><br/>
+        <label >Card Number  </label>
+        <input id="card"></input><br/>
+        <button >Confirm</button>        
+      </form>);
+    }
+
+
+
+    return (<div>
+      {info}
+      {edit}
+      </div>
+    );
+  }
+}
+
+
 class ProfileDetail extends React.Component {
   
   render(){
     const { currentUser } = this.props;
     if(currentUser) {
+      console.log("FUCKFUCK")
       // console.log(this.props);
       return (<div className = "ProfileDetail">
-        <h2>Hello, {currentUser.username} </h2>
+        <h2>Welcome, {currentUser.username} </h2>
+        <UserInfo currentUser = {currentUser}
+        />
       </div>);      
     } else {
       return (
