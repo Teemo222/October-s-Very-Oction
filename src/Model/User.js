@@ -4,11 +4,23 @@ class User{
     this.userId = userId;
     this.username = username;
     this.password = password;
+    this.purchaseHistory = []
+    this.sellingHistory = []
   }
 }
-let count = 0
+
+class Authenticator extends User{
+  constructor(userId, username, password){
+    super(userId, username, password)
+    this.tasks = []
+  }
+}
+
+const authenticator = new Authenticator(0, "admin", "admin")
+
+let count = 1
 const users = [];
-const admin = [];
+const admin = [authenticator];
 
 export function addUser(username, password){
   for (let i = 0; i < users.length; i++){

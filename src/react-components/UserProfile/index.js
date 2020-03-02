@@ -4,6 +4,9 @@ import "./styles.css";
 import Header from '../Header';
 import { getOrderBySeller, getOrderByBuyer} from '../../Model/Order'
 import { getAllItems } from '../../Model/Merchandise'
+import Button from "@material-ui/core/Button";
+import TableCell from "@material-ui/core/TableCell";
+import TableRow from "@material-ui/core/TableRow";
 
 
 class MenuItem extends React.Component {
@@ -23,12 +26,12 @@ class ProfileDetail extends React.Component {
     const { currentUser } = this.props;
     if(currentUser) {
       // console.log(this.props);
-      return (<div>
+      return (<div className = "ProfileDetail">
         <h2>Hello, {currentUser.username} </h2>
       </div>);      
     } else {
       return (
-        <div>
+        <div className = "ProfileDetail">
           <h2>Hello, Mr. A</h2>
         </div>
       )
@@ -36,63 +39,53 @@ class ProfileDetail extends React.Component {
   }
 }
 
+
+
+
 class Purchase extends React.Component {
-   formatDate(date) {
-    var d = new Date(date),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear();
-
-    if (month.length < 2) 
-        month = '0' + month;
-    if (day.length < 2) 
-        day = '0' + day;
-
-    return [year, month, day].join('-');
-}
-
   render() {
     const { order } = this.props;
-    const { item, buyer, seller, transactionTime, price} = order;
+    
     return (
-    <div className="purchase">
-      <h4>Item name: {item.itemName}</h4>
-      <p>Purchase time: {this.formatDate(transactionTime)}</p>
-      <p>Price: {Number.parseFloat(price).toFixed(2)}</p>
-      <p>Category: {item.itemCategory}</p>
-      <p>Description: {item.itemDescription}</p>
-    </div>)
+      <TableRow className="row" >
+        <TableCell component="th" scope="row">
+          {order.item.itemName}
+        </TableCell>
+
+        <TableCell component="th" scope="row">
+          {order.price}
+        </TableCell>
+
+        <TableCell component="th" scope="row">
+          {order.transactionTime.toString()}
+        </TableCell>
+
+      </TableRow>
+    );
   }
 }
 
 class Selling extends React.Component {
-  formatDate(date) {
-   var d = new Date(date),
-       month = '' + (d.getMonth() + 1),
-       day = '' + d.getDate(),
-       year = d.getFullYear();
+  render() {
+    const { order } = this.props;
+    
+    return (
+      <TableRow className="row" >
+        <TableCell component="th" scope="row">
+          {order.item.itemName}
+        </TableCell>
 
-   if (month.length < 2) 
-       month = '0' + month;
-   if (day.length < 2) 
-       day = '0' + day;
+        <TableCell component="th" scope="row">
+          {order.price}
+        </TableCell>
 
-   return [year, month, day].join('-');
-}
+        <TableCell component="th" scope="row">
+          {order.transactionTime.toString()}
+        </TableCell>
 
- render() {
-   const { order } = this.props;
-   const { item, buyer, seller, transactionTime, price} = order;
-
-   return (
-   <div className="purchase">
-     <h4>Item name: {item.itemName}</h4>
-     <p>Purchase time: {this.formatDate(transactionTime)}</p>
-     <p>Price: {Number.parseFloat(price).toFixed(2)}</p>
-     <p>Category: {item.itemCategory}</p>
-     <p>Description: {item.itemDescription}</p>
-   </div>)
- }
+      </TableRow>
+    );
+  }
 }
 
 // // temporary function for hardcoding order
@@ -109,9 +102,10 @@ class Selling extends React.Component {
 class PurchaseHistory extends React.Component {
   render(){
     const { currentUser } = this.props;
-    const purchases = getOrderByBuyer(currentUser);
+    const purchases = currentUser.purchaseHistory;
     return (
-    <div>
+    <div className = "orderTable">
+       <TableLabels/>
       { purchases.map((purchase, index) => {
         return (<Purchase order={purchase} key={index}/>);
       })
@@ -120,12 +114,35 @@ class PurchaseHistory extends React.Component {
   }
 }
 
+class TableLabels extends React.Component{
+  render(){
+    return (
+    <TableRow className="row" >
+        <TableCell component="th" scope="row">
+          Item Name
+        </TableCell>
+
+        <TableCell component="th" scope="row">
+          Price 
+        </TableCell>
+
+        <TableCell component="th" scope="row">
+          Transaction Date
+      </TableCell>
+      </TableRow>
+      )
+  }
+
+
+}
+
 class SellingHistory extends React.Component {
   render(){
     const { currentUser } = this.props;
-    const sellings = getOrderBySeller(currentUser);
+    const sellings = currentUser.sellingHistory;
     return (
-      <div>
+      <div className = "orderTable">
+        <TableLabels/>
         { sellings.map((selling, index) => {
           return (<Selling order={selling} key={index}/>);
         })
@@ -137,7 +154,7 @@ class SellingHistory extends React.Component {
 class Menu extends React.Component{
   render() {
     const {onClick } = this.props;
-    return (<div className="profile-menu">
+    return (<div >
       <MenuItem name="Profile" onClick={e=>{onClick(ProfileDetail)}}/>
       <MenuItem name="Purchase History" onClick={e=>{onClick(PurchaseHistory)}}/>
       <MenuItem name="Selling History" onClick={e=>{onClick(SellingHistory)}}/>
@@ -176,9 +193,9 @@ class UserProfile extends React.Component {
            />
            <br/>
            <div className="profile-content">
-            <Menu onClick={setActive} />
-           <div>
-             <this.state.activePage currentUser={currentUser}/>
+            <Menu className="leftMenu" onClick={setActive} />
+           <div className="mainContent">
+             <this.state.activePage  currentUser={currentUser}/>
            </div>
           </div>          
         </div>         

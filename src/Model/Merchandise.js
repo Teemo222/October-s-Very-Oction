@@ -73,6 +73,8 @@ class Merchandise{
       }
       const order = addOrder(this, user, seller, price)
       this.orderHistory.push(order)
+      user.purchaseHistory.push(order)
+      seller.sellingHistory.push(order)
     }
     else{
       if(price in this.bids){
@@ -103,6 +105,8 @@ class Merchandise{
       }
       const order = addOrder(this, buyer, user, price)
       this.orderHistory.push(order)
+      buyer.purchaseHistory.push(order)
+      user.sellingHistory.push(order)
     }
     else{
       if(price in this.asks){

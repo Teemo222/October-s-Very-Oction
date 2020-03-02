@@ -4,6 +4,7 @@ import "./styles.css";
 import {getAllItems} from '../../Model/Merchandise';
 import ItemData from '../ItemData';
 
+
 /* The ItemView Component */
 class ItemView extends React.Component {
 
