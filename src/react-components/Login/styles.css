@@ -1,12 +1,14 @@
 .login-popup {
+  border-radius: 30px;
   position: absolute;
-  background: orange;
+  background: #F8B463;
   top: 35%;
   left: 50%;
   width: 30%;
   height: 30%;
   transform: translateX(-50%);
   z-index: 1;
+  border: 10px solid #FAEAD8;
 } 
 
 .login-popup form {
@@ -22,9 +24,35 @@
 }
 
 .login-popup-background {
+  z-index: 1;
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
 }
+
+
+.submitButton {
+  display: inline-block;
+  padding: 0.5em 3em;
+  border:0.16em solid pink;
+  margin:0 0.3em 0.3em 0;
+  box-sizing: border-box;
+  text-decoration:none;
+  text-transform:uppercase;
+  font-weight:400;
+  color: pink;
+  text-align:center;
+  transition: all 0.15s;
+
+  }
+
+  .submitButton:hover{
+  color:#DDDDDD;
+  border-color:#DDDDDD;
+  }
+  .submitButton:active{
+  color:#BBBBBB;
+  border-color:#BBBBBB;
+  }

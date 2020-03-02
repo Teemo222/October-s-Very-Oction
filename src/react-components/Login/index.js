@@ -72,7 +72,7 @@ class Login extends React.Component {
             <input type="text" id="username" name="username"></input><br />
             <label htmlFor="password">Password</label>
             <input type="password" id="password" name="password"></input><br />
-            <button type = "submit">Login</button>        
+            <button className="submitButton" type = "submit">Login</button>        
           </form>
         </div>
         </div>

@@ -62,6 +62,9 @@ class ItemView extends React.Component {
         return
       }
       const price = parseInt(document.querySelector("#price").value);
+      if(price <= 0){
+        alert("invalid price")
+      }
       if(this.state.bid){
         item.addBid(price, currentUser)
       }
@@ -120,7 +123,8 @@ class ItemView extends React.Component {
 
         
         </div>
-        <ItemData/>
+        <ItemData item = {item}
+        />
       </div>
 
     );

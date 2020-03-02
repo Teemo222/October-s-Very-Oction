@@ -9,13 +9,26 @@ class Merchandise{
     this.itemImageSrc = itemImageSrc;
     this.bids = {};
     this.asks = {};
+    this.orderHistory = [];
   }
 
   getLowestAsk = function (){
+    console.log(this.asks)
     const arr = Object.keys(this.asks);
-    const result =  Math.min(arr)
-    if (result != Infinity){return result;}
-    else{return "N/A"}
+    const data = []
+    for (let i = 0; i< arr.length; i++){
+      let number = parseInt(arr[i])
+      data.push(parseInt(arr[i]));
+      console.log(number)
+      console.log(data)
+    }
+    if (arr.length == 0){
+      return "N/A"
+    }
+    const result =  Math.min.apply(null, data)
+    console.log("fuck you a")
+    console.log(result)
+    return result
   }
 
   getLowestAskSeller = function (){
@@ -24,10 +37,20 @@ class Merchandise{
   }
 
   getHighestBid = function(){
+    console.log(this.bids)
     const arr = Object.keys(this.bids);
-    const result =  Math.max(arr)
-    if (result != Infinity){return result;}
-    else{return "N/A"}
+    const data = []
+    for (let i = 0; i< arr.length; i++){
+      data.push(parseInt(arr[i]));
+    }
+    if (arr.length == 0){
+      return "N/A"
+    }
+    console.log(data)
+    const result =  Math.max.apply(null, data)
+    console.log("fuck you a")
+    console.log(result)
+    return result
   }
 
   getHighestBidBuyer = function (){
@@ -45,11 +68,15 @@ class Merchandise{
           break;
         }
       }
-      addOrder(this, user, seller, price)
+      if(this.asks[price].length == 0){
+        delete this.asks[price]
+      }
+      const order = addOrder(this, user, seller, price)
+      this.orderHistory.push(order)
     }
     else{
       if(price in this.bids){
-        this.bids.push(user)
+        this.bids[price].push(user)
       }
       else{
         this.bids[price] = [user]
@@ -74,12 +101,12 @@ class Merchandise{
       if(this.bids[price].length == 0){
         delete this.bids[price]
       }
-      console.log(this.bids)
-      addOrder(this, buyer, user, price)
+      const order = addOrder(this, buyer, user, price)
+      this.orderHistory.push(order)
     }
     else{
       if(price in this.asks){
-        this.asks.push(user)
+        this.asks[price].push(user)
       }
       else{
         this.asks[price] = [user]
