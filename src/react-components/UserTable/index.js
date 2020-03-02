@@ -60,6 +60,9 @@ class UserTable extends React.Component {
 
                         data[index] = newData;
                         this.setState({ data }, () => resolve());
+
+                        console.log("Check: getAll() again; update lost if you go to new page since no backend")
+                        console.log(getAll())
                     }
                     resolve()
                     }, 1000)
