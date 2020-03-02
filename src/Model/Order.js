@@ -33,6 +33,10 @@ export function getAllOrders(){
     return allOrders;
 }
 
+export function getColumns(){
+    return ["item", "buyer", "seller"]
+}
+
 export function getOrderBySeller(seller) {
     const result = [];
     for(let i = 0; i < allOrders.length; i++) {

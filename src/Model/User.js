@@ -30,5 +30,11 @@ export function getUser(username, password){
   return null;
 }
 
+export function getAll(){
+  return users;
+}
+
+
+
 export default User;
 
