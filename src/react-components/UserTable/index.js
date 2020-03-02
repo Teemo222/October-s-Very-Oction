@@ -27,7 +27,7 @@ class UserTable extends React.Component {
   
     render() {
       return (
-          <div className = "table">
+          <div className = "table2">
             <MaterialTable
             title="Edit User"
             columns={this.state.columns}
