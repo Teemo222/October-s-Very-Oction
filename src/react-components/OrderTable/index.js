@@ -2,6 +2,10 @@ import React from "react";
 
 import "./styles.css";
 import Header from './../Header';
+import { DataTable } from "react-editable-table";
+import MaterialTable from "material-table";
+
+import { getAllOrders }from "../../Model/Order.js"
 
 class OrderTable extends React.Component {
     render() {
@@ -13,8 +17,8 @@ class OrderTable extends React.Component {
       } = this.props;
   
       return (
-        <div></div>
-      );
+        <MaterialTable/>
+      )
     }
   }
   

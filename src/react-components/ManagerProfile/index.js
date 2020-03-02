@@ -1,7 +1,8 @@
 import React from "react";
 
 import "./styles.css";
-import Header from './../Header';
+import Header from '../Header';
+import UserTable from '../Usertable'
 
 class ManagerProfile extends React.Component {
     render() {
@@ -13,7 +14,7 @@ class ManagerProfile extends React.Component {
       } = this.props;
   
       return (
-        <div></div>
+        <UserTable/>
       );
     }
   }
