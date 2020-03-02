@@ -59,8 +59,8 @@ export function ReceiveAuthentication(){
       })
 }
 
-function getStatus(){
-    switch(this.state.status){
+export function getStatus(order){
+    switch(order.status){
         case ORDERPLACED:
             return "Order Placed";
         case AUTHENTICATING:
@@ -70,6 +70,31 @@ function getStatus(){
         case RETURNING:
             return "Rejected";
     }   
+}
+
+export function getAction(order){
+    switch(order.status){
+        case ORDERPLACED:
+            return "Receive";
+        case AUTHENTICATING:
+            return "Finish Authenticate";
+        case DELIVERING:
+            return "";
+        case RETURNING:
+            return "";
+    }  
+}
+
+export function passItem(order){
+    if(order.status == AUTHENTICATING){order.status = DELIVERING}
+}
+
+export function receiveItem(order){
+    if(order.status == ORDERPLACED){order.status = AUTHENTICATING}
+}
+
+export function rejectItem(order){
+    if(order.status == AUTHENTICATING){order.status = RETURNING}
 }
 
 

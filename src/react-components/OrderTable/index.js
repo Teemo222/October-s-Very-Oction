@@ -8,20 +8,19 @@ import Table from "@material-ui/core/Table";
 import { getAllOrders }from "../../Model/Order.js"
 
 class OrderTable extends React.Component {
-    
+
     renderOrderRow(order){
-      return <OrderRow order/>
+      return <OrderRow order={order}/>
     }
+
+    
 
     render() {
       const {
-        currentUser,
-        handleUserLogIn,  
-        handleUserSignUp,
-        handleUserSignOut  
       } = this.props;
   
       return (
+        <div class="table">
         <Table>
           <TableBody>
               {getAllOrders().map(order => {
@@ -29,6 +28,7 @@ class OrderTable extends React.Component {
               })}
             </TableBody>
         </Table>
+        </div>
       )
     }
   }

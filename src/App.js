@@ -93,9 +93,13 @@ class App extends React.Component {
 
 const user1 = new User("1", "a", "123");
 const user2 = new User("12", "v", "123");
-const item = new Merchandise("1", "Nike Kobe 10", "SNEAKERS", "Beautiful", "/img/kobe2.jpg");
-
-addOrder(item, user1, user2, "45");
+const user3 = new User("3", "t", "123asdf");
+const item1 = new Merchandise("1", "Nike Kobe 10", "SNEAKERS", "Beautiful", "/img/kobe2.jpg");
+const item2 = new Merchandise("2", "Nike Kobe 9", "SNEAKERS", "Beautiful", "/img/kobe2.jpg");
+addUser("a", "123");
+addUser("b", "123aaa");
+addOrder(item1, user1, user2, "45");
+addOrder(item2, user3, user1, "66");
 
     return (
       <div> 

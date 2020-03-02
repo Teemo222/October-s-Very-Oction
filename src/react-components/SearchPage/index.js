@@ -59,7 +59,7 @@ class SearchPage extends React.Component {
       this.setState({
         ["displayed"]: lst,
       });
-      console.log(lst)
+      
     }
   }
 

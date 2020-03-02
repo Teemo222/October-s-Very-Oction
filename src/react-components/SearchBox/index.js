@@ -22,7 +22,7 @@ class SearchBox extends React.Component {
         onChange={handleInputChange}
         name="searchInput"
       />
-        <input type="submit"
+        <input 
         id = "searchBoxButton" 
         type="submit" 
         value="GO!"

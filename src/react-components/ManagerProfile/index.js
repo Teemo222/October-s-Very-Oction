@@ -3,7 +3,8 @@ import React from "react";
 import "./styles.css";
 import Header from '../Header';
 import UserTable from '../UserTable';
-import OrderTable from '../OrderTable'
+import OrderTable from '../OrderTable';
+import AdminHeader from '../AdminHeader';
 
 class ManagerProfile extends React.Component {
     render() {
@@ -15,7 +16,11 @@ class ManagerProfile extends React.Component {
       } = this.props;
   
       return (
-        <OrderTable/>
+        <div>
+          <OrderTable class="table"/>
+          <UserTable class="table2"/>
+        </div>
+        
       );
     }
   }
