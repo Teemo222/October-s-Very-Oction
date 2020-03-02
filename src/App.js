@@ -7,10 +7,13 @@ import HomePage from './react-components/HomePage';
 import ItemPage from './react-components/ItemPage';
 import SearchPage from './react-components/SearchPage';
 import ManagerProfile from './react-components/ManagerProfile';
+import Merchandise from './Model/Merchandise';
+import User from './Model/User';
 import { Route, Switch, BrowserRouter} from 'react-router-dom';
 import {addUser, getUser} from './Model/User';
 import UserProfile from './react-components/UserProfile';
 import {addItem, getAllItems, filterByKeyword, filterByCategory} from './Model/Merchandise';
+import { addOrder } from './Model/Order';
 
 class App extends React.Component {
 
@@ -20,6 +23,8 @@ class App extends React.Component {
     currentUser: null,
     merchandises: []
   }
+
+  
   handleSelectItem = (item) => {
     return (event) => {
       event.preventDefault();
@@ -79,6 +84,17 @@ class App extends React.Component {
   }
 
   render() {
+    // addUser("1", "a", "123")
+    // addUser("2", "b", "123kk")
+    // addUser("3", "c", "fsqwer")
+    // addUser("4", "d", "asdf")
+    // addOrder(getAllItems(), getUser()[0], getUser()[1], "1")
+
+const user1 = new User("1", "a", "123");
+const user2 = new User("12", "v", "123");
+const item = new Merchandise("1", "Nike Kobe 10", "SNEAKERS", "Beautiful", "/img/kobe2.jpg");
+
+addOrder(item, user1, user2, "45");
 
     return (
       <div> 

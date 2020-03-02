@@ -1,3 +1,6 @@
+import {getAll} from './User';
+import {getAllItems} from './Merchandise'
+
 const ORDERPLACED = 0;
 const AUTHENTICATING = 1;
 const DELIVERING =2;
@@ -85,4 +88,4 @@ export function getOrderBySeller(seller) {
     return result;
 }
 
-export default Order
+export default Order;

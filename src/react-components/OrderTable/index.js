@@ -2,7 +2,6 @@ import React from "react";
 
 import "./styles.css";
 import Header from './../Header';
-import { DataTable } from "react-editable-table";
 import TableBody from "@material-ui/core/TableBody";
 import OrderRow from '../OrderRow';
 import Table from "@material-ui/core/Table";

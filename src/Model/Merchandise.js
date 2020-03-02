@@ -172,6 +172,4 @@ addItem("Nike Kobe 9", "SNEAKERS", "Beautiful", "/img/kobe2.jpg");
 addItem("Nike Kobe 10", "SNEAKERS", "Beautiful", "/img/kobe2.jpg");
 
 
-console.log(allItems)
-
-export default Merchandise
+export default Merchandise;

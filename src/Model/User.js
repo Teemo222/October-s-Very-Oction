@@ -1,3 +1,5 @@
+import Merchandise from "./Merchandise";
+import Order from "./Order";
 
 class User{
   constructor(userId, username, password) {
@@ -16,7 +18,9 @@ class Authenticator extends User{
   }
 }
 
+
 const authenticator = new Authenticator(0, "admin", "admin")
+
 
 let count = 1
 const users = [];
