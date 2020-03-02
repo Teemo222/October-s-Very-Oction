@@ -57,6 +57,15 @@ export function getUser(username, password){
   return null;
 }
 
+export function setUserPassword(userId, password) {
+  // assume userId exists
+  for (let i = 0; i < users.length; i++){
+    if (users[i].userId == userId){
+      users[i].password = password;
+    }
+  }
+}
+
 export function getAll(){
   return users;
 }
