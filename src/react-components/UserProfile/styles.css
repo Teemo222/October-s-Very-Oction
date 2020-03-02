@@ -13,15 +13,12 @@
   background-color: white;
 }
 
-
-
 .profile-menu-item {
   text-align: center;
   font-size: xx-large;
   padding: 20px;
-  border: solid 1px  lightgray;
+  border: solid 1px  papayawhip;
 }
-
 
 .profile-content {
   position: relative;
@@ -32,9 +29,7 @@
   padding-left: 15px;
   padding-right: 15px;
   display: flex;
-  border-bottom: 3px solid #E1E8EE;
 }
-
 
 
 /* Columns */
@@ -46,10 +41,10 @@
 }
 
 .mainContent {
+  position: relative;
   padding-left: 30px;
   width: 80%;
   height: 100%;
-  border: 1px solid pink;
 }
 
 .row {
