@@ -23,7 +23,6 @@ class MenuItem extends React.Component {
 class UserInfo extends React.Component {
   
   state = {
-    showInfo: true,
     showEdit: false
   }
 
@@ -37,7 +36,6 @@ class UserInfo extends React.Component {
     currentUser.creditCardNumber = card
 
     this.setState({
-      showInfo: true,
       showEdit: false,
     });
   }
@@ -45,46 +43,53 @@ class UserInfo extends React.Component {
   displayEdit = (event) => {
     event.preventDefault();
     this.setState({
-      showInfo: false,
       showEdit: true,
     });
   }
 
+  cancelPopUp = (e) => {
+    const backgroundDiv = document.querySelector("#edit-background-div");
+    if(e.target === backgroundDiv) {
+      this.closeLogin()
+    }
+  }
+
   render(){
     const { currentUser } = this.props;
-    const {showInfo, showEdit} = this.state;
+    const {showEdit} = this.state;
     let info;
     let edit;
-
-
 
     const update = (event) =>{
       event.preventDefault()
       this.displayInfo(event, currentUser)
     }
 
-    if (showInfo){
-      info = (<div>
-                    <span>Username: {currentUser.username}</span>  <br/>
-                    <span>Email: {currentUser.email}</span> <br/>
-                    <span>Address: {currentUser.address}</span> <br/>
-                    <span>Card Number: {currentUser.creditCardNumber}</span> <br/>
-                    <button onClick = {this.displayEdit}>Edit</button> 
+    info = (<div className = "userInfo">
+                    <div className = "index"><strong>Username: {currentUser.username}</strong></div>  <br/>
+                    <div className = "index"><strong>Email: {currentUser.email}</strong></div> <br/>
+                    <div className = "index"><strong>Address: {currentUser.address}</strong></div> <br/>
+                    <div className = "index"><strong>Card Number: {currentUser.creditCardNumber}</strong></div> <br/>
+                    <button className = "editButton" onClick = {this.displayEdit}>Edit</button> 
                   </div>);
-    }
+    
 
     if(showEdit){
-      edit = (<form onSubmit={update}>
-        <label>Username: {currentUser.username}</label><br/>
-        <label>Email  </label>
-        <input id="email"></input><br/>
-        <label>Address  </label>
-        <input id="address"></input><br/>
-        <label >Card Number  </label>
-        <input id="card"></input><br/>
-        <button >Confirm</button>        
-      </form>);
-    }
+      edit = (
+        <div className="edit-popup-background" id="edit-background-div" onClick={this.cancelPopUp}>
+          <div className="edit-popup" id="login-div">
+          <form onSubmit={update}>
+              <label>Email: </label>
+              <input id="email"></input><br/>
+              <label>Address: </label>
+              <input id="address"></input><br/>
+              <label >Card Number: </label>
+              <input id="card"></input><br/>
+              <button >Confirm</button>            
+          </form>
+        </div>
+        </div>);
+      }
 
 
 
