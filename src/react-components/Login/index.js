@@ -2,6 +2,7 @@ import React from "react";
 
 import "./styles.css";
 import { Link } from "react-router-dom";
+import {getAdmin} from "../../Model/User"
 
 
 /* The Login Component */
@@ -80,18 +81,24 @@ class Login extends React.Component {
     }
 
     let buttonText;
-    let buttonText2;
+    let link;
 
     if (currentUser != null){
+      if (getAdmin().includes(currentUser)){ 
+        link = "/ManagerProfile"
+      }
+      else{
+        link = "/UserProfile"
+      }
       buttonText = "My Account";
-      buttonText2 = "Log Out"
+
     }
     else{
       buttonText = "Login";
-      buttonText2 = "Sign Up"
     }
     
-  let button = (<Link to={"/UserProfile"}><a id = "LogInButton" onClick={logInOrProfile}>{buttonText}</a></Link>);
+  let button = (<Link to={link}><a id = "LogInButton" onClick={logInOrProfile}>{buttonText}</a></Link>);
+    
 
     return (  
      <div>

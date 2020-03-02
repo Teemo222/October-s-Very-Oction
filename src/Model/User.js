@@ -26,6 +26,8 @@ let count = 1
 const users = [];
 const admin = [authenticator];
 
+
+
 export function addUser(username, password){
   for (let i = 0; i < users.length; i++){
     if (users[i].username == username){
@@ -43,6 +45,11 @@ export function getUser(username, password){
       return users[i]
     }
   }
+  for (let i = 0; i < admin.length; i++){
+    if (admin[i].username == username && admin[i].password == password){
+      return admin[i]
+    }
+  }
   return null;
 }
 
@@ -50,6 +57,9 @@ export function getAll(){
   return users;
 }
 
+export function getAdmin(){
+  return admin;
+}
 
 
 export default User;

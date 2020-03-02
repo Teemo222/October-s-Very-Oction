@@ -55,6 +55,7 @@ class App extends React.Component {
     const username = target.querySelector("#username").value;
     const password = target.querySelector("#password").value;
     const user = getUser(username, password);
+    
 
     if (user != null){
       this.setState({
