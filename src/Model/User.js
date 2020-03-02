@@ -8,6 +8,10 @@ class User{
     this.password = password;
     this.purchaseHistory = []
     this.sellingHistory = []
+    this.address = ""
+    this.creditCardNumber = ""
+    this.email = ""
+
   }
 }
 

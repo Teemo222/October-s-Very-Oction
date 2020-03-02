@@ -20,14 +20,99 @@ class MenuItem extends React.Component {
   }
 }
 
+class UserInfo extends React.Component {
+  
+  state = {
+    showEdit: false
+  }
+
+  displayInfo = (event, currentUser) => {
+    console.log(event.target)
+    const email = document.querySelector("#email").value;
+    const address = document.querySelector("#address").value;
+    const card = document.querySelector("#card").value;
+    currentUser.email = email
+    currentUser.address = address
+    currentUser.creditCardNumber = card
+
+    this.setState({
+      showEdit: false,
+    });
+  }
+
+  displayEdit = (event) => {
+    event.preventDefault();
+    this.setState({
+      showEdit: true,
+    });
+  }
+
+  cancelPopUp = (e) => {
+    const backgroundDiv = document.querySelector("#edit-background-div");
+    if(e.target === backgroundDiv) {
+      this.closeLogin()
+    }
+  }
+
+  render(){
+    const { currentUser } = this.props;
+    const {showEdit} = this.state;
+    let info;
+    let edit;
+
+    const update = (event) =>{
+      event.preventDefault()
+      this.displayInfo(event, currentUser)
+    }
+
+    info = (<div className = "userInfo">
+                    <div className = "index"><strong>Username: {currentUser.username}</strong></div>  <br/>
+                    <div className = "index"><strong>Email: {currentUser.email}</strong></div> <br/>
+                    <div className = "index"><strong>Address: {currentUser.address}</strong></div> <br/>
+                    <div className = "index"><strong>Card Number: {currentUser.creditCardNumber}</strong></div> <br/>
+                    <button className = "editButton" onClick = {this.displayEdit}>Edit</button> 
+                  </div>);
+    
+
+    if(showEdit){
+      edit = (
+        <div className="edit-popup-background" id="edit-background-div" onClick={this.cancelPopUp}>
+          <div className="edit-popup" id="login-div">
+          <form onSubmit={update}>
+              <label>Email: </label>
+              <input id="email"></input><br/>
+              <label>Address: </label>
+              <input id="address"></input><br/>
+              <label >Card Number: </label>
+              <input id="card"></input><br/>
+              <button >Confirm</button>            
+          </form>
+        </div>
+        </div>);
+      }
+
+
+
+    return (<div>
+      {info}
+      {edit}
+      </div>
+    );
+  }
+}
+
+
 class ProfileDetail extends React.Component {
   
   render(){
     const { currentUser } = this.props;
     if(currentUser) {
+      console.log("FUCKFUCK")
       // console.log(this.props);
       return (<div className = "ProfileDetail">
-        <h2>Hello, {currentUser.username} </h2>
+        <h2>Welcome, {currentUser.username} </h2>
+        <UserInfo currentUser = {currentUser}
+        />
       </div>);      
     } else {
       return (

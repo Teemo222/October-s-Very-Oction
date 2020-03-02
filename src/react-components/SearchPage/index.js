@@ -18,7 +18,8 @@ class SearchPage extends React.Component {
   state={
     displayed:[],
     searched:[],
-    searchString:""
+    searchString:"",
+    count: 0
   }
 
   renderItems(merchandise, handleSelectItem) {
@@ -30,7 +31,10 @@ class SearchPage extends React.Component {
   }
 
   renderSearchBox(){
-    return <SearchBox handleInputChange={this.handleInputChange} searchInput={this.state.searchString} handleClick={this.handleClick}/>;
+    return <SearchBox handleInputChange={this.handleInputChange} 
+                      searchInput={this.state.searchString} 
+                      handleClick={this.handleClick}
+            />;
   }
 
   handleInputChange = (event) => {
@@ -50,6 +54,16 @@ class SearchPage extends React.Component {
       ["displayed"]: lst,
       ["searched"]: lst,
     })
+  }
+
+  firstTimeSearch = (searchInput) => {
+    let lst = filterByKeyword(getAllItems(), searchInput);
+    let a = this.state.count += 1;
+    this.setState({
+      ["displayed"]: lst,
+      ["searched"]: lst,
+    })
+   
   }
 
   handleFilterChange = (cat) =>{
@@ -72,6 +86,16 @@ class SearchPage extends React.Component {
             handleUserSignOut
           } = this.props;
     
+
+
+
+    const test = () => {
+      console.log(this.state.count)
+      if (this.state.count == 0){
+        this.firstTimeSearch(searchInput)
+      }
+    }
+    test()
     
           
     return (
