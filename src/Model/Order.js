@@ -24,6 +24,7 @@ class Order {
         this.seller = seller;
         this.transactionTime = new Date();
         this.price = price;
+        this.status = ORDERPLACED;
     }
 }
 
@@ -48,6 +49,27 @@ export function getOrderByBuyer(buyer) {
 export function getAllOrders(){
     return allOrders;
 }
+
+export function ReceiveAuthentication(){
+    this.setState({
+        ["status"]: AUTHENTICATING
+      })
+}
+
+function getStatus(){
+    switch(this.state.status){
+        case ORDERPLACED:
+            return "Order Placed";
+        case AUTHENTICATING:
+            return "Authenticating";
+        case DELIVERING:
+            return "Delivering";
+        case RETURNING:
+            return "Rejected";
+    }   
+}
+
+
 
 export function getColumns(){
     return ["item", "buyer", "seller"]
