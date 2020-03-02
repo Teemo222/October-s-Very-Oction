@@ -15,6 +15,8 @@ class ManagerProfile extends React.Component {
         handleUserSignOut  
       } = this.props;
   
+      // console.log("Profile");
+
       return (
         <div>
           <OrderTable class="table"/>
