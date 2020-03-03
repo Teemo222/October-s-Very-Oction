@@ -11,14 +11,16 @@ import { render } from '@testing-library/react';
 import { Component } from 'react';
 
 class UserTable extends React.Component {
+    getDisplayableData(users){
+        return users.map(user => {
+          const {userId, username, password} = user;
+          return {userId, username, password};
+        });
+    }
     constructor(props) {
       super(props);
       const users = getAll();
       console.log(users)
-      let strippedUser =users.map(user => {
-        const {userId, username, password} = user;
-        return {userId, username, password};
-      });
       this.state = {
         columns: [
           { title: 'User Id', field: 'userId' },
@@ -26,7 +28,7 @@ class UserTable extends React.Component {
           { title: 'Password', field: 'password' },
         ],
         data: users,
-        strippedUser : strippedUser
+        strippedUser : this.getDisplayableData(users)
       }
     }
   
@@ -62,14 +64,16 @@ class UserTable extends React.Component {
                     {
                       const strippedUser = this.state.strippedUser;
                       const index = strippedUser.indexOf(oldData);
+                      console.log(oldData);
                       console.log("new Data:")
                       console.log(newData);
+                      console.log(strippedUser);
+                      console.log("index"+index);
                       setUserPassword(newData.userId, newData.password)
-
+                      
                       strippedUser[index] = newData;
-                      this.state.data[index].userId = newData.userId;
-                      this.state.data[index].password = newData.password;
-                      this.setState({ strippedUser },resolve);
+                      
+                      this.setState({ data:getAll(),strippedUser:this.getDisplayableData(getAll()) }, resolve);
 
                       console.log("Check: getAll() again; update lost if you go to new page since no backend")
                       console.log(getAll())
