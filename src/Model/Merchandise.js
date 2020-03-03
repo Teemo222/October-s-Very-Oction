@@ -118,10 +118,33 @@ class Merchandise{
     }  
     console.log(this.asks)  
   }
+
+    getAllAsks = function () {
+      const arr = Object.keys(this.asks);
+      const result = [];
+      for (let i = 0; i< arr.length; i++){
+        for (let j = 0; j < this.asks[arr[i]].length; j++){
+          result.push(parseInt(arr[i]));
+        }
+      }
+      return result;
+    }
+
+    getAllBids = function () {
+      const arr = Object.keys(this.bids);
+      const result = [];
+      for (let i = 0; i< arr.length; i++){
+        for (let j = 0; j < this.bids[arr[i]].length; j++){
+          result.push(parseInt(arr[i]));
+        }
+      }
+      return result;
+    }
 }
 
 let count = 0;
 const allItems = [];
+
 
 export function addItem(itemName, itemCategory, itemDescription, itemImageSrc){
   for (let i = 0; i < allItems.length; i++){
