@@ -3,6 +3,7 @@ import React from "react";
 import "./styles.css";
 import {getAllItems} from '../../Model/Merchandise';
 import ItemData from '../ItemData';
+import PriceList from '../PriceList';
 
 
 /* The ItemView Component */
@@ -117,6 +118,9 @@ class ItemView extends React.Component {
                       <span id = "sellPrice">{"$" + item.getHighestBid()}</span>
                       <a className="sell-btn" onClick = {this.showPopUp}>Sell</a>
                   </div>
+
+                  <PriceList item={item} isBid={true}></PriceList>
+                  <PriceList item={item} isBid={false}></PriceList>
               </div>
           
 
