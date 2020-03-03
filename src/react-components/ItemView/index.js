@@ -3,7 +3,11 @@ import React from "react";
 import "./styles.css";
 import {getAllItems} from '../../Model/Merchandise';
 import ItemData from '../ItemData';
-import PriceList from '../PriceList';
+import TableBody from "@material-ui/core/TableBody";
+import Table from "@material-ui/core/Table";
+import PriceRow from "../PriceRow"
+import TableCell from "@material-ui/core/TableCell";
+import TableRow from "@material-ui/core/TableRow";
 
 
 /* The ItemView Component */
@@ -12,7 +16,9 @@ class ItemView extends React.Component {
   state = {
     shown: false,
     bid: false,
-    sell: false
+    sell: false,
+    showBids: false,
+    showAsks: false
   };
 
   showPopUp = (e) => {
@@ -36,13 +42,33 @@ class ItemView extends React.Component {
   closePopUp = () => {
     this.setState({
       shown: false,
+      showBids: false,
+      showAsks: false
     });
   }
 
   cancelPopUp = (e) => {
+    console.log('shit');
     const backgroundDiv = document.querySelector("#background-div");
     if(e.target === backgroundDiv) {
       this.closePopUp()
+    }
+  }
+
+  showTable = (e) => {
+    console.log(e.target)
+    console.log("aaaaaaahwekfbhjewfbhjewb")
+    if(e.target.classList.contains("viewAsk")){
+      console.log("good")
+      this.setState({
+        showAsks: true
+      });
+    }
+    else{
+      console.log("bad")
+      this.setState({
+        showBids: true
+      });
     }
   }
 
@@ -61,7 +87,7 @@ class ItemView extends React.Component {
       e.preventDefault();
       if(currentUser == null){
         alert("please log in")
-        return
+        this.closePopUp()
       }
       const price = parseInt(document.querySelector("#price").value);
       if(price <= 0){
@@ -76,7 +102,6 @@ class ItemView extends React.Component {
       alert("good");
       this.closePopUp()
     };
-
 
     let popup;
     if(this.state.shown) {
@@ -93,6 +118,61 @@ class ItemView extends React.Component {
       );
     };
 
+    let asksTable;
+    let bidsTable;
+
+    if(this.state.showAsks) {
+      asksTable = (
+        <div className="popup-background" id="background-div" onClick={this.cancelPopUp}>
+          <Table>
+          <TableBody className = "priceTable">
+              <TableCell component="th" scope="row">
+                All Asks 
+              </TableCell>
+              {item.getAllAsks().map(price => {return <PriceRow price={price}/>})}
+            </TableBody>
+        </Table>
+        </div>
+      );
+    };
+
+    if(this.state.showBids) {
+      console.log('dasdasdasdasdasdsad')
+      bidsTable = (
+        <div className="table-background" id="background-div" onClick={this.cancelPopUp}>
+          <Table>
+            <TableBody className = "priceTable">
+            <TableRow >
+              <TableCell component="th" scope="row">
+                All Bids 
+              </TableCell>
+              </TableRow>
+              {/* <p>Shit</p> */}
+                {item.getAllBids().map(price => {return <PriceRow price={price}/>})}
+              </TableBody>
+          </Table>
+        </div>
+      );
+    };
+
+
+    if(this.state.shown) {
+      popup = (
+        <div className="popup-background" id="background-div" onClick={this.cancelPopUp}>
+          <div className="popup" id="login-div">
+          <form onSubmit={submit}>
+            <label htmlFor="price">Price</label>
+            <input type="text" id="price" name="price"></input><br/>
+            <button type = "submit">Confirm</button>        
+          </form>
+        </div>
+        </div>
+      );
+    };
+
+
+    console.log(item.getAllAsks())
+    console.log(item.getAllAsks())
     
 
     return (
@@ -121,10 +201,16 @@ class ItemView extends React.Component {
 
                   <PriceList item={item} isBid={true}></PriceList>
                   <PriceList item={item} isBid={false}></PriceList>
+                  <div className="viewButton">
+                    <a className="viewAsk" onClick = {this.showTable} >View All Asks</a>
+                    <a className="viewBid" onClick = {this.showTable} >View All Bids</a>
+                  </div>
               </div>
           
 
               {popup}
+              {asksTable}
+              {bidsTable}
 
         
         </div>
