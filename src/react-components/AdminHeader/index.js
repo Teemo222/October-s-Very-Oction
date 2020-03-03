@@ -12,8 +12,6 @@ class AdminHeader extends React.Component {
   render() {
     const {
       currentUser,
-      handleUserLogIn,
-      handleUserSignUp,
       handleUserSignOut
     } = this.props;
 
@@ -21,9 +19,7 @@ class AdminHeader extends React.Component {
     return (
       <div className="header">
         <div className = "logoDiv" >
-        <Link to={"/"}>
           <img className = "logo" src="/img/logo.png"></img>
-          </Link> 
         </div>
 
         <div className = "headDiv" >        
@@ -32,10 +28,7 @@ class AdminHeader extends React.Component {
         <div className = "menuDiv">
           <ul className="menu">
             <li>
-              <a href="/">About us</a>
-            </li>
-            <li>
-            <Link to={"/"}>
+            <Link to={"/"} onClick={handleUserSignOut}>
               Sign Out
             </Link> 
             </li>

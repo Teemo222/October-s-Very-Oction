@@ -10,7 +10,7 @@ import ManagerProfile from './react-components/ManagerProfile';
 import Merchandise from './Model/Merchandise';
 import User from './Model/User';
 import { Route, Switch, BrowserRouter} from 'react-router-dom';
-import {addUser, getUser} from './Model/User';
+import {addUser, getUser, getAll} from './Model/User';
 import UserProfile from './react-components/UserProfile';
 import {addItem, getAllItems, filterByKeyword, filterByCategory} from './Model/Merchandise';
 import { addOrder } from './Model/Order';
@@ -21,7 +21,8 @@ class App extends React.Component {
     item: null,
     searchInput : "",
     currentUser: null,
-    merchandises: []
+    merchandises: [],
+    count:0
   }
 
   
@@ -90,16 +91,27 @@ class App extends React.Component {
     // addUser("3", "c", "fsqwer")
     // addUser("4", "d", "asdf")
     // addOrder(getAllItems(), getUser()[0], getUser()[1], "1")
+    if(this.state.count == 0){
+      addUser("user", "user");
+      addUser("user2", "user2");
+      addItem("Nike Kobe 7", "SNEAKERS", "This shoe is really cool", "/img/kobe.jpg");
+      addItem("UT Sweatshirt", "STREETWEAR", "WOW I love it so much", "/img/14355271t.jpg");
+      addItem("Nike Kobe 4", "SNEAKERS", "Beautiful", "/img/kobe2.jpg");
+      addItem("Nike AF 1", "SNEAKERS", "Beautiful", "/img/img01.jpg");
+      addItem("UT sticker", "COLLECTIONS", "Beautiful", "/img/uoftcompsci.jpg");
+      addItem("Nike Mask", "COLLECTIONS", "Beautiful", "/img/46457.jpg");
+      addItem("Nike Kobe 5", "SNEAKERS", "Beautiful", "/img/kobe2.jpg");
+      addItem("Nike Kobe 9", "SNEAKERS", "Beautiful", "/img/kobe2.jpg");
+      addItem("Nike Kobe 10", "SNEAKERS", "Beautiful", "/img/kobe2.jpg");
+      
+      getAllItems()[0].addBid(900, getAll()[0]);
+      
+      getAllItems()[0].addAsk(900, getAll()[1]);
+      getAllItems()[2].addBid(500, getAll()[1]);
+      getAllItems()[2].addAsk(500, getAll()[0]);
+      this.state.count += 1;
+    }
 
-const user1 = new User("1", "a", "123");
-const user2 = new User("12", "v", "123");
-const user3 = new User("3", "t", "123asdf");
-const item1 = new Merchandise("1", "Nike Kobe 10", "SNEAKERS", "Beautiful", "/img/kobe2.jpg");
-const item2 = new Merchandise("2", "Nike Kobe 9", "SNEAKERS", "Beautiful", "/img/kobe2.jpg");
-addUser("a", "123");
-addUser("b", "123aaa");
-addOrder(item1, user1, user2, "45");
-addOrder(item2, user3, user1, "66");
 
     return (
       <div> 
@@ -149,8 +161,6 @@ addOrder(item2, user3, user1, "66");
             <Route exact path='/ManagerProfile' 
               render={() => (<ManagerProfile 
                 currentUser = {this.state.currentUser}
-                handleUserLogIn = {this.handleUserLogIn}  
-                handleUserSignUp = {this.handleUserSignUp}
                 handleUserSignOut = {this.handleUserSignOut}
                 />)}/>
           </Switch>

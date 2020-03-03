@@ -10,8 +10,6 @@ class ManagerProfile extends React.Component {
     render() {
       const {
         currentUser,
-        handleUserLogIn,  
-        handleUserSignUp,
         handleUserSignOut  
       } = this.props;
   
@@ -19,8 +17,13 @@ class ManagerProfile extends React.Component {
 
       return (
         <div>
+          <AdminHeader
+            currentUser={currentUser}
+            handleUserSignOut={handleUserSignOut}
+          />
           <OrderTable class="table"/>
           <UserTable class="table2"/>
+          
         </div>
         
       );
