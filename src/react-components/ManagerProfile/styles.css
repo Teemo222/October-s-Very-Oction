@@ -30,4 +30,5 @@
 .container{
     margin-top: 100px;
     text-align: center;
+    border-bottom: none;
 }
