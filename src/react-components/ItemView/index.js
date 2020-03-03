@@ -198,6 +198,9 @@ class ItemView extends React.Component {
                       <span id = "sellPrice">{"$" + item.getHighestBid()}</span>
                       <a className="sell-btn" onClick = {this.showPopUp}>Sell</a>
                   </div>
+
+                  <PriceList item={item} isBid={true}></PriceList>
+                  <PriceList item={item} isBid={false}></PriceList>
                   <div className="viewButton">
                     <a className="viewAsk" onClick = {this.showTable} >View All Asks</a>
                     <a className="viewBid" onClick = {this.showTable} >View All Bids</a>
