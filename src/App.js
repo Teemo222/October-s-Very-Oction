@@ -1,5 +1,5 @@
 /* New cleaned up version of App.js */
-import React, { useDebugValue } from 'react';
+import React from 'react';
 
 // Importing react-router-dom to use the React Router
 import './App.css';
@@ -7,13 +7,10 @@ import HomePage from './react-components/HomePage';
 import ItemPage from './react-components/ItemPage';
 import SearchPage from './react-components/SearchPage';
 import ManagerProfile from './react-components/ManagerProfile';
-import Merchandise from './Model/Merchandise';
-import User from './Model/User';
 import { Route, Switch, BrowserRouter} from 'react-router-dom';
 import {addUser, getUser, getAll} from './Model/User';
 import UserProfile from './react-components/UserProfile';
-import {addItem, getAllItems, filterByKeyword, filterByCategory} from './Model/Merchandise';
-import { addOrder } from './Model/Order';
+import {addItem, getAllItems} from './Model/Merchandise';
 
 class App extends React.Component {
 
@@ -86,29 +83,36 @@ class App extends React.Component {
   }
 
   render() {
-    // addUser("1", "a", "123")
-    // addUser("2", "b", "123kk")
-    // addUser("3", "c", "fsqwer")
-    // addUser("4", "d", "asdf")
-    // addOrder(getAllItems(), getUser()[0], getUser()[1], "1")
     if(this.state.count == 0){
       addUser("user", "user");
       addUser("user2", "user2");
       addItem("Nike Kobe 7", "SNEAKERS", "This shoe is really cool", "/img/kobe.jpg");
       addItem("UT Sweatshirt", "STREETWEAR", "WOW I love it so much", "/img/14355271t.jpg");
-      addItem("Nike Kobe 4", "SNEAKERS", "Beautiful", "/img/kobe2.jpg");
-      addItem("Nike AF 1", "SNEAKERS", "Beautiful", "/img/img01.jpg");
-      addItem("UT sticker", "COLLECTIONS", "Beautiful", "/img/uoftcompsci.jpg");
-      addItem("Nike Mask", "COLLECTIONS", "Beautiful", "/img/46457.jpg");
-      addItem("Nike Kobe 5", "SNEAKERS", "Beautiful", "/img/kobe2.jpg");
-      addItem("Nike Kobe 9", "SNEAKERS", "Beautiful", "/img/kobe2.jpg");
-      addItem("Nike Kobe 10", "SNEAKERS", "Beautiful", "/img/kobe2.jpg");
+      addItem("Nike Kobe 4", "SNEAKERS", "Nice shoe huh", "/img/kobe2.jpg");
+      addItem("Nike AF 1", "SNEAKERS", "God I'm in love", "/img/img01.jpg");
+      addItem("UT sticker", "COLLECTIONS", "Uoft compsci sticker", "/img/uoftcompsci.jpg");
+      addItem("N95 Mask", "COLLECTIONS", "Expensive", "/img/46457.jpg");
+      addItem("Nike SB Dunk", "SNEAKERS", "Great show", "/img/nikesb.jpg");
+      addItem("Nike Hoodie", "SNEAKERS", "Beautiful hoodie", "/img/nikehoodie.jpg");
       
-      getAllItems()[0].addBid(900, getAll()[0]);
+      getAllItems()[0].addBid(50, getAll()[0]);
+      getAllItems()[0].addBid(100, getAll()[0]);
+      getAllItems()[0].addBid(200, getAll()[0]);
+      getAllItems()[0].addBid(300, getAll()[0]);
       
-      getAllItems()[0].addAsk(900, getAll()[1]);
-      getAllItems()[2].addBid(500, getAll()[1]);
-      getAllItems()[2].addAsk(500, getAll()[0]);
+
+      getAllItems()[0].addAsk(800, getAll()[1]);
+      getAllItems()[0].addAsk(700, getAll()[1]);
+      getAllItems()[0].addAsk(600, getAll()[1]);
+      getAllItems()[0].addAsk(500, getAll()[1]);
+      getAllItems()[0].addAsk(300, getAll()[1]);
+      getAllItems()[0].addAsk(400, getAll()[1]);
+      getAllItems()[0].addBid(400, getAll()[0]);
+      getAllItems()[0].addAsk(200, getAll()[1]);
+
+      
+
+      
       this.state.count += 1;
     }
 

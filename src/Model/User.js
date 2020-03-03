@@ -1,6 +1,3 @@
-import Merchandise from "./Merchandise";
-import Order from "./Order";
-
 class User{
   constructor(userId, username, password) {
     this.userId = userId;

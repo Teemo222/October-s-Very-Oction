@@ -16,8 +16,7 @@ class OrderTable extends React.Component {
       return <OrderRow order={order}/>
     }
 
-    
-
+  
     render() {
       const {
       } = this.props;
