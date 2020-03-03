@@ -21,8 +21,8 @@ class ManagerProfile extends React.Component {
             currentUser={currentUser}
             handleUserSignOut={handleUserSignOut}
           />
-          <div class='container'><OrderTable class="table"/></div>
-          <div class='container'><UserTable class="table2"/></div>
+          <div class='TableContainer'><OrderTable class="table"/></div>
+          <div class='TableContainer'><UserTable class="table2"/></div>
           
           
         </div>

@@ -33,6 +33,7 @@ class UserTable extends React.Component {
     }
   
     render() {
+      console.log("worinimama")
       console.log(this.state.data)
      
       return (
