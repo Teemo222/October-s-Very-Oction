@@ -11,6 +11,12 @@ import { render } from '@testing-library/react';
 import { Component } from 'react';
 
 class UserTable extends React.Component {
+    getDisplayableData(users){
+        return users.map(user => {
+          const {userId, username, password} = user;
+          return {userId, username, password};
+        });
+    }
     constructor(props) {
       super(props);
       const users = getAll();
@@ -21,19 +27,21 @@ class UserTable extends React.Component {
           { title: 'Username', field: 'username' },
           { title: 'Password', field: 'password' },
         ],
-        data: users
+        data: users,
+        strippedUser : this.getDisplayableData(users)
       }
     }
   
     render() {
       console.log("worinimama")
       console.log(this.state.data)
+     
       return (
           <div className = "table2">
             <MaterialTable
             title="Edit User"
             columns={this.state.columns}
-            data={this.state.data}
+            data={this.state.strippedUser}
             options={{
                 search: false,
                 paging: false
@@ -50,24 +58,29 @@ class UserTable extends React.Component {
                 //       resolve()
                 //     }, 1000)
                 //   }),
-                onRowUpdate: (newData, oldData) =>
+                onRowUpdate: 
+                (newData, oldData) =>
                 new Promise((resolve, reject) => {
                     setTimeout(() => {
                     {
-                        const data = this.state.data;
-                        const index = data.indexOf(oldData);
-                        console.log("new Data:")
-                        console.log(newData);
-                        setUserPassword(newData.userId, newData.password)
+                      const strippedUser = this.state.strippedUser;
+                      const index = strippedUser.indexOf(oldData);
+                      console.log(oldData);
+                      console.log("new Data:")
+                      console.log(newData);
+                      console.log(strippedUser);
+                      console.log("index"+index);
+                      setUserPassword(newData.userId, newData.password)
+                      
+                      strippedUser[index] = newData;
+                      
+                      this.setState({ data:getAll(),strippedUser:this.getDisplayableData(getAll()) }, resolve);
 
-                        data[index] = newData;
-                        this.setState({ data }, () => resolve());
-
-                        console.log("Check: getAll() again; update lost if you go to new page since no backend")
-                        console.log(getAll())
+                      console.log("Check: getAll() again; update lost if you go to new page since no backend")
+                      console.log(getAll())
                     }
                     resolve()
-                    }, 1000)
+                    }, 100)
                 }),
                 // onRowDelete: oldData =>
                 //   new Promise((resolve, reject) => {
