@@ -16,13 +16,14 @@ class ManagerProfile extends React.Component {
       // console.log("Profile");
 
       return (
-        <div>
+        <div className="search__bg-image center">
           <AdminHeader
             currentUser={currentUser}
             handleUserSignOut={handleUserSignOut}
           />
-          <OrderTable class="table"/>
-          <UserTable class="table2"/>
+          <div class='container'><OrderTable class="table"/></div>
+          <div class='container'><UserTable class="table2"/></div>
+          
           
         </div>
         
