@@ -13,7 +13,7 @@ class ManagerProfile extends React.Component {
         handleUserSignOut  
       } = this.props;
   
-      // console.log("Profile");
+      console.log("Profile");
 
       return (
         <div className="search__bg-image center">

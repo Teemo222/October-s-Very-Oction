@@ -15,24 +15,30 @@ class UserTable extends React.Component {
       super(props);
       const users = getAll();
       console.log(users)
+      let strippedUser =users.map(user => {
+        const {userId, username, password} = user;
+        return {userId, username, password};
+      });
       this.state = {
         columns: [
           { title: 'User Id', field: 'userId' },
           { title: 'Username', field: 'username' },
           { title: 'Password', field: 'password' },
         ],
-        data: users
+        data: users,
+        strippedUser : strippedUser
       }
     }
   
     render() {
       console.log(this.state.data)
+     
       return (
           <div className = "table2">
             <MaterialTable
             title="Edit User"
             columns={this.state.columns}
-            data={this.state.data}
+            data={this.state.strippedUser}
             options={{
                 search: false,
                 paging: false
@@ -49,24 +55,27 @@ class UserTable extends React.Component {
                 //       resolve()
                 //     }, 1000)
                 //   }),
-                onRowUpdate: (newData, oldData) =>
+                onRowUpdate: 
+                (newData, oldData) =>
                 new Promise((resolve, reject) => {
                     setTimeout(() => {
                     {
-                        const data = this.state.data;
-                        const index = data.indexOf(oldData);
-                        console.log("new Data:")
-                        console.log(newData);
-                        setUserPassword(newData.userId, newData.password)
+                      const strippedUser = this.state.strippedUser;
+                      const index = strippedUser.indexOf(oldData);
+                      console.log("new Data:")
+                      console.log(newData);
+                      setUserPassword(newData.userId, newData.password)
 
-                        data[index] = newData;
-                        this.setState({ data }, () => resolve());
+                      strippedUser[index] = newData;
+                      this.state.data[index].userId = newData.userId;
+                      this.state.data[index].password = newData.password;
+                      this.setState({ strippedUser },resolve);
 
-                        console.log("Check: getAll() again; update lost if you go to new page since no backend")
-                        console.log(getAll())
+                      console.log("Check: getAll() again; update lost if you go to new page since no backend")
+                      console.log(getAll())
                     }
                     resolve()
-                    }, 1000)
+                    }, 100)
                 }),
                 // onRowDelete: oldData =>
                 //   new Promise((resolve, reject) => {
