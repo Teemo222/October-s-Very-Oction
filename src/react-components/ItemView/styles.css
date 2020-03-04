@@ -137,15 +137,18 @@
 
 .popup {
   position: absolute;
-  background: orange;
+  background: rgb(157, 240, 119);
   top: 35%;
   left: 50%;
-  width: 30%;
-  height: 30%;
+  width: 23%;
+  height: 23%;
   transform: translateX(-50%);
+  border-radius: 30px;
+  padding: 10px;
 } 
 
 .popup form {
+  text-align: center;
   padding:10px;
 }
 
@@ -174,7 +177,7 @@
   left: 50%;
   min-width: 10%;
   transform: translateX(-50%);
-  border: 3px solid black;
+  border: 3px solid lightblue;
 } 
 
 .table-background {
@@ -190,4 +193,26 @@
   margin-top: 30px;
   margin-left: 50px;
   width: 50px;
+}
+
+.placeButton{
+  display:inline-block;
+  padding:0.5em 3em;
+  border:0.16em solid #FFFFFF;
+  margin:0 0.3em 0.3em 0;
+  box-sizing: border-box;
+  text-decoration:none;
+  text-transform:uppercase;
+  font-weight:400;
+  color: black;
+  text-align:center;
+  transition: all 0.15s;
+}
+.placeButton:hover{
+  color:#DDDDDD;
+  border-color:#DDDDDD;
+}
+.placeButton:active{
+  color:#BBBBBB;
+  border-color:#BBBBBB;
 }

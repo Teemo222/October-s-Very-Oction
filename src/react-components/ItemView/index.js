@@ -89,6 +89,7 @@ class ItemView extends React.Component {
       if(currentUser == null){
         alert("please log in")
         this.closePopUp()
+        return
       }
       const price = parseInt(document.querySelector("#price").value);
       if(price <= 0){
@@ -102,21 +103,6 @@ class ItemView extends React.Component {
       }
       alert("good");
       this.closePopUp()
-    };
-
-    let popup;
-    if(this.state.shown) {
-      popup = (
-        <div className="popup-background" id="background-div" onClick={this.cancelPopUp}>
-          <div className="popup" id="login-div">
-          <form onSubmit={submit}>
-            <label htmlFor="price">Price</label>
-            <input type="text" id="price" name="price"></input><br/>
-            <button type = "submit">Confirm</button>        
-          </form>
-        </div>
-        </div>
-      );
     };
 
     let asksTable;
@@ -156,15 +142,15 @@ class ItemView extends React.Component {
       );
     };
 
-
+    let popup;
     if(this.state.shown) {
       popup = (
         <div className="popup-background" id="background-div" onClick={this.cancelPopUp}>
           <div className="popup" id="login-div">
           <form onSubmit={submit}>
-            <label htmlFor="price">Price</label>
+            <label htmlFor="price"><strong>Price</strong></label>
             <input type="text" id="price" name="price"></input><br/>
-            <button type = "submit">Confirm</button>        
+            <button class = "placeButton"type = "submit">Confirm</button>        
           </form>
         </div>
         </div>
