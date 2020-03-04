@@ -15,3 +15,5 @@ User-guideline:
     However, the only basic feature that the application currently is lacking is the ability for admin to add an merchandise to the site. Because every merchandise needs an photo associated with it and our group has not figured out a way of uploading pictures to the database(which is currently missing). 
 
     More features will be introduced in Phase 2 of the project. 
+
+Note: Make sure to run "npm install" before running "npm start"
