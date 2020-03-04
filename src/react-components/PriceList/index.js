@@ -14,16 +14,21 @@ class PriceList extends React.Component {
 
     renderOrderRow(item, isBid){
       let priceList = [];
-      if(this.props.isBid){
-        let priceList = [...item.bids];
+      let text ="";
+      if(isBid){
+        text = "Top Bid"
+        priceList = item.getAllBids();
         sort(PriceList).asc();
         priceList = priceList.slice(0, 5);
       }else{
-        let priceList = [...item.asks];
+        text = "Low Ask"
+        priceList = item.getAllAsks();
         sort(PriceList).desc();
         priceList = priceList.slice(0, 5);
       }
+      
       return <TableBody>
+            <TableRow><TableCell class="headerCell"><div class="headerRow">{text}</div></TableCell></TableRow>
                 {priceList.map(price => {
                   return this.renderCell(price);
                 })}
@@ -31,7 +36,7 @@ class PriceList extends React.Component {
     }
 
     renderCell(price){
-        return <TableCell>{price}</TableCell>
+        return <TableCell class="priceRow">{price}</TableCell>
     }
 
     render() {
@@ -41,11 +46,9 @@ class PriceList extends React.Component {
       } = this.props;
   
       return (
-        <div class="table">
-        <Table>
+        <Table class="priceList">
           {this.renderOrderRow(item, isBid)}
         </Table>
-        </div>
       )
     }
   }

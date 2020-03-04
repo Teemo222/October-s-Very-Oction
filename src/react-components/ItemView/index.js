@@ -8,6 +8,7 @@ import Table from "@material-ui/core/Table";
 import PriceRow from "../PriceRow"
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
+import PriceList from '../PriceList'
 
 
 /* The ItemView Component */
@@ -199,11 +200,15 @@ class ItemView extends React.Component {
                       <a className="sell-btn" onClick = {this.showPopUp}>Sell</a>
                   </div>
 
-                  <PriceList item={item} isBid={true}></PriceList>
-                  <PriceList item={item} isBid={false}></PriceList>
+                  
                   <div className="viewButton">
                     <a className="viewAsk" onClick = {this.showTable} >View All Asks</a>
                     <a className="viewBid" onClick = {this.showTable} >View All Bids</a>
+                  </div>
+
+                  <div>
+                    <PriceList item={item} isBid={false} class="priceList"></PriceList>
+                    <PriceList item={item} isBid={true} class="priceList"></PriceList>
                   </div>
               </div>
           

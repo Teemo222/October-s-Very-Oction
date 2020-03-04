@@ -1,0 +1,28 @@
+.priceList{
+    flex: auto;
+    height: 100%;
+    margin-top: 30px;
+    margin-left: 20px;
+    margin-right:10px;
+    width: 150px;
+    vertical-align: top;
+    border-radius: 10px;
+    border: 7px orange solid;
+  }
+  
+
+
+.headerRow{
+    font-size: 130%;
+    font-weight: 500;
+    padding-bottom: 7px;
+    width: 110px;
+    text-align: center;
+}
+
+
+.priceRow{
+    width: 110px;
+    text-align: center;
+
+}
