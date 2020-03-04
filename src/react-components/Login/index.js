@@ -97,7 +97,7 @@ class Login extends React.Component {
       buttonText = "Login";
     }
     
-  let button = (<Link to={link}><p id = "LogInButton" onClick={logInOrProfile}>{buttonText}</p></Link>);
+  let button = (<Link to={link}><a id = "LogInButton" onClick={logInOrProfile}>{buttonText}</a></Link>);
     
 
     return (  
