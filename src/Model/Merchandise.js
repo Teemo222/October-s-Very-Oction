@@ -184,15 +184,4 @@ export function filterByCategory(originalList, category){
   return result;
 }
 
-addItem("Nike Kobe 7", "SNEAKERS", "This shoe is really cool", "/img/kobe.jpg");
-addItem("UT Sweatshirt", "STREETWEAR", "WOW I love it so much", "/img/14355271t.jpg");
-addItem("Nike Kobe 4", "SNEAKERS", "Beautiful", "/img/kobe2.jpg");
-addItem("Nike AF 1", "SNEAKERS", "Beautiful", "/img/img01.jpg");
-addItem("UT sticker", "COLLECTIONS", "Beautiful", "/img/uoftcompsci.jpg");
-addItem("Nike Mask", "COLLECTIONS", "Beautiful", "/img/46457.jpg");
-addItem("Nike Kobe 5", "SNEAKERS", "Beautiful", "/img/kobe2.jpg");
-addItem("Nike Kobe 9", "SNEAKERS", "Beautiful", "/img/kobe2.jpg");
-addItem("Nike Kobe 10", "SNEAKERS", "Beautiful", "/img/kobe2.jpg");
-
-
 export default Merchandise;

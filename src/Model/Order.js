@@ -1,12 +1,9 @@
-import {getAll} from './User';
-import {getAllItems} from './Merchandise'
-
 const ORDERPLACED = 0;
 const AUTHENTICATING = 1;
 const DELIVERING =2;
 const RETURNING = 3;
 
-// function formatDate(date) {
+// export function formatDate(date) {
 //     var d = new Date(date),
 //         month = '' + (d.getMonth() + 1),
 //         day = '' + d.getDate(),
@@ -19,6 +16,7 @@ const RETURNING = 3;
 
 //     return [year, month, day].join('-');
 // }
+
 
 class Order {
     constructor(item, buyer, seller, price) {
