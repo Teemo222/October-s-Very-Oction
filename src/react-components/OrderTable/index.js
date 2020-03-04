@@ -12,8 +12,8 @@ import TableRow from "@material-ui/core/TableRow";
 
 class OrderTable extends React.Component {
 
-    renderOrderRow(order){
-      return <OrderRow order={order}/>
+    renderOrderRow(order, idx){
+      return <OrderRow order={order} key={idx}/>
     }
 
   
@@ -37,8 +37,8 @@ class OrderTable extends React.Component {
             </TableRow>
           </TableHead>
           <TableBody>
-              {getAllOrders().map(order => {
-                  return this.renderOrderRow(order);
+              {getAllOrders().map((order,idx) => {
+                  return this.renderOrderRow(order, idx);
               })}
             </TableBody>
         </Table>

@@ -39,8 +39,6 @@ class OrderRow extends React.Component {
         order,
       } = this.props;
 
-      console.log(order.status)
-
       return (
         <TableRow key={order.item.itemId}>
             <TableCell component="th" scope="row">

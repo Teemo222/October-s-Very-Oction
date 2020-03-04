@@ -43,7 +43,6 @@ class ItemData extends React.Component {
     const itemHistory = item.orderHistory;
 
     function processItemOrderHistory(){
-      console.log(item)
       for (let i = 0; i<itemHistory.length; i++){
         const order = itemHistory[i]
         data.labels.push(order.transactionTime)
@@ -59,19 +58,13 @@ class ItemData extends React.Component {
       let acc= 0
       for (let i = 0; i<itemHistory.length; i++){
         const order = itemHistory[i]
-        console.log()
         acc += order.price;
         count += 1;
       }
-      console.log(acc)
-      console.log(count)
       if (count == 0){return 0.0}
       return acc / count
     }
 
-    console.log(averagePrice())
-    console.log(data)
-    console.log("fuckfuckfuck")
 
     return (
       <div className="wrapper">

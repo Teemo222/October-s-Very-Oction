@@ -20,7 +20,6 @@ class UserTable extends React.Component {
     constructor(props) {
       super(props);
       const users = getAll();
-      console.log(users)
       this.state = {
         columns: [
           { title: 'User Id', field: 'userId' },
@@ -33,8 +32,6 @@ class UserTable extends React.Component {
     }
   
     render() {
-      console.log("worinimama")
-      console.log(this.state.data)
      
       return (
           <div className = "table2">
@@ -65,11 +62,7 @@ class UserTable extends React.Component {
                     {
                       const strippedUser = this.state.strippedUser;
                       const index = strippedUser.indexOf(oldData);
-                      console.log(oldData);
-                      console.log("new Data:")
-                      console.log(newData);
-                      console.log(strippedUser);
-                      console.log("index"+index);
+    
                       setUserPassword(newData.userId, newData.password)
                       
                       strippedUser[index] = newData;
@@ -77,7 +70,7 @@ class UserTable extends React.Component {
                       this.setState({ data:getAll(),strippedUser:this.getDisplayableData(getAll()) }, resolve);
 
                       console.log("Check: getAll() again; update lost if you go to new page since no backend")
-                      console.log(getAll())
+
                     }
                     resolve()
                     }, 100)

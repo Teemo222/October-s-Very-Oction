@@ -27,7 +27,6 @@ class UserInfo extends React.Component {
   }
 
   displayInfo = (event, currentUser) => {
-    console.log(event.target)
     const email = document.querySelector("#email").value;
     const address = document.querySelector("#address").value;
     const card = document.querySelector("#card").value;
@@ -107,7 +106,6 @@ class ProfileDetail extends React.Component {
   render(){
     const { currentUser } = this.props;
     if(currentUser) {
-      console.log("FUCKFUCK")
       // console.log(this.props);
       return (<div className = "ProfileDetail">
         <h2>Welcome, {currentUser.username} </h2>

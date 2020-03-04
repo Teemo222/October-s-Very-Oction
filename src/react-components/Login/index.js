@@ -81,7 +81,7 @@ class Login extends React.Component {
     }
 
     let buttonText;
-    let link;
+    let link = "/";
 
     if (currentUser != null){
       if (getAdmin().includes(currentUser)){ 
@@ -97,7 +97,7 @@ class Login extends React.Component {
       buttonText = "Login";
     }
     
-  let button = (<Link to={link}><a id = "LogInButton" onClick={logInOrProfile}>{buttonText}</a></Link>);
+  let button = (<Link to={link}><p id = "LogInButton" onClick={logInOrProfile}>{buttonText}</p></Link>);
     
 
     return (  

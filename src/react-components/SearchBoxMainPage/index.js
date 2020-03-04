@@ -12,7 +12,7 @@ class SearchBoxMainPage extends React.Component {
 
     return (
       <div className = "searchDiv">
-      <form id = "searchBox"class="search">
+      <form id = "searchBox" className="search">
       <input
         id = "searchBoxInput" 
         type="text" 

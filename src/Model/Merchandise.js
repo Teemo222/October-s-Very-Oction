@@ -13,21 +13,19 @@ class Merchandise{
   }
 
   getLowestAsk = function (){
-    console.log(this.asks)
+
     const arr = Object.keys(this.asks);
     const data = []
     for (let i = 0; i< arr.length; i++){
       let number = parseInt(arr[i])
       data.push(parseInt(arr[i]));
-      console.log(number)
-      console.log(data)
+
     }
     if (arr.length == 0){
       return "N/A"
     }
     const result =  Math.min.apply(null, data)
-    console.log("fuck you a")
-    console.log(result)
+
     return result
   }
 
@@ -37,7 +35,7 @@ class Merchandise{
   }
 
   getHighestBid = function(){
-    console.log(this.bids)
+
     const arr = Object.keys(this.bids);
     const data = []
     for (let i = 0; i< arr.length; i++){
@@ -46,10 +44,9 @@ class Merchandise{
     if (arr.length == 0){
       return "N/A"
     }
-    console.log(data)
+
     const result =  Math.max.apply(null, data)
-    console.log("fuck you a")
-    console.log(result)
+
     return result
   }
 
@@ -84,16 +81,16 @@ class Merchandise{
         this.bids[price] = [user]
       }
     }    
-    console.log(this.bids)  
+ 
   }
 
   addAsk = function(price, user){
     if (Object.keys(this.bids).length > 0 && price <= this.getHighestBid()){
-      console.log("fuck")
+
       const buyer = this.getHighestBidBuyer();
-      console.log(buyer)
+
       const price = this.getHighestBid();
-      console.log(price)
+
       for (let i = 0; i < this.bids[price].length; i++){
         if (this.bids[price][i] === buyer){
           this.bids[price].splice(i, 1)
@@ -116,7 +113,7 @@ class Merchandise{
         this.asks[price] = [user]
       }
     }  
-    console.log(this.asks)  
+
   }
 
     getAllAsks = function () {

@@ -90,7 +90,6 @@ class SearchPage extends React.Component {
 
 
     const test = () => {
-      console.log(this.state.count)
       if (this.state.count == 0){
         this.firstTimeSearch(searchInput)
       }

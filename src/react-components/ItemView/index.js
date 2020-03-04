@@ -49,7 +49,6 @@ class ItemView extends React.Component {
   }
 
   cancelPopUp = (e) => {
-    console.log('shit');
     const backgroundDiv = document.querySelector("#background-div");
     if(e.target === backgroundDiv) {
       this.closePopUp()
@@ -57,16 +56,12 @@ class ItemView extends React.Component {
   }
 
   showTable = (e) => {
-    console.log(e.target)
-    console.log("aaaaaaahwekfbhjewfbhjewb")
     if(e.target.classList.contains("viewAsk")){
-      console.log("good")
       this.setState({
         showAsks: true
       });
     }
     else{
-      console.log("bad")
       this.setState({
         showBids: true
       });
@@ -157,9 +152,6 @@ class ItemView extends React.Component {
       );
     };
 
-
-    console.log(item.getAllAsks())
-    console.log(item.getAllAsks())
     
 
     return (
