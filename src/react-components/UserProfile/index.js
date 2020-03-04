@@ -117,7 +117,7 @@ class ProfileDetail extends React.Component {
     } else {
       return (
         <div className = "ProfileDetail">
-          <h2>Hello, Mr. A</h2>
+          <h2>You haven't logged in yet.</h2>
         </div>
       )
     }
@@ -187,16 +187,21 @@ class Selling extends React.Component {
 class PurchaseHistory extends React.Component {
   render(){
     const { currentUser } = this.props;
-    const purchases = currentUser.purchaseHistory;
-    return (
-    <div className = "orderTable">
-       <TableLabels/>
-      { purchases.map((purchase, index) => {
-        return (<Purchase order={purchase} key={index}/>);
-      })
+    if(!currentUser){return (<div className = "orderTable">
+                                <TableLabels/>
+                            </div>)}
+    else{
+      const purchases = currentUser.purchaseHistory;
+        return (
+        <div className = "orderTable">
+          <TableLabels/>
+          { purchases.map((purchase, index) => {
+            return (<Purchase order={purchase} key={index}/>);
+          })
+        }
+        </div>);
+      }
     }
-    </div>);
-  }
 }
 
 class TableLabels extends React.Component{
@@ -224,16 +229,20 @@ class TableLabels extends React.Component{
 class SellingHistory extends React.Component {
   render(){
     const { currentUser } = this.props;
-    const sellings = currentUser.sellingHistory;
-    return (
-      <div className = "orderTable">
-        <TableLabels/>
-        { sellings.map((selling, index) => {
-          return (<Selling order={selling} key={index}/>);
-        })
-      }
-      </div>);
-  }
+    if(!currentUser){return (<div className = "orderTable">
+                               <TableLabels/>
+                            </div>)}
+    else{
+      const sellings = currentUser.sellingHistory;
+      return (
+        <div className = "orderTable">
+          <TableLabels/>
+          { sellings.map((selling, index) => {
+            return (<Selling order={selling} key={index}/>);
+          })
+        }
+        </div>);
+    }}
 }
 
 class Menu extends React.Component{

@@ -93,7 +93,7 @@ class App extends React.Component {
       addItem("UT sticker", "COLLECTIONS", "Uoft compsci sticker", "/img/uoftcompsci.jpg");
       addItem("N95 Mask", "COLLECTIONS", "Expensive", "/img/46457.jpg");
       addItem("Nike SB Dunk", "SNEAKERS", "Great show", "/img/nikesb.jpg");
-      addItem("Nike Hoodie", "SNEAKERS", "Beautiful hoodie", "/img/nikehoodie.jpg");
+      addItem("Nike Hoodie", "STREETWEAR", "Beautiful hoodie", "/img/nikehoodie.jpg");
       
       getAllItems()[0].addBid(50, getAll()[0]);
       getAllItems()[0].addBid(100, getAll()[0]);
