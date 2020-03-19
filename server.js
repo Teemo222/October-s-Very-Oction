@@ -62,36 +62,32 @@ app.get('/items', (req, res) => {
 	}, (error) => {
 		res.status(500).send(error) // server error
 	})
-})
+});
 
 
 /* --------- User backend implementation    ------------------*/
-// (function() {
-// 	// code goes here
-// 	log("hi");
-// })();
-// ( () => {
+( async () => {
 	// create admin
-	// try {
-	// 	let authenticator;
-	// 	authenticator = await Authenticator.findOne({
-	// 		username: "admin",
-	// 		password: "admin"
-	// 	});
-	// 	if(!authenticator) {
-	// 		authenticator = new Authenticator({
-	// 			username: "admin", 
-	// 			password: "admin"
-	// 		});
-	// 		authenticator = await authenticator.save();
-	// 	} 
-	// 	log("admin: ");
-	// 	log(authenticator);
-	// } catch(e) {
-	// 	log("create admin failed");
-	// 	log(e);
-	// }
-// }) ();
+	try {
+		let authenticator;
+		authenticator = await Authenticator.findOne({
+			username: "admin",
+			password: "admin"
+		});
+		if(!authenticator) {
+			authenticator = new Authenticator({
+				username: "admin", 
+				password: "admin"
+			});
+			authenticator = await authenticator.save();
+		} 
+		log("admin: ");
+		log(authenticator);
+	} catch(e) {
+		log("create admin failed");
+		log(e);
+	}
+}) ();
 
 
 // a POST route to *create* a user
@@ -110,4 +106,4 @@ app.post('/users', (req, res) => {
 	}, (error) => {
 		res.status(400).send(error) // 400 for bad request
 	})
-})
+});
