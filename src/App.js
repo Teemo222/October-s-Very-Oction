@@ -11,16 +11,38 @@ import { Route, Switch, BrowserRouter} from 'react-router-dom';
 import {addUser, getUser, getAll} from './Model/User';
 import UserProfile from './react-components/UserProfile';
 import {addItem, getAllItems} from './Model/Merchandise';
+import {addStudent, getStudents} from './actions/script'
 
 class App extends React.Component {
 
   state = {
+    data: null,
     item: null,
     searchInput : "",
     currentUser: null,
     merchandises: [],
     count:0
   }
+
+  componentDidMount() {
+    // Call our fetch function below once the component mounts
+    this.callBackendAPI().then(res => this.setState({ data: res.express })).then(
+      res => {alert(this.state.data)}
+    ).catch(err => console.log(err));
+  }
+  
+  // Fetches our GET route from the Express server. (Note the route we are fetching matches the GET route from server.js
+  callBackendAPI = async () => {
+
+    const response = await fetch('http://localhost:5000/');
+    const body = await response.json();
+
+    console.log(2)
+    if (response.status !== 200) {
+      throw Error(body.message) 
+    }
+    return body;
+  };
 
   
   handleSelectItem = (item) => {
@@ -83,6 +105,8 @@ class App extends React.Component {
   }
 
   render() {
+    addStudent()
+
     if(this.state.count == 0){
       addUser("user", "user");
       addUser("user2", "user2");

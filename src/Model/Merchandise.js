@@ -17,7 +17,6 @@ class Merchandise{
     const arr = Object.keys(this.asks);
     const data = []
     for (let i = 0; i< arr.length; i++){
-      let number = parseInt(arr[i])
       data.push(parseInt(arr[i]));
 
     }
