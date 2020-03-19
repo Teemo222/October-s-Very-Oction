@@ -1,7 +1,7 @@
 /* Student mongoose model */
 const mongoose = require('mongoose')
 
-const User = mongoose.model('User', {
+const Authenticator = mongoose.model('Authenticator', {
 	username: {
 		type: String,
 		unique: true,  // unique username
@@ -32,7 +32,10 @@ const User = mongoose.model('User', {
 	email: {
 		type: String,
 		trim: true
-	}
+    },
+    tasks: {
+        type: Array
+    }
 })
 
-module.exports = { User }
+module.exports = { Authenticator }
