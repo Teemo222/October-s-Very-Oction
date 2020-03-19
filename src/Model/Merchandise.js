@@ -2,14 +2,15 @@ import { addOrder } from "./Order";
 import {getItems} from '../actions/handleMerchandise'
 
 class Merchandise{
-  constructor(itemName, itemCategory, itemDescription, itemImageSrc) {
+  constructor(itemId, itemName, itemCategory, itemDescription, itemImageSrc) {
+    this.itemId = itemId;
     this.itemName = itemName;
     this.itemCategory = itemCategory;
     this.itemDescription = itemDescription;
     this.itemImageSrc = itemImageSrc;
-    this.bids = {}; // price : userid
-    this.asks = {}; // price : userid
-    this.orderHistory = []; //orderid
+    this.bids = {}; // price : [userids]
+    this.asks = {}; // price : [userids]
+    this.orderHistory = []; //orderids
   }
 
   getLowestAsk = function (){
@@ -27,13 +28,13 @@ class Merchandise{
     return result
   }
 
+  //return id of seller
   getLowestAskSeller = function (){
     const price = this.getLowestAsk();
     return this.asks[price][0]
   }
 
   getHighestBid = function(){
-
     const arr = Object.keys(this.bids);
     const data = []
     for (let i = 0; i< arr.length; i++){
@@ -42,12 +43,11 @@ class Merchandise{
     if (arr.length == 0){
       return "N/A"
     }
-
     const result =  Math.max.apply(null, data)
-
     return result
   }
 
+  //return id of buyer
   getHighestBidBuyer = function (){
     const price = this.getHighestBid();
     return this.bids[price][0]
@@ -141,9 +141,8 @@ class Merchandise{
 export async function getAllItems(){
   const items = await getItems()
   const result = []
-  console.log(items)
   items.map((item) => {
-    let obj = new Merchandise(item.itemName, item.itemCategory, item.itemDescription, item.itemImageSrc)
+    let obj = new Merchandise(item._id, item.itemName, item.itemCategory, item.itemDescription, item.itemImageSrc)
     item.asks.map((ask) => {
       //map asks
     })
@@ -155,7 +154,6 @@ export async function getAllItems(){
     })
     result.push(obj)
   })
-  console.log(result)
   return result
 }
 

@@ -19,6 +19,7 @@ app.listen(port, () => console.log(`Listening on port ${port}`));
 app.use(function(req, res, next) {
 	res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
 	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	res.header('Access-Control-Allow-Methods', 'GET,POST,PATCH,DELETE');
 	next();
   });
 
@@ -58,4 +59,50 @@ app.get('/items', (req, res) => {
 	}, (error) => {
 		res.status(500).send(error) // server error
 	})
+})
+
+/// a GET route to get a student by their id.
+// id is treated as a wildcard parameter, which is why there is a colon : beside it.
+// (in this case, the database id, but you can make your own id system for your project)
+app.get('/items/:id', (req, res) => {
+	res.header("Access-Control-Allow-Origin", "*");
+	/// req.params has the wildcard parameters in the url, in this case, id.
+	// log(req.params.id)
+	const id = req.params.id
+
+	// Good practise: Validate id immediately.
+	if (!ObjectID.isValid(id)) {
+		res.status(404).send()  // if invalid id, definitely can't find resource, 404.
+		return;  // so that we don't run the rest of the handler.
+	}
+
+	// Otherwise, findById
+	Merchandise.findById(id).then((item) => {
+		if (!item) {
+			res.status(404).send()  // could not find this student
+		} else {
+			/// sometimes we wrap returned object in another object:
+			//res.send({student})   
+			res.send(item)
+		}
+	}).catch((error) => {
+		res.status(500).send()  // server error
+	})
+})
+
+// a PATCH route for changing properties of a resource.
+// (alternatively, a PUT is used more often for replacing entire resources).
+app.patch('/items/:id', (req, res) => {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header('Access-Control-Allow-Methods', 'GET,POST,PATCH,DELETE');
+	const id = req.params.id
+
+	// get the updated name and year only from the request body.
+	const {} = req.body
+
+	if (!ObjectID.isValid(id)) {
+		res.status(404).send()
+		return;  // so that we don't run the rest of the handler.
+	}
+
 })

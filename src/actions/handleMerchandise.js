@@ -57,8 +57,39 @@ export function addItem(itemName, itemCategory, itemDescription, itemImageSrc) {
     // Send the request with fetch()
     fetch(request)
     .then(function(res) {
-            log(res)
             console.log('Added item')
+    }).catch((error) => {
+        log(error)
+    })
+}
+
+// A function to send a PATCH request to add a bid to item
+export function updateItem(itemId, action, price, userId) {
+    // the URL for the request
+    const url = 'http://localhost:5000/items'+ itemId;
+
+    // The data we are going to send in our request
+    let act = {
+        action: action,
+        price: price,
+        userId: userId
+    }
+
+    // Create our request constructor with all the parameters we need
+    const request = new Request(url, {
+        method: 'patch', 
+        body: JSON.stringify(act),
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json',
+        }
+    });
+
+    // Send the request with fetch()
+    fetch(request)
+    .then(function(res) {
+            log(res)
+            console.log('Updated item')
     }).catch((error) => {
         log(error)
     })
