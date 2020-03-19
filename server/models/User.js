@@ -1,39 +1,36 @@
 /* Student mongoose model */
 const mongoose = require('mongoose')
 
-const User = mongoose.model('Merchandise', {
-	itemName: {
+const User = mongoose.model('User', {
+	username: {
 		type: String,
 		required: true,
 		minlegth: 1,
 		trim: true
 	},
-	itemCategory: {
+	password: {
 		type: String,
 		required: true,
 		minlegth: 1,
 		trim: true
 	},
-	itemDescription: {
-		type: String,
-		required: true,
-		minlegth: 1,
-		trim: true
+	purchaseHistory: {
+		type: Array
 	},
-	itemImageSrc: {
-		type: String,
-		required: true,
-		minlegth: 1,
-		trim: true
-	},
-	bids: {
+	sellingHistory: {
 		type: Array,
 	},
-	asks: {
-		type: Array,
+	address: {
+		type: String,
+		trim: true
 	},
-	orderHistory: {
-		type: Array,
+	creditCardNumber: {
+		type: String,
+		trim: true
+	},
+	email: {
+		type: String,
+		trim: true
 	}
 })
 
