@@ -10,8 +10,8 @@ import ManagerProfile from './react-components/ManagerProfile';
 import { Route, Switch, BrowserRouter} from 'react-router-dom';
 import {addUser, getUser, getAll} from './Model/User';
 import UserProfile from './react-components/UserProfile';
-import {addItem, getAllItems} from './Model/Merchandise';
-import {addStudent, getStudents} from './actions/script'
+import {addItem} from './actions/handleMerchandise'
+import {getAllItems} from './Model/Merchandise';
 
 class App extends React.Component {
 
@@ -30,7 +30,7 @@ class App extends React.Component {
       res => {alert(this.state.data)}
     ).catch(err => console.log(err));
   }
-  
+
   // Fetches our GET route from the Express server. (Note the route we are fetching matches the GET route from server.js
   callBackendAPI = async () => {
 
@@ -105,7 +105,6 @@ class App extends React.Component {
   }
 
   render() {
-    addStudent()
 
     if(this.state.count == 0){
       addUser("user", "user");
@@ -118,25 +117,8 @@ class App extends React.Component {
       addItem("N95 Mask", "COLLECTIONS", "Expensive", "/img/46457.jpg");
       addItem("Nike SB Dunk", "SNEAKERS", "Great show", "/img/nikesb.jpg");
       addItem("Nike Hoodie", "STREETWEAR", "Beautiful hoodie", "/img/nikehoodie.jpg");
-      
-      getAllItems()[0].addBid(50, getAll()[0]);
-      getAllItems()[0].addBid(100, getAll()[0]);
-      getAllItems()[0].addBid(200, getAll()[0]);
-      getAllItems()[0].addBid(300, getAll()[0]);
-      
 
-      getAllItems()[0].addAsk(800, getAll()[1]);
-      getAllItems()[0].addAsk(700, getAll()[1]);
-      getAllItems()[0].addAsk(600, getAll()[1]);
-      getAllItems()[0].addAsk(500, getAll()[1]);
-      getAllItems()[0].addAsk(300, getAll()[1]);
-      getAllItems()[0].addAsk(400, getAll()[1]);
-      getAllItems()[0].addBid(400, getAll()[0]);
-      getAllItems()[0].addAsk(200, getAll()[1]);
-
-      
-
-      
+      getAllItems()
       this.state.count += 1;
     }
 

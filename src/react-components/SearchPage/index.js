@@ -4,11 +4,10 @@ import "./styles.css";
 
 import Header from '../Header';
 import SearchItem from '../SearchItem';
-import { Grid, Paper, Typography } from '@material-ui/core';
-import Button from "@material-ui/core/Button";
 import SearchBox from '../SearchBox';
 import Filter from '../Filter';
 import {addItem, getAllItems, filterByKeyword, filterByCategory} from '../../Model/Merchandise';
+
 
 
 
@@ -44,24 +43,30 @@ class SearchPage extends React.Component {
     this.setState({
       ["searchString"]: value
     })
-     
+    console.log(value)
   };
 
-  handleClick = (event) => {
+  handleClick = async (event) => {
     event.preventDefault();
-    let lst = filterByKeyword(getAllItems(), this.state.searchString);
+    console.log(11)
+    let items = await getAllItems()
+    console.log(items)
+    let lst = await filterByKeyword(items, this.state.searchString);
     this.setState({
       ["displayed"]: lst,
       ["searched"]: lst,
     })
   }
 
-  firstTimeSearch = (searchInput) => {
-    let lst = filterByKeyword(getAllItems(), searchInput);
-    let a = this.state.count += 1;
+  firstTimeSearch = async (searchInput) => {
+    let items = await getAllItems()
+    console.log(items)
+    let lst = await filterByKeyword(items, searchInput);
+    let a = this.state.count + 1
     this.setState({
       ["displayed"]: lst,
       ["searched"]: lst,
+      ["count"]: a
     })
    
   }

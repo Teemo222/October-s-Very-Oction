@@ -5,7 +5,7 @@ const port = process.env.PORT || 5000;
 const { mongoose } = require('./server/db/mongoose')
 
 // import the mongoose student
-const { Student } = require('./server/models/student')
+const { Merchandise } = require('./server/models/Merchandise')
 
 // to validate object IDs
 const { ObjectID } = require('mongodb')
@@ -27,27 +27,34 @@ app.get('/', (req, res) => {
   res.send({ express: 'YOUR EXPRESS BACKEND IS CONNECTED TO REACT' });
 });
 
-/** Student resource routes **/
-// a POST route to *create* a student
-app.post('/students', (req, res) => {
+/** Items resource routes **/
+// a POST route to *create* a item
+app.post('/items', (req, res) => {
+	res.header("Access-Control-Allow-Origin", "*");
 	// Create a new student using the Student mongoose model
-	const student = new Student({
-		name: req.body.name,
-		year: req.body.year
+	const item = new Merchandise({
+		itemName: req.body.itemName,
+		itemCategory: req.body.itemCategory,
+		itemDescription: req.body.itemDescription,
+		itemImageSrc: req.body.itemImageSrc,
+		bids: [],
+		asks: [],
+		orderHistory: []
 	})
 
 	// Save student to the database
-	student.save().then((result) => {
+	item.save().then((result) => {
 		res.send(result)
 	}, (error) => {
 		res.status(400).send(error) // 400 for bad request
 	})
 })
 
-// a GET route to get all students
-app.get('/students', (req, res) => {
-	Student.find().then((students) => {
-		res.send({ students }) // can wrap in object if want to add more properties
+// a GET route to get all items
+app.get('/items', (req, res) => {
+	res.header("Access-Control-Allow-Origin", "*");
+	Merchandise.find().then((items) => {
+		res.send({ items }) // can wrap in object if want to add more properties
 	}, (error) => {
 		res.status(500).send(error) // server error
 	})

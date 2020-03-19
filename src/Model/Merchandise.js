@@ -1,19 +1,18 @@
 import { addOrder } from "./Order";
+import {getItems} from '../actions/handleMerchandise'
 
 class Merchandise{
-  constructor(itemId, itemName, itemCategory, itemDescription, itemImageSrc) {
-    this.itemId = itemId;
+  constructor(itemName, itemCategory, itemDescription, itemImageSrc) {
     this.itemName = itemName;
     this.itemCategory = itemCategory;
     this.itemDescription = itemDescription;
     this.itemImageSrc = itemImageSrc;
-    this.bids = {};
-    this.asks = {};
-    this.orderHistory = [];
+    this.bids = {}; // price : userid
+    this.asks = {}; // price : userid
+    this.orderHistory = []; //orderid
   }
 
   getLowestAsk = function (){
-
     const arr = Object.keys(this.asks);
     const data = []
     for (let i = 0; i< arr.length; i++){
@@ -138,29 +137,32 @@ class Merchandise{
     }
 }
 
-let count = 0;
-const allItems = [];
 
-
-export function addItem(itemName, itemCategory, itemDescription, itemImageSrc){
-  for (let i = 0; i < allItems.length; i++){
-    if (allItems[i].itemName == itemName){
-      return false;
-    }
-  }
-  allItems.push(new Merchandise(count, itemName, itemCategory, itemDescription, itemImageSrc));
-  count ++;
-  return true;
-}
-
-export function getAllItems(){
-  return allItems;
-}
-
-export function filterByKeyword(originalList, keyword){
+export async function getAllItems(){
+  const items = await getItems()
   const result = []
-  for (let i = 0; i < originalList.length; i++){
+  console.log(items)
+  items.map((item) => {
+    let obj = new Merchandise(item.itemName, item.itemCategory, item.itemDescription, item.itemImageSrc)
+    item.asks.map((ask) => {
+      //map asks
+    })
+    item.bids.map((bid) => {
+      //map bids
+    })
+    item.orderHistory.map((order) => {
+      //map orders
+    })
+    result.push(obj)
+  })
+  console.log(result)
+  return result
+}
 
+export async function filterByKeyword(originalList, keyword){
+  const result = []
+  console.log(originalList)
+  for (let i = 0; i < originalList.length; i++){
     if (originalList[i].itemName.includes(keyword)){
       result.push(originalList[i])
     }
