@@ -198,7 +198,8 @@ app.post('/users/create', (req, res) => {
 		req.session.userid = user._id;
 		req.session.username = user.username;
 		req.session.isAdmin = false;
-		res.redirect('/UserProfile')
+		user.isAdmin = false;
+		res.send(user)
 	}, (error) => {
 		res.status(400).send(error) // 400 for bad request
 	})
@@ -215,7 +216,6 @@ app.post('/users/login', async (req, res) => {
 	try {
 		user = await User.findByUsernamePassword(username, password);
 		if(!user) {
-			console.log(password);
 			res.status(400).send({
 				success: false
 			})			
@@ -227,12 +227,13 @@ app.post('/users/login', async (req, res) => {
 		req.session.username = user.username;
 		user.success = true;
 		log(user);
-		log(admin_task);
 		if(admin_task) {
 			req.session.isAdmin = true;
+			user.isAdmin = true;
 			res.send(user);
 		} else {
 			req.session.isAdmin = false;
+			user.isAdmin = false;
 			res.send(user);
 		}
 	} catch(e) {
