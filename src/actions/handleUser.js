@@ -85,13 +85,35 @@ export function logoutUser(username, password) {
     });    
 }
 
-export function setUserPassword(userId, password) {
+export function setUserPassword(userid, password) {
     // assume userId exists
-    for (let i = 0; i < users.length; i++){
-      if (users[i].userId == userId){
-        users[i].password = password;
-      }
-    }
+    const url = 'http://localhost:5000/users/password';
+
+    // The data we are going to send in our request
+    let user = {
+        userid : userid,
+        password : password
+    };
+
+    log(JSON.stringify(user));
+    // Create our request constructor with all the parameters we need
+    const request = new Request(url, {
+        method: 'patch', 
+        body: JSON.stringify(user),
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        }
+    });
+
+    // Send the request with fetch()
+    fetch(request)
+    .then(function(res) {
+            log(res)
+            console.log('User Password Updated')
+    }).catch((error) => {
+        log(error)
+    });     
   }
   
   export async function getAllUsers(){

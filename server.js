@@ -215,6 +215,7 @@ app.post('/users/login', async (req, res) => {
 	try {
 		user = await User.findByUsernamePassword(username, password);
 		if(!user) {
+			console.log(password);
 			res.status(400).send({
 				success: false
 			})			
@@ -271,5 +272,25 @@ app.get('/users/all', async (req, res) => {
 		res.send(users);
 	} catch(err) {
 		res.status(500).send(error)
+	}
+})
+
+app.patch('/users/password', async (req, res) => {
+
+	// get the updated name and year only from the request body.
+	const { userid, password } = req.body;
+
+	if (!ObjectID.isValid(userid)) {
+		res.status(404).send()
+		return;  // so that we don't run the rest of the handler.
+	}
+
+	try {
+		let user = await User.findById(userid);
+		user.password = password;
+		await user.save();
+		res.send(user);
+	} catch(err) {
+		res.status(400).send(err);
 	}
 })
