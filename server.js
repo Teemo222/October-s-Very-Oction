@@ -73,6 +73,7 @@ app.post('/items', (req, res) => {
 
 // a GET route to get all items
 app.get('/items', (req, res) => {
+
 	res.header("Access-Control-Allow-Origin", "*");
 	Merchandise.find().then((items) => {
 		res.send({ items }) // can wrap in object if want to add more properties
@@ -85,6 +86,7 @@ app.get('/items', (req, res) => {
 // id is treated as a wildcard parameter, which is why there is a colon : beside it.
 // (in this case, the database id, but you can make your own id system for your project)
 app.get('/items/:id', (req, res) => {
+	console.log(req);
 	res.header("Access-Control-Allow-Origin", "*");
 	/// req.params has the wildcard parameters in the url, in this case, id.
 	// log(req.params.id)
@@ -98,6 +100,7 @@ app.get('/items/:id', (req, res) => {
 
 	// Otherwise, findById
 	Merchandise.findById(id).then((item) => {
+		console.log(item);
 		if (!item) {
 			res.status(404).send()  // could not find this student
 		} else {
@@ -126,7 +129,19 @@ app.patch('/items/:id', (req, res) => {
 	}
 
 })
-
+app.patch('/items-add-bid/', async (req, res)=>{
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header('Access-Control-Allow-Methods', 'GET,POST,PATCH,DELETE');
+	console.log(req);
+	const { id, bid} = req.body;
+	Merchandise.findById(id).then(async(item)=>{
+		console.log(item);
+		item.bids.push(bid);
+		await item.save();
+		res.send(item);
+	});
+	
+});
 
 /* --------- User backend implementation    ------------------*/
 ;( async () => {
