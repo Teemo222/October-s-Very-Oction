@@ -17,6 +17,22 @@ const { ObjectID } = require('mongodb')
 const bodyParser = require('body-parser') 
 app.use(bodyParser.json())
 
+// express-session for managing user sessions
+const session = require('express-session')
+app.use(bodyParser.urlencoded({ extended: true }));
+
+/*** Session handling **************************************/
+// Create a session cookie
+app.use(session({
+    secret: 'oursecret',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        expires: 60000,
+        httpOnly: true
+    }
+}));
+
 // console.log that your server is up and running
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
@@ -110,24 +126,26 @@ app.patch('/items/:id', (req, res) => {
 	}
 
 })
-});
 
 
 /* --------- User backend implementation    ------------------*/
-( async () => {
+;( async () => {
 	// create admin
 	try {
 		let authenticator;
-		authenticator = await Authenticator.findOne({
-			username: "admin",
-			password: "admin"
+		authenticator = await User.findOne({
+			username: "admin"
 		});
 		if(!authenticator) {
-			authenticator = new Authenticator({
+			authenticator = new User({
 				username: "admin", 
 				password: "admin"
 			});
 			authenticator = await authenticator.save();
+			let admin_task = new Authenticator({
+				username:"admin"
+			});
+			await admin_task.save();
 		} 
 		log("admin: ");
 		log(authenticator);
@@ -137,9 +155,36 @@ app.patch('/items/:id', (req, res) => {
 	}
 }) ();
 
+// Our own express middleware to check for 
+// an active user on the session cookie (indicating a logged in user.)
+const sessionChecker = (req, res, next) => {
+    if (req.session.userid) {
+        res.redirect('/'); // redirect to homepage if not logged in.
+    } else {
+        next(); // next() moves on to the route.
+    }    
+};
+
+// Middleware for authentication of resources
+const authenticate = (req, res, next) => {
+	if (req.session.userid) {
+		User.findById(req.session.userid).then((user) => {
+			if (!user) {
+				return Promise.reject()
+			} else {
+				req.user = user
+				next()
+			}
+		}).catch((error) => {
+			res.status(401).send("Unauthorized")
+		})
+	} else {
+		res.status(401).send("Unauthorized")
+	}
+}
 
 // a POST route to *create* a user
-app.post('/users', (req, res) => {
+app.post('/users/create', (req, res) => {
 	res.header("Access-Control-Allow-Origin", "*");
 	// Create a new student using the Student mongoose model
 	const { username, password } = req.body;
@@ -150,8 +195,59 @@ app.post('/users', (req, res) => {
 
 	// Save student to the database
 	user.save().then((result) => {
-		res.send(result)
+		req.session.userid = user._id;
+		req.session.username = user.username;
+		req.session.isAdmin = false;
+		res.redirect('/UserProfile')
 	}, (error) => {
 		res.status(400).send(error) // 400 for bad request
 	})
 });
+
+// user login
+app.post('/users/login', async (req, res) => {
+	const username = req.body.username
+    const password = req.body.password
+
+    // Use the static method on the User model to find a user
+	// by their email and password
+	let user;
+	try {
+		user = await User.findByUsernamePassword(username, password);
+		if(!user) {
+			res.status(400).send({
+				success: false
+			})			
+		}
+		let admin_task = await Authenticator.findOne({
+			username: user.username
+		});
+		req.session.userid = user._id;
+		req.session.username = user.username;
+		log(user);
+		log(admin_task);
+		if(admin_task) {
+			req.session.isAdmin = true;
+			res.redirect('/ManagerProfile')	
+		} else {
+			req.session.isAdmin = false;
+			res.redirect('/UserProfile')
+		}
+	} catch(e) {
+		res.status(400).send({
+			success: false
+		})
+	}
+})
+
+// A route to logout a user
+app.get('/users/logout', (req, res) => {
+	// Remove the session
+	req.session.destroy((error) => {
+		if (error) {
+			res.status(500).send(error)
+		} else {
+			res.redirect('/')
+		}
+	})
+})
