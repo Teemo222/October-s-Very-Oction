@@ -1,13 +1,11 @@
 /* Student mongoose model */
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 const Authenticator = mongoose.model('Authenticator', {
-	username: {
-		type: String,
-		unique: true,  // unique username
-		required: true,
-		minlegth: 1,
-		trim: true
+	userId: { 
+		type: Schema.Types.ObjectId, 
+	ref: 'User' 
 	},
     tasks: {
         type: Array

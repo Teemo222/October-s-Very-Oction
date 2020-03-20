@@ -143,7 +143,7 @@ app.patch('/items/:id', (req, res) => {
 			});
 			authenticator = await authenticator.save();
 			let admin_task = new Authenticator({
-				username:"admin"
+				userId: authenticator._id
 			});
 			await admin_task.save();
 		} 
@@ -224,14 +224,15 @@ app.post('/users/login', async (req, res) => {
 		});
 		req.session.userid = user._id;
 		req.session.username = user.username;
+		user.success = true;
 		log(user);
 		log(admin_task);
 		if(admin_task) {
 			req.session.isAdmin = true;
-			res.redirect('/ManagerProfile')	
+			res.send(user);
 		} else {
 			req.session.isAdmin = false;
-			res.redirect('/UserProfile')
+			res.send(user);
 		}
 	} catch(e) {
 		res.status(400).send({
@@ -250,4 +251,25 @@ app.get('/users/logout', (req, res) => {
 			res.redirect('/')
 		}
 	})
+})
+
+app.get('/users/admin', (req, res) => {
+	if(req.session.isAdmin) {
+		res.send({
+			isAdmin: true
+		});
+	} else {
+		res.send({
+			isAdmin: false
+		});
+	}
+})
+
+app.get('/users/all', async (req, res) => {
+	try {
+		let users = await User.find();
+		res.send(users);
+	} catch(err) {
+		res.status(500).send(error)
+	}
 })
