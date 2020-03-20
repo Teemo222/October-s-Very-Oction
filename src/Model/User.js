@@ -29,48 +29,48 @@ const admin = [authenticator];
 
 
 
-export function addUser(username, password){
-  for (let i = 0; i < users.length; i++){
-    if (users[i].username == username){
-      return false;
-    }
-  }
-  users.push(new User(count, username, password));
-  count ++;
-  return true;
-}
+// export function addUser(username, password){
+//   for (let i = 0; i < users.length; i++){
+//     if (users[i].username == username){
+//       return false;
+//     }
+//   }
+//   users.push(new User(count, username, password));
+//   count ++;
+//   return true;
+// }
 
-export function getUser(username, password){
-  for (let i = 0; i < users.length; i++){
-    if (users[i].username == username && users[i].password == password){
-      return users[i]
-    }
-  }
-  for (let i = 0; i < admin.length; i++){
-    if (admin[i].username == username && admin[i].password == password){
-      return admin[i]
-    }
-  }
-  return null;
-}
+// export function getUser(username, password){
+//   for (let i = 0; i < users.length; i++){
+//     if (users[i].username == username && users[i].password == password){
+//       return users[i]
+//     }
+//   }
+//   for (let i = 0; i < admin.length; i++){
+//     if (admin[i].username == username && admin[i].password == password){
+//       return admin[i]
+//     }
+//   }
+//   return null;
+// }
 
-export function setUserPassword(userId, password) {
-  // assume userId exists
-  for (let i = 0; i < users.length; i++){
-    if (users[i].userId == userId){
-      users[i].password = password;
-    }
-  }
-}
+// export function setUserPassword(userId, password) {
+//   // assume userId exists
+//   for (let i = 0; i < users.length; i++){
+//     if (users[i].userId == userId){
+//       users[i].password = password;
+//     }
+//   }
+// }
 
-export function getAll(){
-  return users;
-}
+// export function getAll(){
+//   return users;
+// }
 
-export function getAdmin(){
-  return admin;
-}
+// export function getAdmin(){
+//   return admin;
+// }
 
 
-export default User;
+// export default User;
 

@@ -8,7 +8,8 @@ import ItemPage from './react-components/ItemPage';
 import SearchPage from './react-components/SearchPage';
 import ManagerProfile from './react-components/ManagerProfile';
 import { Route, Switch, BrowserRouter} from 'react-router-dom';
-import {addUser, getUser, getAll} from './Model/User';
+// import {addUser, getUser, getAll} from './Model/User';
+import {addUser, loginUser} from './actions/handleUser';
 import UserProfile from './react-components/UserProfile';
 import {addItem, updateItem} from './actions/handleMerchandise'
 import {getAllItems} from './Model/Merchandise';
@@ -68,13 +69,13 @@ class App extends React.Component {
 
   };
 
-  handleUserLogIn = (event, callback) => {
+  handleUserLogIn = async (event, callback) => {
     event.preventDefault();
     const target = event.target;
    
     const username = target.querySelector("#username").value;
     const password = target.querySelector("#password").value;
-    const user = getUser(username, password);
+    const user = await loginUser(username, password);
     
 
     if (user != null){
@@ -88,14 +89,21 @@ class App extends React.Component {
     }
   };
 
-  handleUserSignUp = (event, callback) => {
+  handleUserSignUp = async (event, callback) => {
     event.preventDefault();
     const target = event.target;
    
     const username = target.querySelector("#username").value;
     const password = target.querySelector("#password").value;
     
-    callback(addUser(username, password));
+    try {
+      let res = await addUser(username, password);
+      console.log(res);
+      callback(res);
+    } catch(err) {
+      console.log(err);
+      callback(false);
+    }
   };  
   
   handleUserSignOut = () =>{
@@ -107,8 +115,9 @@ class App extends React.Component {
   render() {
 
     if(this.state.count == 0){
-      addUser("user", "user");
-      addUser("user2", "user2");
+      // Following 2 lines might add data multiple times if you run app multiple times, database error
+      // addUser("user", "user");
+      // addUser("user2", "user2");
       addItem("Nike Kobe 7", "SNEAKERS", "This shoe is really cool", "/img/kobe.jpg");
       addItem("UT Sweatshirt", "STREETWEAR", "WOW I love it so much", "/img/14355271t.jpg");
       addItem("Nike Kobe 4", "SNEAKERS", "Nice shoe huh", "/img/kobe2.jpg");

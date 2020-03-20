@@ -2,7 +2,7 @@ import React from "react";
 
 import "./styles.css";
 import { Link } from "react-router-dom";
-import {getAdmin} from "../../Model/User"
+// import {getAdmin} from "../../Model/User"
 
 
 /* The Login Component */
@@ -84,7 +84,9 @@ class Login extends React.Component {
     let link = "/";
 
     if (currentUser != null){
-      if (getAdmin().includes(currentUser)){ 
+      console.log("check isAdmin");
+      console.log(currentUser);
+      if (currentUser.isAdmin){ 
         link = "/ManagerProfile"
       }
       else{
