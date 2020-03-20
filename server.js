@@ -110,11 +110,10 @@ app.patch('/items/:id', (req, res) => {
 	}
 
 })
-});
 
 
 /* --------- User backend implementation    ------------------*/
-( async () => {
+;( async () => {
 	// create admin
 	try {
 		let authenticator;

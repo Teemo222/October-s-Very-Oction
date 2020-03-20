@@ -1,7 +1,8 @@
 /* Student mongoose model */
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
-const User = mongoose.model('User', {
+const UserSchema = new mongoose.Schema({
 	username: {
 		type: String,
 		unique: true,  // unique username
@@ -33,6 +34,24 @@ const User = mongoose.model('User', {
 		type: String,
 		trim: true
 	}
+});
+
+UserSchema.pre('save', function(next) {
+	const user = this; // binds this to User document instance
+
+	// checks to ensure we don't hash password more than once
+	if (user.isModified('password')) {
+		// generate salt and hash the password
+		bcrypt.genSalt(10, (err, salt) => {
+			bcrypt.hash(user.password, salt, (err, hash) => {
+				user.password = hash;
+				next();
+			})
+		})
+	} else {
+		next();
+	}
 })
 
+const User = mongoose.model('User', UserSchema);
 module.exports = { User }
