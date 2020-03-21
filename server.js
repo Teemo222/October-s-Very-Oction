@@ -111,7 +111,7 @@ app.get('/items/:id', (req, res) => {
 app.patch('/items-add-bid/', async (req, res)=>{
 	console.log(1111)
 	res.header("Access-Control-Allow-Origin", "*");
-	res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
+	res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS, PATCH');
 	res.header('Accept-Patch', '*');
 	res.header('Access-Control-Allow-Credentials', 'true');
 	res.header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization');
