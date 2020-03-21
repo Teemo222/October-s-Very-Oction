@@ -11,6 +11,7 @@ const { Merchandise } = require('./server/models/Merchandise')
 const { User } = require('./server/models/User')
 const { Authenticator } = require('./server/models/Authenticator')
 const {Order} = require('./server/models/Order');
+const cors = require('cors');
 
 // to validate object IDs
 const { ObjectID } = require('mongodb')
@@ -43,6 +44,8 @@ app.use(function(req, res, next) {
 	res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
 	next();
   });
+
+app.options('*', cors());
 
 /** Items resource routes **/
 // a POST route to *create* a item
@@ -108,25 +111,28 @@ app.get('/items/:id', (req, res) => {
 	})
 })
 
-app.patch('/items-add-bid/', async (req, res)=>{
-	console.log(1111)
+app.post('/items-add-bid/', async (req, res)=>{
 	res.header("Access-Control-Allow-Origin", "*");
 	res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS, PATCH');
 	res.header('Accept-Patch', '*');
 	res.header('Access-Control-Allow-Credentials', 'true');
 	res.header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization');
-	consoel.log(res)
-	console.log(req);
+	
 	const { itemId, price, userId} = req.body;
 	Merchandise.findById(itemId).then(async(item)=>{
 		console.log(item);
 		if(price in item.bids){
-			item.bids["price"].push(userId)
+			console.log(1111)
+			item.bids[price].push(userId)
 		}
 		else{
-			item.bids["price"] = [userId]
+			console.log(item.bids)
+			item.bids[price] = [userId]
+			console.log(2222)
+			console.log(item.bids)
 		}
 		await item.save();
+		console.log(item)
 		res.send(item);
 	});
 });
