@@ -40,7 +40,7 @@ app.listen(port, () => console.log(`Listening on port ${port}`));
 app.use(function(req, res, next) {
 	res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
 	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-	res.header('Access-Control-Allow-Methods', 'GET,POST,PATCH,DELETE');
+	res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
 	next();
   });
 
@@ -109,13 +109,23 @@ app.get('/items/:id', (req, res) => {
 })
 
 app.patch('/items-add-bid/', async (req, res)=>{
+	console.log(1111)
 	res.header("Access-Control-Allow-Origin", "*");
-	res.header('Access-Control-Allow-Methods', 'GET,POST,PATCH,DELETE');
+	res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
+	res.header('Accept-Patch', '*');
+	res.header('Access-Control-Allow-Credentials', 'true');
+	res.header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization');
+	consoel.log(res)
 	console.log(req);
-	const { id, bid} = req.body;
-	Merchandise.findById(id).then(async(item)=>{
+	const { itemId, price, userId} = req.body;
+	Merchandise.findById(itemId).then(async(item)=>{
 		console.log(item);
-		item.bids.push(bid);
+		if(price in item.bids){
+			item.bids["price"].push(userId)
+		}
+		else{
+			item.bids["price"] = [userId]
+		}
 		await item.save();
 		res.send(item);
 	});
@@ -340,7 +350,6 @@ app.get('/users/all', async (req, res) => {
 })
 
 app.patch('/users/password', async (req, res) => {
-
 	// get the updated name and year only from the request body.
 	const { userid, password } = req.body;
 

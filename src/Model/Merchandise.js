@@ -1,4 +1,4 @@
-import { addOrder } from "./Order";
+//import { addOrder } from "./Order";
 import {getItems} from '../actions/handleMerchandise'
 
 class Merchandise{
@@ -66,10 +66,10 @@ class Merchandise{
       if(this.asks[price].length == 0){
         delete this.asks[price]
       }
-      const order = addOrder(this, user, seller, price)
-      this.orderHistory.push(order)
-      user.purchaseHistory.push(order)
-      seller.sellingHistory.push(order)
+      // const order = addOrder(this, user, seller, price)
+      // this.orderHistory.push(order)
+      // user.purchaseHistory.push(order)
+      // seller.sellingHistory.push(order)
     }
     else{
       if(price in this.bids){
@@ -98,10 +98,10 @@ class Merchandise{
       if(this.bids[price].length == 0){
         delete this.bids[price]
       }
-      const order = addOrder(this, buyer, user, price)
-      this.orderHistory.push(order)
-      buyer.purchaseHistory.push(order)
-      user.sellingHistory.push(order)
+      // const order = addOrder(this, buyer, user, price)
+      // this.orderHistory.push(order)
+      // buyer.purchaseHistory.push(order)
+      // user.sellingHistory.push(order)
     }
     else{
       if(price in this.asks){

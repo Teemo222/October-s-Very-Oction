@@ -21,7 +21,6 @@ export async function getItems() {
        }                
     })
     .then((json) => {  // the resolved promise with the JSON body
-        console.log('aaa')
         return json.items
     }).catch((error) => {
         log(error)
@@ -64,13 +63,13 @@ export function addItem(itemName, itemCategory, itemDescription, itemImageSrc) {
 }
 
 // A function to send a PATCH request to add a bid to item
-export function updateItem(itemId, action, price, userId) {
+export function itemAddBid(itemId, price, userId) {
     // the URL for the request
-    const url = 'http://localhost:5000/items'+ itemId;
+    const url = "http://localhost:5000/items-add-bid/";
 
     // The data we are going to send in our request
     let act = {
-        action: action,
+        itemId: itemId,
         price: price,
         userId: userId
     }
@@ -82,15 +81,18 @@ export function updateItem(itemId, action, price, userId) {
         headers: {
             'Accept': 'application/json, text/plain, */*',
             'Content-Type': 'application/json',
-        }
+        },
+        mode: "no-cors"
     });
 
     // Send the request with fetch()
     fetch(request)
     .then(function(res) {
+            log("fuckckckkckckckckck")
             log(res)
-            console.log('Updated item')
+            console.log('item added bid')
     }).catch((error) => {
+        log("fuckckckkckckckckck")
         log(error)
     })
 }
