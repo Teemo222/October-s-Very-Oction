@@ -41,7 +41,7 @@ app.listen(port, () => console.log(`Listening on port ${port}`));
 app.use(function(req, res, next) {
 	res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
 	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-	res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
+	res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS, PATCH');
 	next();
   });
 
@@ -112,24 +112,25 @@ app.get('/items/:id', (req, res) => {
 })
 
 app.post('/items-add-bid/', async (req, res)=>{
+	console.log(1111)
 	res.header("Access-Control-Allow-Origin", "*");
 	res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS, PATCH');
 	res.header('Accept-Patch', '*');
 	res.header('Access-Control-Allow-Credentials', 'true');
 	res.header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization');
-	
+	// console.log(res)
+	// console.log(req);
 	const { itemId, price, userId} = req.body;
 	Merchandise.findById(itemId).then(async(item)=>{
 		console.log(item);
-		if(price in item.bids){
-			console.log(1111)
-			item.bids[price].push(userId)
+		const p = '' + price;
+		const user = new mongoose.Types.ObjectId(userId);
+		console.log(item.bids.keys());
+		if(item.bids.get(p)){
+			item.bids.get(p).push(user)
 		}
 		else{
-			console.log(item.bids)
-			item.bids[price] = [userId]
-			console.log(2222)
-			console.log(item.bids)
+			item.bids.set(p, [user]);
 		}
 		await item.save();
 		console.log(item)

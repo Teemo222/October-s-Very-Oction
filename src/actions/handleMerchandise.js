@@ -81,7 +81,12 @@ export function itemAddBid(itemId, price, userId) {
         headers: {
             'Accept': 'application/json, text/plain, */*',
             'Content-Type': 'application/json',
+<<<<<<< HEAD
+        },
+        // mode: "no-cors"
+=======
         }
+>>>>>>> ef9abc837abdae6f3d08e6ad693076eea368564b
     });
 
     // Send the request with fetch()
@@ -93,5 +98,6 @@ export function itemAddBid(itemId, price, userId) {
     }).catch((error) => {
         log("fuckckckkckckckckck")
         log(error)
+        throw error;
     })
 }
