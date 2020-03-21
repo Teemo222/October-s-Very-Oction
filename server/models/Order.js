@@ -1,40 +1,20 @@
 /* Student mongoose model */
 const mongoose = require('mongoose')
 
-const Order = mongoose.model('Merchandise', {
-	itemName: {
-		type: String,
-		required: true,
-		minlegth: 1,
-		trim: true
+const Order = mongoose.model('Order', {
+	price: Number,
+	item : {
+		type: mongoose.Schema.Types.ObjectId,
+		ref:"Merchandise"
 	},
-	itemCategory: {
-		type: String,
-		required: true,
-		minlegth: 1,
-		trim: true
+	buyer : {
+		type: mongoose.Schema.Types.ObjectId,
+		ref:"User"
 	},
-	itemDescription: {
-		type: String,
-		required: true,
-		minlegth: 1,
-		trim: true
+	seller : {
+		type: mongoose.Schema.Types.ObjectId,
+		ref:"User"
 	},
-	itemImageSrc: {
-		type: String,
-		required: true,
-		minlegth: 1,
-		trim: true
-	},
-	bids: {
-		type: Array,
-	},
-	asks: {
-		type: Array,
-	},
-	orderHistory: {
-		type: Array,
-	}
 })
 
 module.exports = { Order }
