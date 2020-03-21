@@ -24,27 +24,6 @@ class App extends React.Component {
     merchandises: [],
     count:0
   }
-
-  componentDidMount() {
-    // Call our fetch function below once the component mounts
-    this.callBackendAPI().then(res => this.setState({ data: res.express })).then(
-      res => {alert(this.state.data)}
-    ).catch(err => console.log(err));
-  }
-
-  // Fetches our GET route from the Express server. (Note the route we are fetching matches the GET route from server.js
-  callBackendAPI = async () => {
-
-    const response = await fetch('http://localhost:5000/');
-    const body = await response.json();
-
-    console.log(2)
-    if (response.status !== 200) {
-      throw Error(body.message) 
-    }
-    return body;
-  };
-
   
   handleSelectItem = (item) => {
     return (event) => {
@@ -64,9 +43,6 @@ class App extends React.Component {
     this.setState({
       ["searchInput"]: value // [name] sets the object property name to the value of the 'name' variable.
     });
-
-
-
   };
 
   handleUserLogIn = async (event, callback) => {
@@ -76,7 +52,6 @@ class App extends React.Component {
     const username = target.querySelector("#username").value;
     const password = target.querySelector("#password").value;
     const user = await loginUser(username, password);
-    
 
     if (user != null){
       this.setState({

@@ -44,11 +44,6 @@ app.use(function(req, res, next) {
 	next();
   });
 
-// create a GET route
-app.get('/', (req, res) => {
-  res.send({ express: 'YOUR EXPRESS BACKEND IS CONNECTED TO REACT' });
-});
-
 /** Items resource routes **/
 // a POST route to *create* a item
 app.post('/items', (req, res) => {
@@ -74,7 +69,6 @@ app.post('/items', (req, res) => {
 
 // a GET route to get all items
 app.get('/items', (req, res) => {
-
 	res.header("Access-Control-Allow-Origin", "*");
 	Merchandise.find().then((items) => {
 		res.send({ items }) // can wrap in object if want to add more properties
@@ -114,22 +108,6 @@ app.get('/items/:id', (req, res) => {
 	})
 })
 
-// a PATCH route for changing properties of a resource.
-// (alternatively, a PUT is used more often for replacing entire resources).
-app.patch('/items/:id', (req, res) => {
-	res.header("Access-Control-Allow-Origin", "*");
-	res.header('Access-Control-Allow-Methods', 'GET,POST,PATCH,DELETE');
-	const id = req.params.id
-
-	// get the updated name and year only from the request body.
-	const {} = req.body
-
-	if (!ObjectID.isValid(id)) {
-		res.status(404).send()
-		return;  // so that we don't run the rest of the handler.
-	}
-
-})
 app.patch('/items-add-bid/', async (req, res)=>{
 	res.header("Access-Control-Allow-Origin", "*");
 	res.header('Access-Control-Allow-Methods', 'GET,POST,PATCH,DELETE');
@@ -141,14 +119,15 @@ app.patch('/items-add-bid/', async (req, res)=>{
 		await item.save();
 		res.send(item);
 	});
-	
 });
+
 app.get('/all-order', async (req, res)=>{
 	res.header("Access-Control-Allow-Origin", "*");
 	res.header('Access-Control-Allow-Methods', 'GET,POST,PATCH,DELETE');
 	const orders = await Order.find({});
 	res.send(orders);
 });
+
 app.post('/order', async (req, res)=>{
 	res.header("Access-Control-Allow-Origin", "*");
 	res.header('Access-Control-Allow-Methods', 'GET,POST,PATCH,DELETE');
