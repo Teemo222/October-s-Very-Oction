@@ -31,25 +31,29 @@ class Order {
 
 const allOrders = [];
 
-export function addOrder(item, buyer, seller, price) {
-    const order = new Order(item, buyer, seller, price);
-    allOrders.push(order);
-    return order;
-}
 
-export function getOrderByBuyer(buyer) {
-    const result = [];
-    for(let i = 0; i < allOrders.length; i++) {
-        if(allOrders[i].buyer === buyer) {
-            result.push(allOrders[i]);
-        }
-    }
-    return result;
-}
+// POST /order
+// export function addOrder(item, buyer, seller, price) {
+//     const order = new Order(item, buyer, seller, price);
+//     allOrders.push(order);
+//     return order;
+// }
 
-export function getAllOrders(){
-    return allOrders;
-}
+// GET /order-buyer/:id
+// export function getOrderByBuyer(buyer) {
+//     const result = [];
+//     for(let i = 0; i < allOrders.length; i++) {
+//         if(allOrders[i].buyer === buyer) {
+//             result.push(allOrders[i]);
+//         }
+//     }
+//     return result;
+// }
+
+// GET /all-order
+// export function getAllOrders(){
+//     return allOrders;
+// }
 
 export function ReceiveAuthentication(){
     this.setState({
@@ -101,14 +105,16 @@ export function getColumns(){
     return ["item", "buyer", "seller"]
 }
 
-export function getOrderBySeller(seller) {
-    const result = [];
-    for(let i = 0; i < allOrders.length; i++) {
-        if(allOrders[i].seller === seller) {
-            result.push(allOrders[i]);
-        }
-    }
-    return result;
-}
+
+// GET /order-seller/:id
+// export function getOrderBySeller(seller) {
+//     const result = [];
+//     for(let i = 0; i < allOrders.length; i++) {
+//         if(allOrders[i].seller === seller) {
+//             result.push(allOrders[i]);
+//         }
+//     }
+//     return result;
+// }
 
 export default Order;

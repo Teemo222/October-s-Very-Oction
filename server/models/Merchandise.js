@@ -27,13 +27,24 @@ const Merchandise = mongoose.model('Merchandise', {
 		trim: true
 	},
 	bids: {
-		type: Array,
+		type: Map,
+		of: [{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "User"
+		}]
 	},
 	asks: {
-		type: Array,
+		type: Map,
+		of: [{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "User"
+		}]
 	},
 	orderHistory: {
-		type: Array,
+		type: [{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "User"
+		}],
 	}
 })
 
