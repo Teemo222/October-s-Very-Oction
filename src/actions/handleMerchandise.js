@@ -76,7 +76,7 @@ export function itemAddBid(itemId, price, userId) {
 
     // Create our request constructor with all the parameters we need
     const request = new Request(url, {
-        method: 'patch', 
+        method: 'post', 
         body: JSON.stringify(act),
         headers: {
             'Accept': 'application/json, text/plain, */*',
