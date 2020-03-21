@@ -154,7 +154,8 @@ app.patch('/items-add-bid/', async (req, res)=>{
 		if(!authenticator) {
 			authenticator = new User({
 				username: "admin", 
-				password: "admin"
+				password: "admin",
+				isAdmin: true
 			});
 			authenticator = await authenticator.save();
 			let admin_task = new Authenticator({
@@ -213,8 +214,13 @@ app.post('/users/create', (req, res) => {
 		req.session.userid = user._id;
 		req.session.username = user.username;
 		req.session.isAdmin = false;
-		res.redirect('/UserProfile')
+		user.isAdmin = false;
+		console.log("/users/create");
+		console.log(result);
+		res.send(result)
 	}, (error) => {
+		console.log("Error")
+		console.log(error)
 		res.status(400).send(error) // 400 for bad request
 	})
 });
@@ -235,18 +241,21 @@ app.post('/users/login', async (req, res) => {
 			})			
 		}
 		let admin_task = await Authenticator.findOne({
-			username: user.username
+			userId: user._id
 		});
 		req.session.userid = user._id;
 		req.session.username = user.username;
-		user.success = true;
-		log(user);
+		// user.success = true;
 		log(admin_task);
+		log(user);
 		if(admin_task) {
 			req.session.isAdmin = true;
+			// user.isAdmin = true;
+			log(user);
 			res.send(user);
 		} else {
 			req.session.isAdmin = false;
+			// user.isAdmin = false;
 			res.send(user);
 		}
 	} catch(e) {
@@ -286,5 +295,25 @@ app.get('/users/all', async (req, res) => {
 		res.send(users);
 	} catch(err) {
 		res.status(500).send(error)
+	}
+})
+
+app.patch('/users/password', async (req, res) => {
+
+	// get the updated name and year only from the request body.
+	const { userid, password } = req.body;
+
+	if (!ObjectID.isValid(userid)) {
+		res.status(404).send()
+		return;  // so that we don't run the rest of the handler.
+	}
+
+	try {
+		let user = await User.findById(userid);
+		user.password = password;
+		await user.save();
+		res.send(user);
+	} catch(err) {
+		res.status(400).send(err);
 	}
 })
