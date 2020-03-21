@@ -10,6 +10,7 @@ const log = console.log
 const { Merchandise } = require('./server/models/Merchandise')
 const { User } = require('./server/models/User')
 const { Authenticator } = require('./server/models/Authenticator')
+const {Order} = require('./server/models/Order');
 
 // to validate object IDs
 const { ObjectID } = require('mongodb')
@@ -142,7 +143,68 @@ app.patch('/items-add-bid/', async (req, res)=>{
 	});
 	
 });
+app.get('/all-order', async (req, res)=>{
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header('Access-Control-Allow-Methods', 'GET,POST,PATCH,DELETE');
+	const orders = await Order.find({});
+	res.send(orders);
+});
+app.post('/order', async (req, res)=>{
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header('Access-Control-Allow-Methods', 'GET,POST,PATCH,DELETE');
+	console.log('add order');
+	const {item, buyer, seller, price} = req.body;
+	const order = new Order({
+		item,
+		buyer,
+		seller,
+		price
+	});
+	await order.save();
+	res.send(order);
+});
 
+app.get('/order-buyer/:id', async (req, res)=>{
+	const buyerId = req.param.id;
+	const orders = await Order.find({
+		buyer: new mongoose.Types.ObjectId(buyerId)
+	});
+	res.send(orders);
+});
+
+app.get('/order-seller/:id', async (req, res)=>{
+	const sellerId = req.param.id;
+	const orders = await Order.find({
+		seller: new mongoose.Types.ObjectId(sellerId)
+	});
+	res.send(orders);
+});
+
+
+app.get('/unwind-order/:id', async (req, res)=>{
+	const orders = await Order.aggregate([
+		{
+			$match:{_id: req.param.id}
+		},
+		{
+			$lookup: {
+				from : 'User',
+				localField: 'seller',
+				foreignField: '_id',
+				as : 'realSeller'
+			}
+		},
+		{
+			$lookup: {
+				from : 'User',
+				localField: 'buyer',
+				foreignField: '_id',
+				as : 'realBuyer'
+			}
+		}
+	]);
+	res.send(orders);
+});
 /* --------- User backend implementation    ------------------*/
 ;( async () => {
 	// create admin
