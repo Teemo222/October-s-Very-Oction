@@ -81,8 +81,7 @@ export function itemAddBid(itemId, price, userId) {
         headers: {
             'Accept': 'application/json, text/plain, */*',
             'Content-Type': 'application/json',
-        },
-        mode: "no-cors"
+        }
     });
 
     // Send the request with fetch()
