@@ -1,6 +1,7 @@
 import React from 'react';
 
-import User, {getAll, setUserPassword} from '../../Model/User'
+// import User, {getAll, setUserPassword} from '../../Model/User'
+import {setUserPassword, getAllUsers} from '../../actions/handleUser'
 import Table from "@material-ui/core/Table";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
@@ -19,7 +20,7 @@ class UserTable extends React.Component {
     }
     constructor(props) {
       super(props);
-      const users = getAll();
+      const users = [];
       this.state = {
         columns: [
           { title: 'User Id', field: 'userId' },
@@ -29,6 +30,17 @@ class UserTable extends React.Component {
         data: users,
         strippedUser : this.getDisplayableData(users)
       }
+    }
+
+    async componentDidMount() {
+      let allUsers = await getAllUsers();
+      console.log("here");
+      console.log(allUsers);
+      let strippedUser = this.getDisplayableData(allUsers);
+      this.setState({
+        data: allUsers,
+        strippedUser: strippedUser
+      });
     }
   
     render() {
@@ -58,18 +70,22 @@ class UserTable extends React.Component {
                 onRowUpdate: 
                 (newData, oldData) =>
                 new Promise((resolve, reject) => {
-                    setTimeout(() => {
+                    setTimeout(async() => {
                     {
                       const strippedUser = this.state.strippedUser;
                       const index = strippedUser.indexOf(oldData);
     
-                      setUserPassword(newData.userId, newData.password)
+                      // TODO? await?
+                      await setUserPassword(newData.userId, newData.password)
                       
                       strippedUser[index] = newData;
                       
-                      this.setState({ data:getAll(),strippedUser:this.getDisplayableData(getAll()) }, resolve);
+                      let allUsers = await getAllUsers();
+                      this.setState({ data: allUsers,
+                        strippedUser:this.getDisplayableData(allUsers) }, 
+                        resolve);
 
-                      console.log("Check: getAll() again; update lost if you go to new page since no backend")
+                      // console.log("Check: getAll() again; update lost if you go to new page since no backend")
 
                     }
                     resolve()

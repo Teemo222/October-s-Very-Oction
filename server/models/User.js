@@ -33,25 +33,29 @@ const UserSchema = new mongoose.Schema({
 	email: {
 		type: String,
 		trim: true
+	},
+	isAdmin: {
+		type: Boolean,
+		default: false
 	}
 });
 
-UserSchema.pre('save', function(next) {
-	const user = this; // binds this to User document instance
+// UserSchema.pre('save', function(next) {
+// 	const user = this; // binds this to User document instance
 
-	// checks to ensure we don't hash password more than once
-	if (user.isModified('password')) {
-		// generate salt and hash the password
-		bcrypt.genSalt(10, (err, salt) => {
-			bcrypt.hash(user.password, salt, (err, hash) => {
-				user.password = hash;
-				next();
-			})
-		})
-	} else {
-		next();
-	}
-})
+// 	// checks to ensure we don't hash password more than once
+// 	if (user.isModified('password')) {
+// 		// generate salt and hash the password
+// 		bcrypt.genSalt(10, (err, salt) => {
+// 			bcrypt.hash(user.password, salt, (err, hash) => {
+// 				user.password = hash;
+// 				next();
+// 			})
+// 		})
+// 	} else {
+// 		next();
+// 	}
+// })
 
 UserSchema.statics.findByUsernamePassword = function(username, password) {
 	const User = this // binds this to the User model
@@ -63,13 +67,18 @@ UserSchema.statics.findByUsernamePassword = function(username, password) {
 		}
 		// if the user exists, make sure their password is correct
 		return new Promise((resolve, reject) => {
-			bcrypt.compare(password, user.password, (err, result) => {
-				if (result) {
-					resolve(user)
-				} else {
-					reject()
-				}
-			})
+			// bcrypt.compare(password, user.password, (err, result) => {
+			// 	if (result) {
+			// 		resolve(user)
+			// 	} else {
+			// 		reject()
+			// 	}
+			// })
+			if(user.password === password) {
+				resolve(user)
+			} else {
+				reject();
+			}
 		})
 	})
 }

@@ -143,15 +143,15 @@ export async function getAllItems(){
   const result = []
   items.map((item) => {
     let obj = new Merchandise(item._id, item.itemName, item.itemCategory, item.itemDescription, item.itemImageSrc)
-    item.asks.map((ask) => {
-      //map asks
-    })
-    item.bids.map((bid) => {
-      //map bids
-    })
-    item.orderHistory.map((order) => {
-      //map orders
-    })
+    // item.asks.map((ask) => {
+    //   //map asks
+    // })
+    // item.bids.map((bid) => {
+    //   //map bids
+    // })
+    // item.orderHistory.map((order) => {
+    //   //map orders
+    // })
     result.push(obj)
   })
   return result

@@ -10,6 +10,7 @@ const log = console.log
 const { Merchandise } = require('./server/models/Merchandise')
 const { User } = require('./server/models/User')
 const { Authenticator } = require('./server/models/Authenticator')
+const {Order} = require('./server/models/Order');
 
 // to validate object IDs
 const { ObjectID } = require('mongodb')
@@ -73,6 +74,7 @@ app.post('/items', (req, res) => {
 
 // a GET route to get all items
 app.get('/items', (req, res) => {
+
 	res.header("Access-Control-Allow-Origin", "*");
 	Merchandise.find().then((items) => {
 		res.send({ items }) // can wrap in object if want to add more properties
@@ -85,6 +87,7 @@ app.get('/items', (req, res) => {
 // id is treated as a wildcard parameter, which is why there is a colon : beside it.
 // (in this case, the database id, but you can make your own id system for your project)
 app.get('/items/:id', (req, res) => {
+	console.log(req);
 	res.header("Access-Control-Allow-Origin", "*");
 	/// req.params has the wildcard parameters in the url, in this case, id.
 	// log(req.params.id)
@@ -98,6 +101,7 @@ app.get('/items/:id', (req, res) => {
 
 	// Otherwise, findById
 	Merchandise.findById(id).then((item) => {
+		console.log(item);
 		if (!item) {
 			res.status(404).send()  // could not find this student
 		} else {
@@ -126,8 +130,81 @@ app.patch('/items/:id', (req, res) => {
 	}
 
 })
+app.patch('/items-add-bid/', async (req, res)=>{
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header('Access-Control-Allow-Methods', 'GET,POST,PATCH,DELETE');
+	console.log(req);
+	const { id, bid} = req.body;
+	Merchandise.findById(id).then(async(item)=>{
+		console.log(item);
+		item.bids.push(bid);
+		await item.save();
+		res.send(item);
+	});
+	
+});
+app.get('/all-order', async (req, res)=>{
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header('Access-Control-Allow-Methods', 'GET,POST,PATCH,DELETE');
+	const orders = await Order.find({});
+	res.send(orders);
+});
+app.post('/order', async (req, res)=>{
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header('Access-Control-Allow-Methods', 'GET,POST,PATCH,DELETE');
+	console.log('add order');
+	const {item, buyer, seller, price} = req.body;
+	const order = new Order({
+		item,
+		buyer,
+		seller,
+		price
+	});
+	await order.save();
+	res.send(order);
+});
+
+app.get('/order-buyer/:id', async (req, res)=>{
+	const buyerId = req.param.id;
+	const orders = await Order.find({
+		buyer: new mongoose.Types.ObjectId(buyerId)
+	});
+	res.send(orders);
+});
+
+app.get('/order-seller/:id', async (req, res)=>{
+	const sellerId = req.param.id;
+	const orders = await Order.find({
+		seller: new mongoose.Types.ObjectId(sellerId)
+	});
+	res.send(orders);
+});
 
 
+app.get('/unwind-order/:id', async (req, res)=>{
+	const orders = await Order.aggregate([
+		{
+			$match:{_id: req.param.id}
+		},
+		{
+			$lookup: {
+				from : 'User',
+				localField: 'seller',
+				foreignField: '_id',
+				as : 'realSeller'
+			}
+		},
+		{
+			$lookup: {
+				from : 'User',
+				localField: 'buyer',
+				foreignField: '_id',
+				as : 'realBuyer'
+			}
+		}
+	]);
+	res.send(orders);
+});
 /* --------- User backend implementation    ------------------*/
 ;( async () => {
 	// create admin
@@ -139,11 +216,12 @@ app.patch('/items/:id', (req, res) => {
 		if(!authenticator) {
 			authenticator = new User({
 				username: "admin", 
-				password: "admin"
+				password: "admin",
+				isAdmin: true
 			});
 			authenticator = await authenticator.save();
 			let admin_task = new Authenticator({
-				username:"admin"
+				userId: authenticator._id
 			});
 			await admin_task.save();
 		} 
@@ -198,8 +276,13 @@ app.post('/users/create', (req, res) => {
 		req.session.userid = user._id;
 		req.session.username = user.username;
 		req.session.isAdmin = false;
-		res.redirect('/UserProfile')
+		user.isAdmin = false;
+		console.log("/users/create");
+		console.log(result);
+		res.send(result)
 	}, (error) => {
+		console.log("Error")
+		console.log(error)
 		res.status(400).send(error) // 400 for bad request
 	})
 });
@@ -220,18 +303,22 @@ app.post('/users/login', async (req, res) => {
 			})			
 		}
 		let admin_task = await Authenticator.findOne({
-			username: user.username
+			userId: user._id
 		});
 		req.session.userid = user._id;
 		req.session.username = user.username;
-		log(user);
+		// user.success = true;
 		log(admin_task);
+		log(user);
 		if(admin_task) {
 			req.session.isAdmin = true;
-			res.redirect('/ManagerProfile')	
+			// user.isAdmin = true;
+			log(user);
+			res.send(user);
 		} else {
 			req.session.isAdmin = false;
-			res.redirect('/UserProfile')
+			// user.isAdmin = false;
+			res.send(user);
 		}
 	} catch(e) {
 		res.status(400).send({
@@ -250,4 +337,45 @@ app.get('/users/logout', (req, res) => {
 			res.redirect('/')
 		}
 	})
+})
+
+app.get('/users/admin', (req, res) => {
+	if(req.session.isAdmin) {
+		res.send({
+			isAdmin: true
+		});
+	} else {
+		res.send({
+			isAdmin: false
+		});
+	}
+})
+
+app.get('/users/all', async (req, res) => {
+	try {
+		let users = await User.find();
+		res.send(users);
+	} catch(err) {
+		res.status(500).send(error)
+	}
+})
+
+app.patch('/users/password', async (req, res) => {
+
+	// get the updated name and year only from the request body.
+	const { userid, password } = req.body;
+
+	if (!ObjectID.isValid(userid)) {
+		res.status(404).send()
+		return;  // so that we don't run the rest of the handler.
+	}
+
+	try {
+		let user = await User.findById(userid);
+		user.password = password;
+		await user.save();
+		res.send(user);
+	} catch(err) {
+		res.status(400).send(err);
+	}
 })
