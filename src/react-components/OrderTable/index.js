@@ -6,7 +6,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableHead from "@material-ui/core/TableBody";
 import OrderRow from '../OrderRow';
 import Table from "@material-ui/core/Table";
-import { getAllOrders }from "../../Model/Order.js";
+import { getAllOrders }from "../../actions/handleOrder.js";
 import { TableCell } from "@material-ui/core";
 import TableRow from "@material-ui/core/TableRow";
 
