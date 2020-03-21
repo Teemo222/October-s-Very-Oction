@@ -76,13 +76,13 @@ export function itemAddBid(itemId, price, userId) {
 
     // Create our request constructor with all the parameters we need
     const request = new Request(url, {
-        method: 'patch', 
+        method: 'post', 
         body: JSON.stringify(act),
         headers: {
             'Accept': 'application/json, text/plain, */*',
             'Content-Type': 'application/json',
         },
-        mode: "no-cors"
+        // mode: "no-cors"
     });
 
     // Send the request with fetch()
@@ -94,5 +94,6 @@ export function itemAddBid(itemId, price, userId) {
     }).catch((error) => {
         log("fuckckckkckckckckck")
         log(error)
+        throw error;
     })
 }

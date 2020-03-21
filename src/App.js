@@ -102,7 +102,7 @@ class App extends React.Component {
       addItem("Nike SB Dunk", "SNEAKERS", "Great show", "/img/nikesb.jpg");
       addItem("Nike Hoodie", "STREETWEAR", "Beautiful hoodie", "/img/nikehoodie.jpg");
 
-      itemAddBid("5e7691b486d19738b657c19c", 10, "teemo222")
+      itemAddBid("5e76a13db4dc3a2a01a5f6dd", 10, "5e76a135b4dc3a2a01a5f6db")
       this.state.count += 1;
     }
 
