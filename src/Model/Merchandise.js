@@ -1,4 +1,4 @@
-import { addOrder } from "./Order";
+import {addOrder} from "../actions/handleOrder";
 import {getItems} from '../actions/handleMerchandise'
 
 class Merchandise{
