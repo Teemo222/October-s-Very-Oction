@@ -109,14 +109,14 @@ export async function setUserPassword(userid, password) {
 
     // The data we are going to send in our request
     let user = {
-        userid : userid,
+        userid: userid,
         password : password
     };
 
     log(JSON.stringify(user));
     // Create our request constructor with all the parameters we need
     const request = new Request(url, {
-        method: 'patch', 
+        method: 'post', 
         body: JSON.stringify(user),
         headers: {
             'Accept': 'application/json, text/plain, */*',
