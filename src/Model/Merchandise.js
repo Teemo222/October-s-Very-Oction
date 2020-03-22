@@ -30,7 +30,7 @@ class Merchandise{
   }
 
   //return id of seller
-  getLowestAskSeller = function (){
+  getLowestAskSeller = function(){
     const price = this.getLowestAsk();
     return this.asks[price][0]
   }

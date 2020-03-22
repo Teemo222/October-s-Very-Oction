@@ -1,3 +1,5 @@
+import {getAllOrders, addOrderDb} from '../actions/handleOrder.js'
+
 const ORDERPLACED = 0;
 const AUTHENTICATING = 1;
 const DELIVERING =2;
@@ -29,15 +31,12 @@ class Order {
     }
 }
 
-const allOrders = [];
 
 
-// POST /order
-// export function addOrder(item, buyer, seller, price) {
-//     const order = new Order(item, buyer, seller, price);
-//     allOrders.push(order);
-//     return order;
-// }
+export function addOrder(item, buyer, seller, price) {
+    const order = new Order(item, buyer, seller, price);
+    addOrderDb(item, buyer, seller, price, order.transactionTime, order.status);
+}
 
 // GET /order-buyer/:id
 // export function getOrderByBuyer(buyer) {
@@ -103,6 +102,18 @@ export function rejectItem(order){
 
 export function getColumns(){
     return ["item", "buyer", "seller"]
+}
+
+export async function getOrders(){
+  const orders = await getAllOrders()
+  const result = []
+  orders.map((order) => {
+    let obj = new Order(order._id, order.itemName, order.itemCategory, order.itemDescription)
+    obj.transactionTime = order.time;
+    obj.status = order.status
+    result.push(obj)
+  })
+  return result
 }
 
 

@@ -6,7 +6,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableHead from "@material-ui/core/TableBody";
 import OrderRow from '../OrderRow';
 import Table from "@material-ui/core/Table";
-import { getAllOrders }from "../../actions/handleOrder.js";
+import { getOrders }from "../../Model/Order.js";
 import { TableCell } from "@material-ui/core";
 import TableRow from "@material-ui/core/TableRow";
 
@@ -37,7 +37,7 @@ class OrderTable extends React.Component {
             </TableRow>
           </TableHead>
           <TableBody>
-              {getAllOrders().map((order,idx) => {
+              {getOrders().map((order,idx) => {
                   return this.renderOrderRow(order, idx);
               })}
             </TableBody>

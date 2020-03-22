@@ -30,7 +30,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        expires: 60000,
+        expires: 60000 * 60 * 72,
         httpOnly: true
     }
 }));
@@ -366,8 +366,10 @@ app.post('/users/login', async (req, res) => {
 		req.session.userid = user._id;
 		req.session.username = user.username;
 		// user.success = true;
-		log(admin_task);
-		log(user);
+		log("session:")
+		log(JSON.stringify(req.session))
+		// log(admin_task);
+		// log(user);
 		if(admin_task) {
 			req.session.isAdmin = true;
 			// user.isAdmin = true;
@@ -418,14 +420,19 @@ app.get('/users/all', async (req, res) => {
 	}
 })
 
-app.patch('/users/password', async (req, res) => {
+app.post('/users/password', async (req, res) => {
 	// get the updated name and year only from the request body.
-	const { userid, password } = req.body;
+	res.header("Access-Control-Allow-Origin", "*");
+	const { password, userid } = req.body;
 
-	if (!ObjectID.isValid(userid)) {
-		res.status(404).send()
-		return;  // so that we don't run the rest of the handler.
-	}
+	log("/users/password")
+	log(password)
+	log(userid)
+	console.log(ObjectID.isValid(userid))
+	// if (!ObjectID.isValid(userid)) {
+	// 	res.status(404).send()
+	// 	return;  // so that we don't run the rest of the handler.
+	// }
 
 	try {
 		let user = await User.findById(userid);
