@@ -30,7 +30,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        expires: 60000,
+        expires: 60000 * 60 * 72,
         httpOnly: true
     }
 }));
@@ -111,32 +111,32 @@ app.get('/items/:id', (req, res) => {
 	})
 })
 
-app.post('/items-add-bid/', async (req, res)=>{
-	console.log(1111)
-	res.header("Access-Control-Allow-Origin", "*");
-	res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS, PATCH');
-	res.header('Accept-Patch', '*');
-	res.header('Access-Control-Allow-Credentials', 'true');
-	res.header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization');
-	// console.log(res)
-	// console.log(req);
-	const { itemId, price, userId} = req.body;
-	Merchandise.findById(itemId).then(async(item)=>{
-		console.log(item);
-		const p = '' + price;
-		const user = new mongoose.Types.ObjectId(userId);
-		console.log(item.bids.keys());
-		if(item.bids.get(p)){
-			item.bids.get(p).push(user)
-		}
-		else{
-			item.bids.set(p, [user]);
-		}
-		await item.save();
-		console.log(item)
-		res.send(item);
-	});
-});
+// app.post('/items-add-bid/', async (req, res)=>{
+// 	console.log(1111)
+// 	res.header("Access-Control-Allow-Origin", "*");
+// 	res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS, PATCH');
+// 	res.header('Accept-Patch', '*');
+// 	res.header('Access-Control-Allow-Credentials', 'true');
+// 	res.header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization');
+// 	// console.log(res)
+// 	// console.log(req);
+// 	const { itemId, price, userId} = req.body;
+// 	Merchandise.findById(itemId).then(async(item)=>{
+// 		console.log(item);
+// 		const p = '' + price;
+// 		const user = new mongoose.Types.ObjectId(userId);
+// 		console.log(item.bids.keys());
+// 		if(item.bids.get(p)){
+// 			item.bids.get(p).push(user)
+// 		}
+// 		else{
+// 			item.bids.set(p, [user]);
+// 		}
+// 		await item.save();
+// 		console.log(item)
+// 		res.send(item);
+// 	});
+// });
 
 app.get('/all-order', async (req, res)=>{
 	res.header("Access-Control-Allow-Origin", "*");
@@ -304,8 +304,10 @@ app.post('/users/login', async (req, res) => {
 		req.session.userid = user._id;
 		req.session.username = user.username;
 		// user.success = true;
-		log(admin_task);
-		log(user);
+		log("session:")
+		log(JSON.stringify(req.session))
+		// log(admin_task);
+		// log(user);
 		if(admin_task) {
 			req.session.isAdmin = true;
 			// user.isAdmin = true;
@@ -356,14 +358,19 @@ app.get('/users/all', async (req, res) => {
 	}
 })
 
-app.patch('/users/password', async (req, res) => {
+app.post('/users/password', async (req, res) => {
 	// get the updated name and year only from the request body.
-	const { userid, password } = req.body;
+	res.header("Access-Control-Allow-Origin", "*");
+	const { password, userid } = req.body;
 
-	if (!ObjectID.isValid(userid)) {
-		res.status(404).send()
-		return;  // so that we don't run the rest of the handler.
-	}
+	log("/users/password")
+	log(password)
+	log(userid)
+	console.log(ObjectID.isValid(userid))
+	// if (!ObjectID.isValid(userid)) {
+	// 	res.status(404).send()
+	// 	return;  // so that we don't run the rest of the handler.
+	// }
 
 	try {
 		let user = await User.findById(userid);

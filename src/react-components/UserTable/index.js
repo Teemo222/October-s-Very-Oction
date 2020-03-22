@@ -14,7 +14,8 @@ import { Component } from 'react';
 class UserTable extends React.Component {
     getDisplayableData(users){
         return users.map(user => {
-          const {userId, username, password} = user;
+          const {_id, username, password} = user;
+          const userId = _id;
           return {userId, username, password};
         });
     }
@@ -76,6 +77,8 @@ class UserTable extends React.Component {
                       const index = strippedUser.indexOf(oldData);
     
                       // TODO? await?
+                      console.log("new Data");
+                      console.log(newData);
                       await setUserPassword(newData.userId, newData.password)
                       
                       strippedUser[index] = newData;
