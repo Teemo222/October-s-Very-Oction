@@ -19,13 +19,13 @@ export async function getOrderByBuyer(buyerId) {
 export async function addOrder(itemId, buyerId, sellerId, price){
     const url = 'http://localhost:5000/order/';
 
-    const req = new Request({
+    const req = new Request(url, {
         method:"post",
         body:{
             item:itemId,
             buyer:buyerId,
             seller:sellerId,
-            price
+            price: price
         },
         headers: {
             'Accept': 'application/json, text/plain, */*',

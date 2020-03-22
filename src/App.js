@@ -11,7 +11,7 @@ import { Route, Switch, BrowserRouter} from 'react-router-dom';
 // import {addUser, getUser, getAll} from './Model/User';
 import {addUser, loginUser} from './actions/handleUser';
 import UserProfile from './react-components/UserProfile';
-import {addItem, itemAddBid} from './actions/handleMerchandise'
+import {addItem, itemAddBid, itemRemoveBid} from './actions/handleMerchandise'
 import {getAllItems} from './Model/Merchandise';
 
 class App extends React.Component {
@@ -102,7 +102,9 @@ class App extends React.Component {
       addItem("Nike SB Dunk", "SNEAKERS", "Great show", "/img/nikesb.jpg");
       addItem("Nike Hoodie", "STREETWEAR", "Beautiful hoodie", "/img/nikehoodie.jpg");
 
-      itemAddBid("5e76a13db4dc3a2a01a5f6dd", 10, "5e76a135b4dc3a2a01a5f6db")
+      
+      itemRemoveBid("5e76a50b20d0b841da9b3f71", 10, "5e76a135b4dc3a2a01a5f6db")
+
       this.state.count += 1;
     }
 

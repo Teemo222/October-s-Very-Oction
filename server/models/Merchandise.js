@@ -43,7 +43,7 @@ const Merchandise = mongoose.model('Merchandise', {
 	orderHistory: {
 		type: [{
 			type: mongoose.Schema.Types.ObjectId,
-			ref: "User"
+			ref: "Order"
 		}],
 	}
 })

@@ -1,5 +1,6 @@
 import {addOrder} from "../actions/handleOrder";
-import {getItems} from '../actions/handleMerchandise'
+import {getItems, itemAddBid, itemAddAsk, itemRemoveBid, itemRemoveAsk} from '../actions/handleMerchandise'
+
 
 class Merchandise{
   constructor(itemId, itemName, itemCategory, itemDescription, itemImageSrc) {
@@ -53,65 +54,35 @@ class Merchandise{
     return this.bids[price][0]
   }
 
-  addBid = function(price, user){
+  addBid = function(price, userId){
     if (Object.keys(this.asks).length > 0 && price >= this.getLowestAsk()){
-      const seller = this.getLowestAskSeller();
+      const sellerId = this.getLowestAskSeller();
       const price = this.getLowestAsk();
-      for (let i = 0; i < this.asks[price].length; i++){
-        if (this.asks[price][i] === seller){
-          this.asks[price].splice(i, 1)
-          break;
-        }
-      }
-      if(this.asks[price].length == 0){
-        delete this.asks[price]
-      }
+      itemRemoveAsk(this.itemId, price, sellerId)
       // const order = addOrder(this, user, seller, price)
       // this.orderHistory.push(order)
       // user.purchaseHistory.push(order)
       // seller.sellingHistory.push(order)
     }
     else{
-      if(price in this.bids){
-        this.bids[price].push(user)
-      }
-      else{
-        this.bids[price] = [user]
-      }
+      itemAddBid(this.itemId, price, userId)
     }    
  
   }
 
-  addAsk = function(price, user){
+  addAsk = function(price, userId){
     if (Object.keys(this.bids).length > 0 && price <= this.getHighestBid()){
-
-      const buyer = this.getHighestBidBuyer();
-
+      const buyerId = this.getHighestBidBuyer();
       const price = this.getHighestBid();
-
-      for (let i = 0; i < this.bids[price].length; i++){
-        if (this.bids[price][i] === buyer){
-          this.bids[price].splice(i, 1)
-          break;
-        }
-      }
-      if(this.bids[price].length == 0){
-        delete this.bids[price]
-      }
+      itemRemoveBid(this.itemId, price, buyerId)
       // const order = addOrder(this, buyer, user, price)
       // this.orderHistory.push(order)
       // buyer.purchaseHistory.push(order)
       // user.sellingHistory.push(order)
     }
     else{
-      if(price in this.asks){
-        this.asks[price].push(user)
-      }
-      else{
-        this.asks[price] = [user]
-      }
+      itemAddAsk(this.itemId, price, userId)
     }  
-
   }
 
     getAllAsks = function () {
@@ -143,15 +114,21 @@ export async function getAllItems(){
   const result = []
   items.map((item) => {
     let obj = new Merchandise(item._id, item.itemName, item.itemCategory, item.itemDescription, item.itemImageSrc)
-    // item.asks.map((ask) => {
-    //   //map asks
-    // })
-    // item.bids.map((bid) => {
-    //   //map bids
-    // })
-    // item.orderHistory.map((order) => {
-    //   //map orders
-    // })
+    const asks = Object.keys(item.asks)
+    asks.map((ask) => {
+      if (item.asks[ask].length > 0){
+        obj.asks[ask] = item.asks[ask]
+      }
+    })
+    const bids = Object.keys(item.bids)
+    bids.map((bid) => {
+      if (item.bids[bid].length > 0){
+        obj.bids[bid] = item.bids[bid]
+      }
+    })
+    item.orderHistory.map((order) => {
+      obj.orderHistory.push(order)
+    })
     result.push(obj)
   })
   return result

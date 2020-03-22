@@ -112,14 +112,7 @@ app.get('/items/:id', (req, res) => {
 })
 
 app.post('/items-add-bid/', async (req, res)=>{
-	console.log(1111)
 	res.header("Access-Control-Allow-Origin", "*");
-	res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS, PATCH');
-	res.header('Accept-Patch', '*');
-	res.header('Access-Control-Allow-Credentials', 'true');
-	res.header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization');
-	// console.log(res)
-	// console.log(req);
 	const { itemId, price, userId} = req.body;
 	Merchandise.findById(itemId).then(async(item)=>{
 		console.log(item);
@@ -132,11 +125,80 @@ app.post('/items-add-bid/', async (req, res)=>{
 		else{
 			item.bids.set(p, [user]);
 		}
+		item.markModified('bids');
 		await item.save();
 		console.log(item)
 		res.send(item);
 	});
 });
+
+app.post('/items-add-ask/', async (req, res)=>{
+	res.header("Access-Control-Allow-Origin", "*");
+	const { itemId, price, userId} = req.body;
+	Merchandise.findById(itemId).then(async(item)=>{
+		console.log(item);
+		const p = '' + price;
+		const user = new mongoose.Types.ObjectId(userId);
+		if(item.asks.get(p)){
+			item.asks.get(p).push(user)
+		}
+		else{
+			item.asks.set(p, [user]);
+		}
+		await item.save();
+		console.log(item)
+		res.send(item);
+	});
+});
+
+app.post('/items-add-order/', async (req, res)=>{
+	res.header("Access-Control-Allow-Origin", "*");
+	const { itemId, orderId} = req.body;
+	Merchandise.findById(itemId).then(async(item)=>{
+		item.orderHistory.push(orderId)
+		await item.save();
+		console.log(item)
+		res.send(item);
+	});
+});
+
+app.post('/items-remove-bid/', async (req, res)=>{
+	res.header("Access-Control-Allow-Origin", "*");
+	const { itemId, price, userId} = req.body;
+	console.log(userId)
+	Merchandise.findById(itemId).then(async(item)=>{
+		const p = '' + price;
+		console.log(item.bids.get(p))
+		for (let i = 0; i < item.bids.get(p).length; i++){
+			if (item.bids.get(p)[i] == userId){
+				item.bids.get(p).splice(i, 1)
+			  	break;
+			}
+		}
+		item.markModified('bids');
+		await item.save();
+		res.send(item);
+	});
+});
+
+app.post('/items-remove-ask/', async (req, res)=>{
+	res.header("Access-Control-Allow-Origin", "*");
+	const { itemId, price, userId} = req.body;
+	console.log(userId)
+	Merchandise.findById(itemId).then(async(item)=>{
+		const p = '' + price;
+		for (let i = 0; i < item.asks.get(p).length; i++){
+			if (item.asks.get(p)[i] == userId){
+				item.asks.get(p).splice(i, 1)
+			  	break;
+			}
+		}
+		item.markModified('asks');
+		await item.save();
+		res.send(item);
+	});
+});
+
 
 app.get('/all-order', async (req, res)=>{
 	res.header("Access-Control-Allow-Origin", "*");
