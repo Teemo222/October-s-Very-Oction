@@ -1,4 +1,4 @@
-import {addOrder} from "../actions/handleOrder";
+import {addOrder} from "../Model/Order.js";
 import {getItems} from '../actions/handleMerchandise'
 
 class Merchandise{
@@ -29,7 +29,7 @@ class Merchandise{
   }
 
   //return id of seller
-  getLowestAskSeller = function (){
+  getLowestAskSeller = function(){
     const price = this.getLowestAsk();
     return this.asks[price][0]
   }

@@ -15,6 +15,8 @@ const Order = mongoose.model('Order', {
 		type: mongoose.Schema.Types.ObjectId,
 		ref:"User"
 	},
+	time : Date,
+	status : Number,
 })
 
 module.exports = { Order }

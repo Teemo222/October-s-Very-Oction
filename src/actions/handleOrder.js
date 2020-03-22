@@ -16,7 +16,7 @@ export async function getOrderByBuyer(buyerId) {
 
 }
 
-export async function addOrder(itemId, buyerId, sellerId, price){
+export async function addOrderDb(itemId, buyerId, sellerId, price, time, status){
     const url = 'http://localhost:5000/order/';
 
     const req = new Request({
@@ -25,7 +25,9 @@ export async function addOrder(itemId, buyerId, sellerId, price){
             item:itemId,
             buyer:buyerId,
             seller:sellerId,
-            price
+            price:price,
+            time:time,
+            status:status
         },
         headers: {
             'Accept': 'application/json, text/plain, */*',
