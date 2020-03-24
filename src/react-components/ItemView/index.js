@@ -1,7 +1,6 @@
 import React from "react";
 
 import "./styles.css";
-import {getAllItems} from '../../Model/Merchandise';
 import ItemData from '../ItemData';
 import TableBody from "@material-ui/core/TableBody";
 import Table from "@material-ui/core/Table";
@@ -74,10 +73,6 @@ class ItemView extends React.Component {
       item,
       currentUser
     } = this.props;
-
-    if(item == null){
-      item = getAllItems()[0];
-    }
 
     const submit = (e) => {
       e.preventDefault();

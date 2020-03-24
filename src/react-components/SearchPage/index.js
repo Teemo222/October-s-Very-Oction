@@ -6,7 +6,7 @@ import Header from '../Header';
 import SearchItem from '../SearchItem';
 import SearchBox from '../SearchBox';
 import Filter from '../Filter';
-import {addItem, getAllItems, filterByKeyword, filterByCategory} from '../../Model/Merchandise';
+import {addItem, getAllItems, getFilterItems} from '../../Model/Merchandise';
 
 
 
@@ -48,10 +48,7 @@ class SearchPage extends React.Component {
 
   handleClick = async (event) => {
     event.preventDefault();
-    console.log(11)
-    let items = await getAllItems()
-    console.log(items)
-    let lst = await filterByKeyword(items, this.state.searchString);
+    let lst = await getFilterItems(this.state.searchString, null);
     this.setState({
       ["displayed"]: lst,
       ["searched"]: lst,
@@ -59,9 +56,7 @@ class SearchPage extends React.Component {
   }
 
   firstTimeSearch = async (searchInput) => {
-    let items = await getAllItems()
-    console.log(items)
-    let lst = await filterByKeyword(items, searchInput);
+    let lst = await getFilterItems(searchInput, null);
     let a = this.state.count + 1
     this.setState({
       ["displayed"]: lst,
@@ -72,9 +67,12 @@ class SearchPage extends React.Component {
   }
 
   handleFilterChange = (cat) =>{
-    return (event) => {
+    return async (event) => {
       event.preventDefault();
-      let lst = filterByCategory(this.state.searched, cat)
+      console.log(cat)
+      console.log(this.state.searchString)
+      let lst = await getFilterItems(this.state.searchString, cat)
+      console.log(lst)
       this.setState({
         ["displayed"]: lst,
       });

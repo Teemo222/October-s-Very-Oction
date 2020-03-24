@@ -29,6 +29,81 @@ export async function getItems() {
     return items;
 }
 
+export async function getItemsByKeyword(word) {
+    // the URL for the request
+    const url = 'http://localhost:5000/items-by-keyword/' + word;
+
+    console.log(url)
+
+    // Since this is a GET request, simply call fetch on the URL
+    const items = await fetch(url)
+    .then((res) => { 
+        if (res.status === 200) {
+            // return a promise that resolves with the JSON body
+           return res.json() 
+       } else {
+            alert('Could not get item')
+       }                
+    })
+    .then((json) => {  // the resolved promise with the JSON body
+        console.log()
+        return json.items
+    }).catch((error) => {
+        log(error)
+    })
+
+    console.log(items)
+    
+    return items;
+}
+
+
+export async function getItemsByCategory(category) {
+    // the URL for the request
+    const url = 'http://localhost:5000/items-by-category/' + category;
+
+    // Since this is a GET request, simply call fetch on the URL
+    const items = await fetch(url)
+    .then((res) => { 
+        if (res.status === 200) {
+            // return a promise that resolves with the JSON body
+           return res.json() 
+       } else {
+            alert('Could not get item')
+       }                
+    })
+    .then((json) => {  // the resolved promise with the JSON body
+        return json.items
+    }).catch((error) => {
+        log(error)
+    })
+    
+    return items;
+}
+
+export async function getItemsByKeywordAndCategory(word, category) {
+    // the URL for the request
+    const url = 'http://localhost:5000/items-by-keyword-and-category/' + word + '/' + category;
+
+    // Since this is a GET request, simply call fetch on the URL
+    const items = await fetch(url)
+    .then((res) => { 
+        if (res.status === 200) {
+            // return a promise that resolves with the JSON body
+           return res.json() 
+       } else {
+            alert('Could not get item')
+       }                
+    })
+    .then((json) => {  // the resolved promise with the JSON body
+        return json.items
+    }).catch((error) => {
+        log(error)
+    })
+    
+    return items;
+}
+
 // A function to send a POST request with a new student.
 export function addItem(itemName, itemCategory, itemDescription, itemImageSrc) {
     // the URL for the request

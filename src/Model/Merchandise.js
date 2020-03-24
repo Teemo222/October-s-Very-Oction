@@ -1,5 +1,5 @@
-import {addOrder} from "../actions/handleOrder";
-import {getItems, itemAddBid, itemAddAsk, itemRemoveBid, itemRemoveAsk} from '../actions/handleMerchandise'
+import {addOrder} from "./Order";
+import {getItems, itemAddBid, itemAddAsk, itemRemoveBid, itemRemoveAsk, getItemsByKeyword, getItemsByKeywordAndCategory, getItemsByCategory} from '../actions/handleMerchandise'
 
 
 class Merchandise{
@@ -59,8 +59,8 @@ class Merchandise{
       const sellerId = this.getLowestAskSeller();
       const price = this.getLowestAsk();
       itemRemoveAsk(this.itemId, price, sellerId)
-      // const order = addOrder(this, user, seller, price)
-      // this.orderHistory.push(order)
+      const order = addOrder(this.itemId, userId, sellerId, price)
+      this.orderHistory.push(order._id)
       // user.purchaseHistory.push(order)
       // seller.sellingHistory.push(order)
     }
@@ -75,8 +75,8 @@ class Merchandise{
       const buyerId = this.getHighestBidBuyer();
       const price = this.getHighestBid();
       itemRemoveBid(this.itemId, price, buyerId)
-      // const order = addOrder(this, buyer, user, price)
-      // this.orderHistory.push(order)
+      const order = addOrder(this.itemId, buyerId, userId, price)
+      this.orderHistory.push(order._id)
       // buyer.purchaseHistory.push(order)
       // user.sellingHistory.push(order)
     }
@@ -108,9 +108,20 @@ class Merchandise{
     }
 }
 
-
-export async function getAllItems(){
-  const items = await getItems()
+export async function getFilterItems(word,category){
+  let items;
+  if(word == "" && category != null){
+    items = await getItemsByCategory(category)
+  }
+  else if(category != null){
+    items = await getItemsByKeywordAndCategory(word, category)
+  }
+  else if(word != ""){
+    items = await getItemsByKeyword(word)
+  }
+  else{
+    items = await getItems()
+  }
   const result = []
   items.map((item) => {
     let obj = new Merchandise(item._id, item.itemName, item.itemCategory, item.itemDescription, item.itemImageSrc)
@@ -132,29 +143,6 @@ export async function getAllItems(){
     result.push(obj)
   })
   return result
-}
-
-export async function filterByKeyword(originalList, keyword){
-  const result = []
-  console.log(originalList)
-  for (let i = 0; i < originalList.length; i++){
-    if (originalList[i].itemName.includes(keyword)){
-      result.push(originalList[i])
-    }
-  }
-  return result;
-}
-
-export function filterByCategory(originalList, category){
-  const result = []
-  for (let i = 0; i < originalList.length; i++){
-  
-    if (originalList[i].itemCategory == category){
-      result.push(originalList[i])
-    }
-  }
-  
-  return result;
 }
 
 export default Merchandise;

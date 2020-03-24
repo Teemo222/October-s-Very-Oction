@@ -1,4 +1,4 @@
-import {getAllOrders, addOrderDb} from '../actions/handleOrder.js'
+import {getAllOrders, addOrderDb, getOrderByBuyer, getOrderBySeller, handleItemStatus} from '../actions/handleOrder.js'
 
 const ORDERPLACED = 0;
 const AUTHENTICATING = 1;
@@ -21,10 +21,11 @@ const RETURNING = 3;
 
 
 class Order {
-    constructor(item, buyer, seller, price) {
-        this.item = item;
-        this.buyer = buyer;
-        this.seller = seller;
+    constructor(orderId, itemId, buyerId, sellerId, price) {
+        this.orderId = orderId;
+        this.itemId = itemId;
+        this.buyerId = buyerId;
+        this.sellerId = sellerId;
         this.transactionTime = new Date();
         this.price = price;
         this.status = ORDERPLACED;
@@ -33,26 +34,38 @@ class Order {
 
 
 
-export function addOrder(item, buyer, seller, price) {
-    const order = new Order(item, buyer, seller, price);
-    addOrderDb(item, buyer, seller, price, order.transactionTime, order.status);
+export async function addOrder(itemId, buyerId, sellerId, price){
+    const result = await addOrderDb(itemId, buyerId, sellerId, price, new Date(), ORDERPLACED);
+    console.log(result)
+    return result
 }
 
-// GET /order-buyer/:id
-// export function getOrderByBuyer(buyer) {
-//     const result = [];
-//     for(let i = 0; i < allOrders.length; i++) {
-//         if(allOrders[i].buyer === buyer) {
-//             result.push(allOrders[i]);
-//         }
-//     }
-//     return result;
-// }
 
-// GET /all-order
-// export function getAllOrders(){
-//     return allOrders;
-// }
+export async function getOrderOfBuyer(buyerId) {
+  const orders = await getOrderByBuyer(buyerId)
+  const result = []
+  orders.map((order) => {
+    let obj = new Order(order._id, order.item, order.buyer, order.seller, order.price)
+    obj.transactionTime = order.time;
+    console.log(order.time)
+    obj.status = order.status
+    result.push(obj)
+  })
+  return result
+}
+
+export async function getOrderOfSeller(sellerId) {
+    const orders = await getOrderBySeller(sellerId)
+    const result = []
+    orders.map((order) => {
+      let obj = new Order(order._id, order.item, order.buyer, order.seller, order.price)
+      obj.transactionTime = order.time;
+      console.log(order.time)
+      obj.status = order.status
+      result.push(obj)
+    })
+    return result
+}
 
 export function ReceiveAuthentication(){
     this.setState({
@@ -86,19 +99,20 @@ export function getAction(order){
     }  
 }
 
-export function passItem(order){
+export async function passItem(order){
     if(order.status == AUTHENTICATING){order.status = DELIVERING}
+    handleItemStatus(order.orderId, "pass")
 }
 
-export function receiveItem(order){
+export async function receiveItem(order){
     if(order.status == ORDERPLACED){order.status = AUTHENTICATING}
+    handleItemStatus(order.orderId, "receive")
 }
 
-export function rejectItem(order){
+export async function rejectItem(order){
     if(order.status == AUTHENTICATING){order.status = RETURNING}
+    handleItemStatus(order.orderId, "reject")
 }
-
-
 
 export function getColumns(){
     return ["item", "buyer", "seller"]
@@ -108,24 +122,12 @@ export async function getOrders(){
   const orders = await getAllOrders()
   const result = []
   orders.map((order) => {
-    let obj = new Order(order._id, order.itemName, order.itemCategory, order.itemDescription)
+    let obj = new Order(order._id, order.item, order.buyer, order.seller, order.price)
     obj.transactionTime = order.time;
     obj.status = order.status
     result.push(obj)
   })
   return result
 }
-
-
-// GET /order-seller/:id
-// export function getOrderBySeller(seller) {
-//     const result = [];
-//     for(let i = 0; i < allOrders.length; i++) {
-//         if(allOrders[i].seller === seller) {
-//             result.push(allOrders[i]);
-//         }
-//     }
-//     return result;
-// }
 
 export default Order;

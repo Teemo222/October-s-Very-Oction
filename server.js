@@ -80,24 +80,50 @@ app.get('/items', (req, res) => {
 	})
 });
 
-app.get('/items-by-keyword:kw',async (req, res)=>{
+app.get('/items-by-keyword/:kw',(req, res)=>{
 	res.header("Access-Control-Allow-Origin", "*");
-	const items = await Merchandise.find(
+
+	Merchandise.find(
 		{
-			itemName:{$regex: new RegExp(`.*${req.param.kw}.*`,'i')}
+			itemName:{$regex: new RegExp(`.*${req.params.kw}.*`,'i')}
 		}
-	);
-	res.send(items);
+	).then((items) => {
+		res.send({ items }) // can wrap in object if want to add more properties
+	}, (error) => {
+		res.status(500).send(error) // server error
+	})
 });
 
-app.get('/items-by-category:cat',async (req, res)=>{
+app.get('/items-by-category/:cat',(req, res)=>{
 	res.header("Access-Control-Allow-Origin", "*");
-	const items = await Merchandise.find(
+	Merchandise.find(
 		{
-			itemCategory:{$regex: new RegExp(`.*${req.param.cat}.*`,'i')}
+			itemCategory:{$regex: new RegExp(`.*${req.params.cat}.*`,'i')}
 		}
-	);
-	res.send(items);
+	).then((items) => {
+		res.send({ items }) // can wrap in object if want to add more properties
+	}, (error) => {
+		res.status(500).send(error) // server error
+	})
+});
+
+app.get('/items-by-keyword-and-category/:kw/:cat',(req, res)=>{
+	res.header("Access-Control-Allow-Origin", "*");
+
+	console.log(req.params.kw)
+	console.log(req.params.cat)
+
+
+	Merchandise.find(
+		{
+			itemName:{$regex: new RegExp(`.*${req.params.kw}.*`,'i')},
+			itemCategory:{$regex: new RegExp(`.*${req.params.cat}.*`,'i')}
+		}
+	).then((items) => {
+		res.send({ items }) // can wrap in object if want to add more properties
+	}, (error) => {
+		res.status(500).send(error) // server error
+	})
 });
 
 /// a GET route to get a student by their id.
@@ -127,7 +153,7 @@ app.get('/items/:id', (req, res) => {
 			res.send(item)
 		}
 	}).catch((error) => {
-		res.status(500).send()  // server error
+		res.status(500).send(error)  // server error
 	})
 })
 app.get('/item-lowest-ask/:id', async (req, res)=>{
@@ -235,14 +261,15 @@ app.post('/items-remove-ask/', async (req, res)=>{
 
 app.get('/all-order', async (req, res)=>{
 	res.header("Access-Control-Allow-Origin", "*");
-	res.header('Access-Control-Allow-Methods', 'GET,POST,PATCH,DELETE');
-	const orders = await Order.find({});
-	res.send(orders);
+	Order.find().then((orders) => {
+		res.send(orders) // can wrap in object if want to add more properties
+	}, (error) => {
+		res.status(500).send(error) // server error
+	})
 });
 
 app.post('/order', async (req, res)=>{
 	res.header("Access-Control-Allow-Origin", "*");
-	res.header('Access-Control-Allow-Methods', 'GET,POST,PATCH,DELETE');
 	console.log('add order');
 	const {item, buyer, seller, price} = req.body;
 	const order = new Order({
@@ -251,31 +278,39 @@ app.post('/order', async (req, res)=>{
 		seller,
 		price
 	});
-	await order.save();
+	order.save();
 	res.send(order);
 });
 
 app.get('/order-buyer/:id', async (req, res)=>{
-	const buyerId = req.param.id;
-	const orders = await Order.find({
+	const buyerId = req.params.id;
+	Order.find({
 		buyer: new mongoose.Types.ObjectId(buyerId)
-	});
-	res.send(orders);
+	}).then((orders) => {
+		console.log(orders)
+		res.send(orders) // can wrap in object if want to add more properties
+	}, (error) => {
+		res.status(500).send(error) // server error
+	})
 });
 
 app.get('/order-seller/:id', async (req, res)=>{
-	const sellerId = req.param.id;
-	const orders = await Order.find({
-		seller: new mongoose.Types.ObjectId(sellerId)
-	});
-	res.send(orders);
+	const buyerId = req.params.id;
+	Order.find({
+		seller: new mongoose.Types.ObjectId(buyerId)
+	}).then((orders) => {
+		console.log(orders)
+		res.send(orders) // can wrap in object if want to add more properties
+	}, (error) => {
+		res.status(500).send(error) // server error
+	})
 });
 
 
 app.get('/unwind-order/:id', async (req, res)=>{
 	const orders = await Order.aggregate([
 		{
-			$match:{_id: req.param.id}
+			$match:{_id: req.params.id}
 		},
 		{
 			$lookup: {
@@ -294,6 +329,9 @@ app.get('/unwind-order/:id', async (req, res)=>{
 			}
 		}
 	]);
+
+	console.log(orders)
+
 	res.send(orders);
 });
 
