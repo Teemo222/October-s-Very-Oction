@@ -79,7 +79,8 @@ class UserTable extends React.Component {
                       // TODO? await?
                       console.log("new Data");
                       console.log(newData);
-                      await setUserPassword(newData.userId, newData.password)
+                      let changedUser = await setUserPassword(newData.userId, newData.password)
+                      newData.password = changedUser.password;
                       
                       strippedUser[index] = newData;
                       

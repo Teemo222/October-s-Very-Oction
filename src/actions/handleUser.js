@@ -127,6 +127,10 @@ export async function setUserPassword(userid, password) {
     // Send the request with fetch()
     try {
         let res = await fetch(request);
+        if(res.status != 200) {
+            alert("operation failed");
+            return;
+        }
         let data = await res.json();
         log(data);
         console.log('User Password Updated');
