@@ -361,7 +361,7 @@ app.post('/pass-order/:id', async (req, res)=>{
 
 /* --------- User backend implementation    ------------------*/
 ;( async () => {
-	// create admin
+	// create admin in handout
 	try {
 		let authenticator;
 		authenticator = await User.findOne({
@@ -381,6 +381,19 @@ app.post('/pass-order/:id', async (req, res)=>{
 		} 
 		log("admin: ");
 		log(authenticator);
+		// create user in handout
+		let demoUser = await User.findOne({
+			"username": "user"
+		})
+		if(!demoUser) {
+			demoUser = new User({
+				"username": "user",
+				"password": "user"
+			});
+			demoUser = await demoUser.save();
+		}
+		log("user: ")
+		log(demoUser)
 	} catch(e) {
 		log("create admin failed");
 		log(e);
@@ -394,6 +407,16 @@ const sessionChecker = (req, res, next) => {
         res.redirect('/'); // redirect to homepage if not logged in.
     } else {
         next(); // next() moves on to the route.
+    }    
+};
+
+const adminChecker = (req, res, next) => {
+	log("session in adminChecker")
+	log(req.session)
+    if (req.session.isAdmin) {
+        next();
+    } else {
+        res.status(401).send("Unauthorized"); // next() moves on to the route.
     }    
 };
 
@@ -462,7 +485,7 @@ app.post('/users/login', async (req, res) => {
 		req.session.userid = user._id;
 		req.session.username = user.username;
 		// user.success = true;
-		log("session:")
+		log("session in user login:")
 		log(JSON.stringify(req.session))
 		// log(admin_task);
 		// log(user);
@@ -516,7 +539,7 @@ app.get('/users/all', async (req, res) => {
 	}
 })
 
-app.post('/users/password', async (req, res) => {
+app.post('/users/password',  async (req, res) => {
 	// get the updated name and year only from the request body.
 	res.header("Access-Control-Allow-Origin", "*");
 	const { password, userid } = req.body;
