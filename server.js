@@ -78,7 +78,27 @@ app.get('/items', (req, res) => {
 	}, (error) => {
 		res.status(500).send(error) // server error
 	})
-})
+});
+
+app.get('/items-by-keyword:kw',async (req, res)=>{
+	res.header("Access-Control-Allow-Origin", "*");
+	const items = await Merchandise.find(
+		{
+			itemName:{$regex: new RegExp(`.*${req.param.kw}.*`,'i')}
+		}
+	);
+	res.send(items);
+});
+
+app.get('/items-by-category:cat',async (req, res)=>{
+	res.header("Access-Control-Allow-Origin", "*");
+	const items = await Merchandise.find(
+		{
+			itemCategory:{$regex: new RegExp(`.*${req.param.cat}.*`,'i')}
+		}
+	);
+	res.send(items);
+});
 
 /// a GET route to get a student by their id.
 // id is treated as a wildcard parameter, which is why there is a colon : beside it.
@@ -110,7 +130,20 @@ app.get('/items/:id', (req, res) => {
 		res.status(500).send()  // server error
 	})
 })
-
+app.get('/item-lowest-ask/:id', async (req, res)=>{
+	const item = await Merchandise.findById(itemId);
+	const low = Math.min(...item.asks.keys().map(
+		price=>parseInt(price)
+	));
+	res.send({lowestAsk:low, sellers:item.asks[low].map(user=>user.id)});
+});
+app.get('/item-highest-bid/:id', async (req, res)=>{
+	const item = await Merchandise.findById(itemId);
+	const highest = Math.max(...item.bids.keys().map(
+		price=>parseInt(price)
+	));
+	res.send({highestBid:highest, buyers:item.bids[highest].map(user=>user.id)});
+});
 app.post('/items-add-bid/', async (req, res)=>{
 	res.header("Access-Control-Allow-Origin", "*");
 	const { itemId, price, userId} = req.body;
@@ -263,6 +296,31 @@ app.get('/unwind-order/:id', async (req, res)=>{
 	]);
 	res.send(orders);
 });
+
+const ORDERPLACED = 0;
+const AUTHENTICATING = 1;
+const DELIVERING =2;
+const RETURNING = 3;
+
+app.post('/reject-order/:id', async (req, res)=>{
+	const order = await Order.findById(req.params.id);
+	if(order.status == AUTHENTICATING){order.status = RETURNING}
+	await order.save();
+	res.send(order);
+});
+app.post('/receive-order/:id', async (req, res)=>{
+	const order = await Order.findById(req.params.id);
+	if(order.status == ORDERPLACED){order.status = AUTHENTICATING}
+	await order.save();
+	res.send(order);
+});
+app.post('/pass-order/:id', async (req, res)=>{
+	const order = await Order.findById(req.params.id);
+	if(order.status == AUTHENTICATING){order.status = DELIVERING}
+	await order.save();
+	res.send(order);
+});
+
 /* --------- User backend implementation    ------------------*/
 ;( async () => {
 	// create admin
