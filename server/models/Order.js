@@ -16,7 +16,7 @@ const Order = mongoose.model('Order', {
 		ref:"User"
 	},
 	time : Date,
-	status : Number,
+	status : Number
 })
 
 module.exports = { Order }

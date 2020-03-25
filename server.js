@@ -214,9 +214,9 @@ app.post('/items-add-order/', async (req, res)=>{
 	res.header("Access-Control-Allow-Origin", "*");
 	const { itemId, orderId} = req.body;
 	Merchandise.findById(itemId).then(async(item)=>{
-		item.orderHistory.push(orderId)
+		const order = new mongoose.Types.ObjectId(orderId);
+		item.orderHistory.push(order)
 		await item.save();
-		console.log(item)
 		res.send(item);
 	});
 });
@@ -271,15 +271,50 @@ app.get('/all-order', async (req, res)=>{
 app.post('/order', async (req, res)=>{
 	res.header("Access-Control-Allow-Origin", "*");
 	console.log('add order');
-	const {item, buyer, seller, price} = req.body;
+	const {item, buyer, seller, price, time, status} = req.body;
 	const order = new Order({
 		item,
 		buyer,
 		seller,
-		price
+		price,
+		time,
+        status
 	});
 	order.save();
 	res.send(order);
+});
+
+app.get('/order/:id', async (req, res)=>{
+	const id = req.params.id;
+	if (!ObjectID.isValid(id)) {
+		res.status(404).send()  // if invalid id, definitely can't find resource, 404.
+		return;  // so that we don't run the rest of the handler.
+	}
+
+	// Otherwise, findById
+	Order.findById(id).then((order) => {
+		if (!order) {
+			res.status(404).send()  // could not find this student
+		} else {
+			/// sometimes we wrap returned object in another object:
+			//res.send({student})   
+			res.send(order)
+		}
+	}).catch((error) => {
+		res.status(500).send(error)  // server error
+	})
+});
+
+app.get('/order-seller/:id', async (req, res)=>{
+	const buyerId = req.params.id;
+	Order.find({
+		seller: new mongoose.Types.ObjectId(buyerId)
+	}).then((orders) => {
+		console.log(orders)
+		res.send(orders) // can wrap in object if want to add more properties
+	}, (error) => {
+		res.status(500).send(error) // server error
+	})
 });
 
 app.get('/order-buyer/:id', async (req, res)=>{

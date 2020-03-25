@@ -1,6 +1,28 @@
 /* AJAX fetch() calls */
 const log = console.log
 
+export async function getOrderByOrderId(orderId) {
+    const url = 'http://localhost:5000/order/' + orderId;
+
+    const order = await fetch(url)
+    .then((res) => { 
+        if (res.status === 200) {
+            // return a promise that resolves with the JSON body
+           return res.json() 
+       } else {
+            alert('Could not get orders')
+       }                
+    })
+    .then((json) => {  // the resolved promise with the JSON body
+        return json
+    }).catch((error) => {
+        log(error)
+    })
+    
+    return order;
+}
+
+
 export async function getOrderByBuyer(buyerId) {
     const url = 'http://localhost:5000/order-buyer/' + buyerId;
 

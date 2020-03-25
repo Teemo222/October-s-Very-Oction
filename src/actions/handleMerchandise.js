@@ -137,6 +137,36 @@ export function addItem(itemName, itemCategory, itemDescription, itemImageSrc) {
     })
 }
 
+export async function itemAddOrder(itemId, orderId) {
+    // the URL for the request
+    const url = "http://localhost:5000/items-add-order/";
+
+    // The data we are going to send in our request
+    let act = {
+        itemId: itemId,
+        orderId: orderId
+    }
+
+    // Create our request constructor with all the parameters we need
+    const request = new Request(url, {
+        method: 'post', 
+        body: JSON.stringify(act),
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json',
+        }
+    });
+
+    // Send the request with fetch()
+    await fetch(request)
+    .then(function(res) {
+
+    }).catch((error) => {
+        log(error)
+        throw error;
+    })
+}
+
 export async function itemAddBid(itemId, price, userId) {
     // the URL for the request
     const url = "http://localhost:5000/items-add-bid/";
@@ -259,37 +289,6 @@ export async function itemRemoveAsk(itemId, price, userId) {
     .then(function(res) {
             log(res)
             console.log('item removed ask')
-    }).catch((error) => {
-        log(error)
-        throw error;
-    })
-}
-
-export async function itemAddOrder(itemId, orderId) {
-    // the URL for the request
-    const url = "http://localhost:5000/items-add-order/";
-
-    // The data we are going to send in our request
-    let act = {
-        itemId: itemId,
-        orderId: orderId
-    }
-
-    // Create our request constructor with all the parameters we need
-    const request = new Request(url, {
-        method: 'post', 
-        body: JSON.stringify(act),
-        headers: {
-            'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json',
-        }
-    });
-
-    // Send the request with fetch()
-    await fetch(request)
-    .then(function(res) {
-            log(res)
-            console.log('item added order')
     }).catch((error) => {
         log(error)
         throw error;

@@ -1,5 +1,5 @@
 import {addOrder} from "./Order";
-import {getItems, itemAddBid, itemAddAsk, itemRemoveBid, itemRemoveAsk, getItemsByKeyword, getItemsByKeywordAndCategory, getItemsByCategory} from '../actions/handleMerchandise'
+import {getItems, itemAddBid, itemAddAsk, itemRemoveBid, itemRemoveAsk, getItemsByKeyword, getItemsByKeywordAndCategory, getItemsByCategory, itemAddOrder} from '../actions/handleMerchandise'
 
 
 class Merchandise{
@@ -54,34 +54,69 @@ class Merchandise{
     return this.bids[price][0]
   }
 
-  addBid = function(price, userId){
+  addBid = async function(price, userId){
     if (Object.keys(this.asks).length > 0 && price >= this.getLowestAsk()){
       const sellerId = this.getLowestAskSeller();
       const price = this.getLowestAsk();
-      itemRemoveAsk(this.itemId, price, sellerId)
-      const order = addOrder(this.itemId, userId, sellerId, price)
+      await itemRemoveAsk(this.itemId, price, sellerId)
+      for (let i = 0; i < this.asks[price].length; i++){
+        if (this.asks[price][i] == userId){
+          this.asks[price].splice(i, 1)
+            break;
+        }
+      }
+      if(this.bids[price].length == 0){
+        delete this.bids[price]
+      }
+      const order = await addOrder(this.itemId, userId, sellerId, price)
       this.orderHistory.push(order._id)
+      await itemAddOrder(this.itemId, order._id)
       // user.purchaseHistory.push(order)
       // seller.sellingHistory.push(order)
     }
     else{
-      itemAddBid(this.itemId, price, userId)
+      await itemAddBid(this.itemId, price, userId)
+      if (price in this.bids){
+        this.bids[price].push(userId)
+      }
+      else{
+        this.bids[price] = [userId]
+      }
     }    
  
   }
 
-  addAsk = function(price, userId){
+  addAsk = async function(price, userId){
     if (Object.keys(this.bids).length > 0 && price <= this.getHighestBid()){
       const buyerId = this.getHighestBidBuyer();
       const price = this.getHighestBid();
-      itemRemoveBid(this.itemId, price, buyerId)
-      const order = addOrder(this.itemId, buyerId, userId, price)
+      await itemRemoveBid(this.itemId, price, buyerId)
+      for (let i = 0; i < this.bids[price].length; i++){
+        if (this.bids[price][i] == userId){
+          this.bids[price].splice(i, 1)
+            break;
+        }
+      }
+      if(this.bids[price].length == 0){
+        delete this.bids[price]
+      }
+      const order = await addOrder(this.itemId, buyerId, userId, price)
+      console.log(order._id)
       this.orderHistory.push(order._id)
+      console.log(this.orderHistory)
+      await itemAddOrder(this.itemId, order._id)
       // buyer.purchaseHistory.push(order)
       // user.sellingHistory.push(order)
     }
     else{
-      itemAddAsk(this.itemId, price, userId)
+      await itemAddAsk(this.itemId, price, userId)
+      if (price in this.asks){
+        this.asks[price].push(userId)
+      }
+      else{
+        console.log("fuckuckujsjjs")
+        this.asks[price] = [userId]
+      }
     }  
   }
 

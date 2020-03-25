@@ -3,6 +3,7 @@ import React from "react";
 import "./styles.css";
 
 import {Line} from 'react-chartjs-2';
+import {getOrderByOrderId} from '../../actions/handleOrder'
 
 class DataBox extends React.Component {
 
@@ -22,13 +23,9 @@ class DataBox extends React.Component {
 
 /* The ItemData Component */
 class ItemData extends React.Component {
-
-  render() {
-    let {
-      item
-    } = this.props;
-
-    const data = {
+  state = {
+    item: this.props.item,
+    data: {
       labels: [],
       datasets: [
         {label: "purchases",
@@ -38,51 +35,65 @@ class ItemData extends React.Component {
         data: []
         }
       ]
+    },
+    average: 0,
+    length: 0
+  }
+
+  async processItemOrderHistory(){
+    const itemHistory = this.state.item.orderHistory;
+    const data = this.state.data
+    for (let i = 0; i<itemHistory.length; i++){
+      await getOrderByOrderId(itemHistory[i]).then((order) => {
+        data.labels.push(order.time)
+        data.datasets[0].data.push({x: order.time, y: order.price})
+      })
     }
+    this.setState({data: data, length: this.state.item.orderHistory.length})
+  }
 
-    const itemHistory = item.orderHistory;
-
-    function processItemOrderHistory(){
-      for (let i = 0; i<itemHistory.length; i++){
-        const order = itemHistory[i]
-        data.labels.push(order.transactionTime)
-        data.datasets[0].data.push({x: order.transactionTime, y: order.price})
-      }
-
-    }
-
-    processItemOrderHistory()
-
-    const averagePrice = function(){
-      let count = 0;
-      let acc= 0
-      for (let i = 0; i<itemHistory.length; i++){
-        const order = itemHistory[i]
+  async averagePrice(){
+    const itemHistory = this.state.item.orderHistory;
+    let count = 0;
+    let acc= 0
+    for (let i = 0; i<itemHistory.length; i++){
+      await getOrderByOrderId(itemHistory[i]).then((order) => {
         acc += order.price;
         count += 1;
-      }
-      if (count == 0){return 0.0}
-      return acc / count
+      })
+    }
+    if (count == 0){return 0.0}
+    this.setState({average: acc/count})
+  }
+
+  async componentDidMount() {
+    await this.processItemOrderHistory()
+    await this.averagePrice()
+  }
+
+  render() {
+
+    console.log("re-rendering")
+
+    if(this.state.length != this.state.item.orderHistory.length){
+      this.componentDidMount()
     }
 
-
-    return (
+     return (
       <div className="wrapper">
         <div className="leftPart">
                <Line
                 options = {{reponsive: true}}
-                data = {data}
-               />
-        
-              
+                data = {this.state.data}
+               /> 
         </div>
       
         <div className="rightPart">
           <DataBox dataName = {"Total Sales"}
-                   stats = {item.orderHistory.length}
+                   stats = {this.state.item.orderHistory.length}
           />
           <DataBox dataName = {"Average Price"}
-                   stats = {averagePrice()}
+                   stats = {this.state.average}
           />
         </div>
         

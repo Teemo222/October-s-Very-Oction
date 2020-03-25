@@ -74,7 +74,7 @@ class ItemView extends React.Component {
       currentUser
     } = this.props;
 
-    const submit = (e) => {
+    const submit = async (e) => {
       e.preventDefault();
       if(currentUser == null){
         alert("please log in")
@@ -86,10 +86,10 @@ class ItemView extends React.Component {
         alert("invalid price")
       }
       if(this.state.bid){
-        item.addBid(price, currentUser)
+        await item.addBid(price, currentUser._id)
       }
       else{
-        item.addAsk(price, currentUser)
+        await item.addAsk(price, currentUser._id)
       }
       alert("good");
       this.closePopUp()
