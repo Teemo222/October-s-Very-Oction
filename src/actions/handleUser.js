@@ -132,8 +132,49 @@ export async function setUserPassword(userid, password) {
             return;
         }
         let data = await res.json();
+        updateCurrentUser(data);
         log(data);
         console.log('User Password Updated');
+        return data;
+    } catch(err) {
+        log(err);
+    } 
+  }
+
+  export async function setUserInfo(userid, email, address, creditCardNumber) {
+    // assume userId exists
+    const url = 'http://localhost:5000/users/info';
+
+    // The data we are going to send in our request
+    let user = {
+        userid: userid,
+        email,
+        address,
+        creditCardNumber
+    };
+
+    log(JSON.stringify(user));
+    // Create our request constructor with all the parameters we need
+    const request = new Request(url, {
+        method: 'post', 
+        body: JSON.stringify(user),
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        }
+    });
+
+    // Send the request with fetch()
+    try {
+        let res = await fetch(request);
+        if(res.status != 200) {
+            alert("operation failed");
+            return;
+        }
+        let data = await res.json();
+        updateCurrentUser(data)
+        log(data);
+        console.log('User Info Updated');
         return data;
     } catch(err) {
         log(err);
@@ -155,6 +196,11 @@ export async function setUserPassword(userid, password) {
         log(err);
     }
   }
+
+export function updateCurrentUser(user) {
+    sessionStorage.setItem('user', JSON.stringify(user));
+
+}
   
 //   export async function isAdmin(){
 //       // the URL for the request

@@ -7,6 +7,7 @@ import { getAllItems } from '../../Model/Merchandise'
 import Button from "@material-ui/core/Button";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
+import {setUserInfo} from '../../actions/handleUser';
 
 
 class MenuItem extends React.Component {
@@ -67,9 +68,24 @@ class UserInfo extends React.Component {
     let info;
     let edit;
 
-    const update = (event) =>{
+    const update = async (event) =>{
       event.preventDefault()
-      this.displayInfo(event, currentUser)
+      const email = document.querySelector("#email").value;
+      const address = document.querySelector("#address").value;
+      const creditCardNumber = document.querySelector("#card").value;
+      try {
+        let data = await setUserInfo(currentUser._id, email, address, creditCardNumber);
+        if(data) {
+          console.log("updated user");
+          console.log(data)
+          this.setState({
+            showEdit: false,
+          });
+          window.location.reload();
+        }
+      } catch(err) {
+        console.log(err)
+      }
     }
 
     info = (<div className = "userInfo">
@@ -87,11 +103,11 @@ class UserInfo extends React.Component {
           <div className="edit-popup" id="login-div">
           <form onSubmit={update}>
               <label>Email: </label>
-              <input id="email"></input><br/>
+              <input id="email" name="email"></input><br/>
               <label>Address: </label>
-              <input id="address"></input><br/>
+              <input id="address" name="address"></input><br/>
               <label >Card Number: </label>
-              <input id="card"></input><br/>
+              <input id="card" name="creditCardNumber"></input><br/>
               <button >Confirm</button>            
           </form>
         </div>

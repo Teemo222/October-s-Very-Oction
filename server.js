@@ -562,3 +562,31 @@ app.post('/users/password',  async (req, res) => {
 		res.status(400).send(err);
 	}
 })
+
+app.post('/users/info',  async (req, res) => {
+	// get the updated name and year only from the request body.
+	res.header("Access-Control-Allow-Origin", "*");
+	const { userid, email, address, creditCardNumber } = req.body;
+
+	log("/users/info")
+	log(email)
+	log(address)
+	log(creditCardNumber)
+	console.log(ObjectID.isValid(userid))
+	if (!ObjectID.isValid(userid)) {
+		res.status(404).send()
+		return;  // so that we don't run the rest of the handler.
+	}
+
+	try {
+		let user = await User.findById(userid);
+		user.email = email;
+		user.address = address;
+		user.creditCardNumber = creditCardNumber;
+		user = await user.save();
+		console.log(user)
+		res.send(user);
+	} catch(err) {
+		res.status(400).send(err);
+	}
+})
