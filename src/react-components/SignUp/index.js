@@ -56,11 +56,11 @@ class SignUp extends React.Component {
     }
 
     const SignUpOrSignOut = (event) => {
-      if (currentUser == null){
+      if (currentUser){
         event.preventDefault()
-        this.showSignUp()
-      }else{
         handleUserSignOut();
+      }else{
+        this.showSignUp()
       }
     }
 
@@ -83,11 +83,12 @@ class SignUp extends React.Component {
 
     let buttonText;
 
-    if (currentUser == null){
-      buttonText = "Sign Up";
+    if (currentUser){
+      console.log("signup page")
+      buttonText = "Sign Out";
     }
     else{
-      buttonText = "Sign Out";
+      buttonText = "Sign In";
     }
     
   

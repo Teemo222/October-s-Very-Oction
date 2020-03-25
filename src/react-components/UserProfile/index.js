@@ -46,6 +46,12 @@ class UserInfo extends React.Component {
     });
   }
 
+  closeLogin = () => {
+    this.setState({
+      showEdit: false,
+    });
+  }
+
   cancelPopUp = (e) => {
     const backgroundDiv = document.querySelector("#edit-background-div");
     if(e.target === backgroundDiv) {
@@ -54,6 +60,8 @@ class UserInfo extends React.Component {
   }
 
   render(){
+    console.log("user profile")
+    console.log(this.props);
     const { currentUser } = this.props;
     const {showEdit} = this.state;
     let info;

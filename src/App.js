@@ -46,6 +46,30 @@ class App extends React.Component {
     });
   };
 
+  getUserFromSessionStorage = () => {
+    let tempUser = JSON.parse(sessionStorage.getItem('user'));
+    const { currentUser } = this.state;
+    console.log("on load: currentUser vs tempUser")
+    console.log(currentUser);
+    console.log(tempUser)
+    if(tempUser && (!currentUser)) {
+      console.log("set user from session storage")
+      this.setState({
+        ["currentUser"]: tempUser
+      });
+    }
+  }
+
+  componentDidMount() {
+    console.log("mount")
+    this.getUserFromSessionStorage();
+  }
+
+  componentDidUpdate() {
+    console.log("update")
+    this.getUserFromSessionStorage();
+  }
+
   handleUserLogIn = async (event, callback) => {
     event.preventDefault();
     const target = event.target;
@@ -53,8 +77,11 @@ class App extends React.Component {
     const username = target.querySelector("#username").value;
     const password = target.querySelector("#password").value;
     const user = await loginUser(username, password);
+    console.log("after loginUser");
+    console.log(user);
 
-    if (user != null){
+    if ((user != null) && !(user.success === false)){
+      sessionStorage.setItem('user', JSON.stringify(user));
       this.setState({
         ["currentUser"]: user
       });
@@ -83,6 +110,7 @@ class App extends React.Component {
   };  
   
   handleUserSignOut = () =>{
+    sessionStorage.removeItem('user');
     this.setState({
       ["currentUser"]: null
     });
