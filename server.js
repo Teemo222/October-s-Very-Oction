@@ -634,28 +634,46 @@ app.post('/users/add-purchase', async (req, res)=>{
 
 	if (!ObjectID.isValid(userid)) {
 		res.status(404).send()
-		return; 
+		return;
 	}
 
 	if (!ObjectID.isValid(itemid)) {
 		res.status(404).send()
-		return; 
+		return;
 	}
 
-	Merchandise.findById(itemId).then(async(item)=>{
-		console.log(item);
-		const p = '' + price;
-		const user = new mongoose.Types.ObjectId(userId);
-		console.log(item.bids.keys());
-		if(item.bids.get(p)){
-			item.bids.get(p).push(user)
-		}
-		else{
-			item.bids.set(p, [user]);
-		}
-		item.markModified('bids');
-		await item.save();
-		console.log(item)
-		res.send(item);
-	});
-});
+	try {
+		let user = await User.findById(userid);
+		user.purchaseHistory.push(itemid)
+		user = await user.save();
+		res.send(user);
+	} catch(err) {
+		res.status(400).send(err);
+	}	
+})
+
+
+app.post('/users/add-selling', async (req, res)=>{
+
+	res.header("Access-Control-Allow-Origin", "*");
+	const { userid, itemid } = req.body;
+
+	if (!ObjectID.isValid(userid)) {
+		res.status(404).send()
+		return;
+	}
+
+	if (!ObjectID.isValid(itemid)) {
+		res.status(404).send()
+		return;
+	}
+
+	try {
+		let user = await User.findById(userid);
+		user.sellingHistory.push(itemid)
+		user = await user.save();
+		res.send(user);
+	} catch(err) {
+		res.status(400).send(err);
+	}	
+})
