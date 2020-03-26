@@ -105,8 +105,8 @@ class Merchandise{
       this.orderHistory.push(order._id)
       console.log(this.orderHistory)
       await itemAddOrder(this.itemId, order._id)
-      // buyer.purchaseHistory.push(order)
-      // user.sellingHistory.push(order)
+      await addToPurchase(buyerId, this.itemId)
+      await addToSelling(userId, this.itemId)
     }
     else{
       await itemAddAsk(this.itemId, price, userId)
