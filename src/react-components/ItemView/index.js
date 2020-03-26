@@ -72,7 +72,8 @@ class ItemView extends React.Component {
   render() {
     let {
       item,
-      currentUser
+      currentUser,
+      handleUserFunction
     } = this.props;
 
     const submit = async (e) => {
@@ -87,10 +88,12 @@ class ItemView extends React.Component {
         alert("invalid price")
       }
       if(this.state.bid){
-        await item.addBid(price, currentUser._id)       
+        await item.addBid(price, currentUser._id)  
+        handleUserFunction()     
       }
       else{
         await item.addAsk(price, currentUser._id)
+        handleUserFunction()   
       }
       alert("good");
       this.closePopUp()

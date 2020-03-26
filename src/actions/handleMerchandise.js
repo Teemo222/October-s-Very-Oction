@@ -5,6 +5,30 @@ log('Loaded front-end javascript.')
 
 // A function to send a GET request to the web server,
 //  and then loop through them and add a list element for each student.
+
+export async function getItemById(itemId) {
+    // the URL for the request
+    const url = 'http://localhost:5000/items/' + itemId;
+
+    console.log(111)
+    // Since this is a GET request, simply call fetch on the URL
+    const item = await fetch(url)
+    .then((res) => { 
+        if (res.status === 200) {
+            // return a promise that resolves with the JSON body
+           return res.json() 
+       } else {
+            alert('Could not get item')
+       }                
+    })
+    .then((json) => {  // the resolved promise with the JSON body
+        return json
+    }).catch((error) => {
+        log(error)
+    })
+    return item;
+}
+
 export async function getItems() {
     // the URL for the request
     const url = 'http://localhost:5000/items';

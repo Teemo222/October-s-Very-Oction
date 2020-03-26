@@ -26,6 +26,11 @@ class App extends React.Component {
     count:0
   }
   
+  handleUserFunction = () => {
+      let count = this.state.count + 1;
+      this.setState({count: count})
+  }
+
   handleSelectItem = (item) => {
     return (event) => {
       event.preventDefault();
@@ -46,17 +51,25 @@ class App extends React.Component {
     });
   };
 
-  getUserFromSessionStorage = () => {
-    let tempUser = JSON.parse(sessionStorage.getItem('user'));
+  getUserFromSessionStorage = async () => {
+    let tempUser = await JSON.parse(sessionStorage.getItem('user'));
     const { currentUser } = this.state;
     console.log("on load: currentUser vs tempUser")
     console.log(currentUser);
     console.log(tempUser)
-    if(tempUser && (!currentUser)) {
+    if (tempUser && !currentUser){
       console.log("set user from session storage")
       this.setState({
         ["currentUser"]: tempUser
       });
+    }
+    else if (tempUser && currentUser){
+      if(tempUser.purchaseHistory.length !== currentUser.purchaseHistory.length || tempUser.sellingHistory.length !== currentUser.sellingHistory.length){
+        console.log("set user from session storage")
+      this.setState({
+        ["currentUser"]: tempUser
+      });
+      }
     }
   }
 
@@ -68,6 +81,7 @@ class App extends React.Component {
   componentDidUpdate() {
     console.log("update")
     this.getUserFromSessionStorage();
+    console.log(this.state.currentUser)
   }
 
   handleUserLogIn = async (event, callback) => {
@@ -157,6 +171,7 @@ class App extends React.Component {
                 handleUserLogIn = {this.handleUserLogIn}
                 handleUserSignUp = {this.handleUserSignUp}
                 handleUserSignOut = {this.handleUserSignOut}
+                handleUserFunction = {this.handleUserFunction}
                 //more attributes
                 
                 />)}/>

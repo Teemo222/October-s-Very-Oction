@@ -9,6 +9,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import {setUserInfo} from '../../actions/handleUser';
 import {getOrderByOrderId} from '../../actions/handleOrder';
+import {getItemById} from '../../actions/handleMerchandise';
 
 
 class MenuItem extends React.Component {
@@ -156,7 +157,7 @@ class Purchase extends React.Component {
     return (
       <TableRow className="row" >
         <TableCell component="th" scope="row">
-          {order.item}
+          {order.itemName}
         </TableCell>
 
         <TableCell component="th" scope="row">
@@ -180,7 +181,7 @@ class Selling extends React.Component {
     return (
       <TableRow className="row" >
         <TableCell component="th" scope="row">
-          {order.item}
+          {order.itemName}
         </TableCell>
 
         <TableCell component="th" scope="row">
@@ -288,36 +289,37 @@ class UserProfile extends React.Component {
   state = {
       sellings: null,
       purchases: null,
+      sellingLength: 0,
+      purchaseLength: 0,
       activePage: ProfileDetail
     }
   
 
-  async loadSellings(){
-    const result = []
-    console.log(this.props.currentUser)
+  async loadHistory(){
+    const sellings = []
     this.props.currentUser.sellingHistory.map(async (orderId) => {
       const order = await getOrderByOrderId(orderId)
-      result.push(order)
+      const item = await getItemById(order.item)
+      order.itemName = item.itemName
+      sellings.push(order)
     })
-    console.log(result)
-    this.setState({sellings: result})
-  }
 
-  async loadPurchases(){
-    const result = []
-    console.log(this.props.currentUser)
+    const purchases = []
     this.props.currentUser.purchaseHistory.map(async (orderId) => {
       const order = await getOrderByOrderId(orderId)
-      result.push(order)
+      const item = await getItemById(order.item)
+      order.itemName = item.itemName
+      purchases.push(order)
     })
-    console.log(result)
-    this.setState({purchases: result})
+
+
+    this.setState({sellings: sellings, purchases: purchases, sellingLength: this.props.currentUser.sellingHistory.length, purchaseLength: this.props.currentUser.purchaseHistory.length})
   }
+
 
   setActive(page){
     console.log(this.props.currentUser)
     this.setState({activePage:page});
-    //
   }
 
   render() {  
@@ -325,14 +327,20 @@ class UserProfile extends React.Component {
     console.log("re-render here")
     console.log(this.props.currentUser)
 
+    let flag = false;
+
     if(this.props.currentUser != null && (this.state.sellings == null || this.state.purchases == null)){
-        try {
-          this.loadPurchases()
-          this.loadSellings()
-        } catch(err) {
-          console.log(err)
-        }
+        flag = true
     }
+    else if(this.props.currentUser != null && this.state.sellingLength != this.props.currentUser.sellingHistory.length){
+        flag = true
+    }
+    else if(this.props.currentUser != null && this.state.purchaseLength != this.props.currentUser.sellingHistory.length){
+        flag = true
+    }
+    if (flag){
+      this.loadHistory()
+    } 
 
     const {
       currentUser,

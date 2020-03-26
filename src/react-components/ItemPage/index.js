@@ -13,7 +13,8 @@ class ItemPage extends React.Component {
           item,
           handleUserLogIn,
           handleUserSignUp,
-          handleUserSignOut
+          handleUserSignOut,
+          handleUserFunction
         } = this.props;
 
     return (
@@ -27,6 +28,7 @@ class ItemPage extends React.Component {
         <ItemView 
           item = {item}
           currentUser = {currentUser}
+          handleUserFunction = {handleUserFunction}
         />
 
       </div>
