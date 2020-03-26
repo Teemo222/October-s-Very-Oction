@@ -8,6 +8,7 @@ import PriceRow from "../PriceRow"
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import PriceList from '../PriceList'
+import {setUserInfo} from '../../actions/handleUser'
 
 
 /* The ItemView Component */
@@ -86,7 +87,7 @@ class ItemView extends React.Component {
         alert("invalid price")
       }
       if(this.state.bid){
-        await item.addBid(price, currentUser._id)
+        await item.addBid(price, currentUser._id)       
       }
       else{
         await item.addAsk(price, currentUser._id)
