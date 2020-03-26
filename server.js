@@ -642,9 +642,6 @@ app.post('/users/add-purchase', async (req, res)=>{
 		return; 
 	}
 
-
-
-
 	Merchandise.findById(itemId).then(async(item)=>{
 		console.log(item);
 		const p = '' + price;
