@@ -201,6 +201,69 @@ export function updateCurrentUser(user) {
     sessionStorage.setItem('user', JSON.stringify(user));
 
 }
+
+
+export async function addToPurchase(userid, itemid) {
+    const url = 'http://localhost:5000/users/add-purchase';
+    let purchase = {
+        userid: userid,
+        itemId: itemid
+    };
+    const request = new Request(url, {
+        method: 'post',
+        body: JSON.stringify(purchase),
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        }
+    });
+    try {
+        let res = await fetch(request);
+        if(res.status != 200) {
+            alert("operation failed");
+            return;
+        }
+        let data = await res.json();
+        updateCurrentUser(data)
+        log(data);
+        console.log('User Info Updated');
+        return data;
+    } catch(err) {
+        log(err);
+    } 
+  
+}
+
+export async function addToSelling(userid, itemid) {
+    const url = 'http://localhost:5000/users/add-selling';
+    let selling = {
+        userid: userid,
+        itemId: itemid
+    };
+    const request = new Request(url, {
+        method: 'post',
+        body: JSON.stringify(selling),
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        }
+    });
+    try {
+        let res = await fetch(request);
+        if(res.status != 200) {
+            alert("operation failed");
+            return;
+        }
+        let data = await res.json();
+        updateCurrentUser(data)
+        log(data);
+        console.log('User Info Updated');
+        return data;
+    } catch(err) {
+        log(err);
+    } 
+}
+
   
 //   export async function isAdmin(){
 //       // the URL for the request
