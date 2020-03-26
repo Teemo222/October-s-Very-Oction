@@ -630,21 +630,25 @@ app.post('/users/info',  async (req, res) => {
 app.post('/users/add-purchase', async (req, res)=>{
 
 	res.header("Access-Control-Allow-Origin", "*");
-	const { userid, itemid } = req.body;
+	const { userid, orderid } = req.body;
 
 	if (!ObjectID.isValid(userid)) {
+		console.log(userid + 'hahhaa')
 		res.status(404).send()
 		return;
 	}
 
-	if (!ObjectID.isValid(itemid)) {
+	if (!ObjectID.isValid(orderid)) {
+		console.log(itemid + 'rinima')
 		res.status(404).send()
 		return;
 	}
 
 	try {
 		let user = await User.findById(userid);
-		user.purchaseHistory.push(itemid)
+		console.log(user)
+		user.purchaseHistory.push(orderid)
+		console.log(user)
 		user = await user.save();
 		res.send(user);
 	} catch(err) {
@@ -656,21 +660,21 @@ app.post('/users/add-purchase', async (req, res)=>{
 app.post('/users/add-selling', async (req, res)=>{
 
 	res.header("Access-Control-Allow-Origin", "*");
-	const { userid, itemid } = req.body;
+	const { userid, orderid } = req.body;
 
 	if (!ObjectID.isValid(userid)) {
 		res.status(404).send()
 		return;
 	}
 
-	if (!ObjectID.isValid(itemid)) {
+	if (!ObjectID.isValid(orderid)) {
 		res.status(404).send()
 		return;
 	}
 
 	try {
 		let user = await User.findById(userid);
-		user.sellingHistory.push(itemid)
+		user.sellingHistory.push(orderid)
 		user = await user.save();
 		res.send(user);
 	} catch(err) {

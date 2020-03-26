@@ -71,8 +71,8 @@ class Merchandise{
       const order = await addOrder(this.itemId, userId, sellerId, price)
       this.orderHistory.push(order._id)
       await itemAddOrder(this.itemId, order._id)
-      await addToPurchase(userId, this.itemId)
-      await addToSelling(sellerId, this.itemId)
+      await addToPurchase(userId, order._id)
+      await addToSelling(sellerId, order._id)
     }
     else{
       await itemAddBid(this.itemId, price, userId)
@@ -105,8 +105,8 @@ class Merchandise{
       this.orderHistory.push(order._id)
       console.log(this.orderHistory)
       await itemAddOrder(this.itemId, order._id)
-      await addToPurchase(buyerId, this.itemId)
-      await addToSelling(userId, this.itemId)
+      await addToPurchase(buyerId, order._id)
+      await addToSelling(userId, order._id)
     }
     else{
       await itemAddAsk(this.itemId, price, userId)

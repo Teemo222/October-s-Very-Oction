@@ -2,12 +2,13 @@ import React from "react";
 
 import "./styles.css";
 import Header from '../Header';
-import { getOrderBySeller, getOrderByBuyer} from '../../Model/Order'
+import { getOrderBySeller, getOrderByBuyer, getOrderOfBuyer} from '../../Model/Order'
 import { getAllItems } from '../../Model/Merchandise'
 import Button from "@material-ui/core/Button";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import {setUserInfo} from '../../actions/handleUser';
+import {getOrderByOrderId} from '../../actions/handleOrder';
 
 
 class MenuItem extends React.Component {
@@ -61,8 +62,6 @@ class UserInfo extends React.Component {
   }
 
   render(){
-    console.log("user profile")
-    console.log(this.props);
     const { currentUser } = this.props;
     const {showEdit} = this.state;
     let info;
@@ -150,13 +149,14 @@ class ProfileDetail extends React.Component {
 
 
 class Purchase extends React.Component {
+
   render() {
-    const { order } = this.props;
-    
+
+    const {order} = this.props
     return (
       <TableRow className="row" >
         <TableCell component="th" scope="row">
-          {order.item.itemName}
+          {order.item}
         </TableCell>
 
         <TableCell component="th" scope="row">
@@ -164,7 +164,7 @@ class Purchase extends React.Component {
         </TableCell>
 
         <TableCell component="th" scope="row">
-          {order.transactionTime.toString()}
+          {order.time}
         </TableCell>
 
       </TableRow>
@@ -173,13 +173,14 @@ class Purchase extends React.Component {
 }
 
 class Selling extends React.Component {
+
   render() {
-    const { order } = this.props;
-    
+    const {order} = this.props
+
     return (
       <TableRow className="row" >
         <TableCell component="th" scope="row">
-          {order.item.itemName}
+          {order.item}
         </TableCell>
 
         <TableCell component="th" scope="row">
@@ -187,7 +188,7 @@ class Selling extends React.Component {
         </TableCell>
 
         <TableCell component="th" scope="row">
-          {order.transactionTime.toString()}
+          {order.time}
         </TableCell>
 
       </TableRow>
@@ -208,12 +209,11 @@ class Selling extends React.Component {
 
 class PurchaseHistory extends React.Component {
   render(){
-    const { currentUser } = this.props;
+    const { currentUser , purchases} = this.props;
     if(!currentUser){return (<div className = "orderTable">
                                 <TableLabels/>
                             </div>)}
     else{
-      const purchases = currentUser.purchaseHistory;
         return (
         <div className = "orderTable">
           <TableLabels/>
@@ -250,12 +250,16 @@ class TableLabels extends React.Component{
 
 class SellingHistory extends React.Component {
   render(){
-    const { currentUser } = this.props;
+    console.log(this.props)
+    const { currentUser, sellings} = this.props;
+
+    console.log(sellings)
+
     if(!currentUser){return (<div className = "orderTable">
                                <TableLabels/>
                             </div>)}
     else{
-      const sellings = currentUser.sellingHistory;
+
       return (
         <div className = "orderTable">
           <TableLabels/>
@@ -280,16 +284,56 @@ class Menu extends React.Component{
 
 /* The SignUp Component */
 class UserProfile extends React.Component {
-  constructor(){
-    super();
-    this.state = {
+
+  state = {
+      sellings: null,
+      purchases: null,
       activePage: ProfileDetail
     }
+  
+
+  async loadSellings(){
+    const result = []
+    console.log(this.props.currentUser)
+    this.props.currentUser.sellingHistory.map(async (orderId) => {
+      const order = await getOrderByOrderId(orderId)
+      result.push(order)
+    })
+    console.log(result)
+    this.setState({sellings: result})
   }
+
+  async loadPurchases(){
+    const result = []
+    console.log(this.props.currentUser)
+    this.props.currentUser.purchaseHistory.map(async (orderId) => {
+      const order = await getOrderByOrderId(orderId)
+      result.push(order)
+    })
+    console.log(result)
+    this.setState({purchases: result})
+  }
+
   setActive(page){
+    console.log(this.props.currentUser)
     this.setState({activePage:page});
+    //
   }
+
   render() {  
+
+    console.log("re-render here")
+    console.log(this.props.currentUser)
+
+    if(this.props.currentUser != null && (this.state.sellings == null || this.state.purchases == null)){
+        try {
+          this.loadPurchases()
+          this.loadSellings()
+        } catch(err) {
+          console.log(err)
+        }
+    }
+
     const {
       currentUser,
       handleUserLogIn,  
@@ -311,7 +355,9 @@ class UserProfile extends React.Component {
            <div className="profile-content">
             <Menu className="leftMenu" onClick={setActive} />
            <div className="mainContent">
-             <this.state.activePage  currentUser={currentUser}/>
+             <this.state.activePage  currentUser={currentUser}
+                                      sellings={this.state.sellings}
+                                      purchases={this.state.purchases}/>
            </div>
           </div>          
         </div>         

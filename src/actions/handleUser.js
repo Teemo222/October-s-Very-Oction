@@ -203,11 +203,11 @@ export function updateCurrentUser(user) {
 }
 
 
-export async function addToPurchase(userid, itemid) {
+export async function addToPurchase(userid, orderid) {
     const url = 'http://localhost:5000/users/add-purchase';
     let purchase = {
         userid: userid,
-        itemId: itemid
+        orderid: orderid
     };
     const request = new Request(url, {
         method: 'post',
@@ -234,11 +234,11 @@ export async function addToPurchase(userid, itemid) {
   
 }
 
-export async function addToSelling(userid, itemid) {
+export async function addToSelling(userid, orderid) {
     const url = 'http://localhost:5000/users/add-selling';
     let selling = {
         userid: userid,
-        itemId: itemid
+        orderid: orderid
     };
     const request = new Request(url, {
         method: 'post',
@@ -250,6 +250,7 @@ export async function addToSelling(userid, itemid) {
     });
     try {
         let res = await fetch(request);
+        console.log(res)
         if(res.status != 200) {
             alert("operation failed");
             return;
