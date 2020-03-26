@@ -1,6 +1,6 @@
 import {addOrder} from "./Order";
 import {getItems, itemAddBid, itemAddAsk, itemRemoveBid, itemRemoveAsk, getItemsByKeyword, getItemsByKeywordAndCategory, getItemsByCategory, itemAddOrder} from '../actions/handleMerchandise'
-
+import {addToPurchase, addToSelling} from "../actions/handleUser"
 
 class Merchandise{
   constructor(itemId, itemName, itemCategory, itemDescription, itemImageSrc) {
@@ -71,8 +71,8 @@ class Merchandise{
       const order = await addOrder(this.itemId, userId, sellerId, price)
       this.orderHistory.push(order._id)
       await itemAddOrder(this.itemId, order._id)
-      // user.purchaseHistory.push(order)
-      // seller.sellingHistory.push(order)
+      await addToPurchase(userId, this.itemId)
+      await addToSelling(sellerId, this.itemId)
     }
     else{
       await itemAddBid(this.itemId, price, userId)
