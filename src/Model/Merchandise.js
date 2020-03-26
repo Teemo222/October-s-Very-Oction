@@ -60,7 +60,7 @@ class Merchandise{
       const price = this.getLowestAsk();
       await itemRemoveAsk(this.itemId, price, sellerId)
       for (let i = 0; i < this.asks[price].length; i++){
-        if (this.asks[price][i] == userId){
+        if (this.asks[price][i] == sellerId){
           this.asks[price].splice(i, 1)
             break;
         }
@@ -92,7 +92,7 @@ class Merchandise{
       const price = this.getHighestBid();
       await itemRemoveBid(this.itemId, price, buyerId)
       for (let i = 0; i < this.bids[price].length; i++){
-        if (this.bids[price][i] == userId){
+        if (this.bids[price][i] == buyerId){
           this.bids[price].splice(i, 1)
             break;
         }

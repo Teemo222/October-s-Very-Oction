@@ -42,7 +42,17 @@ class ItemData extends React.Component {
 
   async processItemOrderHistory(){
     const itemHistory = this.state.item.orderHistory;
-    const data = this.state.data
+    const data = {
+      labels: [],
+      datasets: [
+        {label: "purchases",
+        fill: false, 
+        borderColor: "purple",
+        backgroundColor: "pink", 
+        data: []
+        }
+      ]
+    }
     for (let i = 0; i<itemHistory.length; i++){
       await getOrderByOrderId(itemHistory[i]).then((order) => {
         data.labels.push(order.time)
@@ -76,6 +86,7 @@ class ItemData extends React.Component {
     console.log("re-rendering")
 
     if(this.state.length != this.state.item.orderHistory.length){
+      console.log("reset data")
       this.componentDidMount()
     }
 
