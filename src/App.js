@@ -127,7 +127,7 @@ class App extends React.Component {
     console.log(user);
 
     if ((user != null) && !(user.success === false)){
-      sessionStorage.setItem('user', JSON.stringify(user));
+      // sessionStorage.setItem('user', JSON.stringify(user));
       this.setState({
         ["currentUser"]: user
       });
@@ -157,7 +157,7 @@ class App extends React.Component {
   
   handleUserSignOut = async () =>{
     logoutUser();
-    sessionStorage.removeItem('user');
+    // sessionStorage.removeItem('user');
     this.setState({
       ["currentUser"]: null
     });

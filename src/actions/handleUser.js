@@ -202,9 +202,9 @@ export async function setUserPassword(userid, password) {
     }
   }
 
-export function updateCurrentUser(user) {
-    sessionStorage.setItem('user', JSON.stringify(user));
-}
+// export function updateCurrentUser(user) {
+//     sessionStorage.setItem('user', JSON.stringify(user));
+// }
 
 // A function to check if a user is logged in on the session cookie
 export const readCookie = async(app) => {
