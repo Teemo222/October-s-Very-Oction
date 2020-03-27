@@ -42,13 +42,16 @@ class OrderRow extends React.Component {
       return (
         <TableRow key={order.item.itemId}>
             <TableCell component="th" scope="row">
+                {order.item._id}
+            </TableCell>
+            <TableCell component="th" scope="row">
                 {order.item.itemName}
             </TableCell>
             <TableCell component="th" scope="row">
-                {order.buyer.userId}
+                {order.buyer.username}
             </TableCell>
             <TableCell component="th" scope="row">
-                {order.seller.userId}
+                {order.seller.username}
             </TableCell>
             <TableCell component="th" scope="row">
                 {getStatus(order)}

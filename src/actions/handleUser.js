@@ -78,8 +78,6 @@ export async function loginUser(username, password) {
     try {
         let res = await fetch(request);
         let data = await res.json();
-        log(res);
-        log(data);
         return data;
     } catch(err) {
         log(err)

@@ -102,20 +102,18 @@ export async function addOrderDb(itemId, buyerId, sellerId, price, time, status)
 }
 
 export async function getAllOrders() {
-    const url = 'http://localhost:5000/all-order/';
-    fetch(url).then((res) => { 
-        if (res.status === 200) {
-            // return a promise that resolves with the JSON body
-           return res.json() 
-       } else {
-            alert('Could not get item')
-       }                
-    })
-    .then((orders) => {  // the resolved promise with the JSON body
-        return orders
-    }).catch((error) => {
-        log(error)
-    })
+    const url = 'http://localhost:5000/all-order';
+    try {
+        let res = await fetch(url);
+        if(res.status === 200) {
+            let orders = await res.json();
+            return orders
+        } else {
+            console.log(res)
+        }
+    } catch(error) {
+        console.log(error)
+    }
 }
 
 export async function handleItemStatus(orderId, action) {

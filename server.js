@@ -260,7 +260,13 @@ app.post('/items-remove-ask/', async (req, res)=>{
 
 app.get('/all-order', async (req, res)=>{
 	res.header("Access-Control-Allow-Origin", "*");
-	Order.find().then((orders) => {
+	Order.find()
+	.populate("item")
+	.populate("buyer")
+	.populate("seller")
+	.then((orders) => {
+		console.log("backend all-order")
+		console.log(orders)
 		res.send(orders) // can wrap in object if want to add more properties
 	}, (error) => {
 		res.status(500).send(error) // server error
