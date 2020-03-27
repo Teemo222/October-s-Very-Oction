@@ -9,7 +9,7 @@ import SearchPage from './react-components/SearchPage';
 import ManagerProfile from './react-components/ManagerProfile';
 import { Route, Switch, BrowserRouter} from 'react-router-dom';
 // import {addUser, getUser, getAll} from './Model/User';
-import {addUser, loginUser, readCookie} from './actions/handleUser';
+import {addUser, loginUser, readCookie, logoutUser} from './actions/handleUser';
 import UserProfile from './react-components/UserProfile';
 import {addItem} from './actions/handleMerchandise'
 import {addOrder} from './Model/Order'
@@ -29,6 +29,7 @@ class App extends React.Component {
   handleUserFunction = () => {
       let count = this.state.count + 1;
       this.setState({count: count})
+      getUserFromServerSession(); // or updateUserFromServer
   }
 
   handleSelectItem = (item) => {
@@ -154,7 +155,8 @@ class App extends React.Component {
     } 
   };  
   
-  handleUserSignOut = () =>{
+  handleUserSignOut = async () =>{
+    logoutUser();
     sessionStorage.removeItem('user');
     this.setState({
       ["currentUser"]: null

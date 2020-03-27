@@ -86,7 +86,7 @@ export async function loginUser(username, password) {
     }  
 }
 
-export function logoutUser(username, password) {
+export function logoutUser() {
     // the URL for the request
     const url = 'http://localhost:5000/users/logout';
 
@@ -136,7 +136,7 @@ export async function setUserPassword(userid, password) {
             return;
         }
         let data = await res.json();
-        updateCurrentUser(data);
+        // updateCurrentUser(data);
         log(data);
         console.log('User Password Updated');
         return data;
@@ -177,7 +177,7 @@ export async function setUserPassword(userid, password) {
             return;
         }
         let data = await res.json();
-        updateCurrentUser(data)
+        // updateCurrentUser(data)
         log(data);
         console.log('User Info Updated');
         return data;
@@ -194,7 +194,7 @@ export async function setUserPassword(userid, password) {
 
     // Send the request with fetch()
     try {
-        let res = await fetch(request);
+        let res = await fetch(request, { credentials: "include"});
         let data = res.json();
         return data;  
     } catch(err) {
@@ -250,7 +250,7 @@ export async function addToPurchase(userid, orderid) {
             return;
         }
         let data = await res.json();
-        updateCurrentUser(data)
+        // updateCurrentUser(data)
         log(data);
         console.log('User Info Updated');
         return data;
@@ -283,7 +283,7 @@ export async function addToSelling(userid, orderid) {
             return;
         }
         let data = await res.json();
-        updateCurrentUser(data)
+        // updateCurrentUser(data)
         log(data);
         console.log('User Info Updated');
         return data;
