@@ -35,17 +35,16 @@ app.use(session({
     }
 }));
 
-// console.log that your server is up and running
-app.listen(port, () => console.log(`Listening on port ${port}`));
-
 app.use(function(req, res, next) {
-	res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+	res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // update to match the domain you will make the request from
 	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 	res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS, PATCH');
+	res.header("Access-Control-Allow-Credentials", true);
+	res.header("Access-Control-Expose-Headers", "*");
 	next();
   });
 
-app.options('*', cors());
+// app.options('*', cors());
 
 /** Items resource routes **/
 // a POST route to *create* a item
@@ -437,17 +436,17 @@ app.post('/pass-order/:id', async (req, res)=>{
 
 // Our own express middleware to check for 
 // an active user on the session cookie (indicating a logged in user.)
-const sessionChecker = (req, res, next) => {
-    if (req.session.userid) {
-        res.redirect('/'); // redirect to homepage if not logged in.
-    } else {
-        next(); // next() moves on to the route.
-    }    
-};
+// const sessionChecker = (req, res, next) => {
+//     if (req.session.userid) {
+//         res.redirect('/'); // redirect to homepage if not logged in.
+//     } else {
+//         next(); // next() moves on to the route.
+//     }    
+// };
 
 const adminChecker = (req, res, next) => {
 	log("session in adminChecker")
-	// log(req.session)
+	log(req.session)
     if (req.session.isAdmin) {
         next();
     } else {
@@ -457,8 +456,8 @@ const adminChecker = (req, res, next) => {
 
 // Middleware for authentication of resources
 const authenticate = (req, res, next) => {
-	// console.log("here is the session");
-	// console.log(req.session);
+	console.log("here is the session in authenticate");
+	console.log(req.session);
 	if (req.session.userid) {
 		User.findById(req.session.userid).then((user) => {
 			if (!user) {
@@ -475,14 +474,24 @@ const authenticate = (req, res, next) => {
 	}
 }
 
-// test authentication
+// test authentication (only for testing)
 app.get('/users/authtest', authenticate, (req, res) => {
 	res.end();
 })
 
+app.get("/users/check-session", authenticate, (req, res) => {
+	log(' -- check -- session')
+	log(req.session)
+    if (req.user) {
+        res.send(req.user);
+    } else {
+        res.status(401).send();
+    }
+});
+
 // a POST route to *create* a user
 app.post('/users/create', (req, res) => {
-	res.header("Access-Control-Allow-Origin", "*");
+	// res.header("Access-Control-Allow-Origin", "*");
 	// Create a new student using the Student mongoose model
 	const { username, password } = req.body;
 	const user = new User({
@@ -553,8 +562,8 @@ app.post('/users/login', async (req, res) => {
 // A route to logout a user
 app.get('/users/logout', (req, res) => {
 	// Remove the session
-	console.log("here is the session");
-	console.log(req.session);
+	// console.log("here is the session");
+	// console.log(req.session);
 	req.session.destroy((error) => {
 		if (error) {
 			res.status(500).send(error)
@@ -588,7 +597,7 @@ app.get('/users/all', adminChecker, async (req, res) => {
 
 app.post('/users/password',  authenticate, async (req, res) => {
 	// get the updated name and year only from the request body.
-	res.header("Access-Control-Allow-Origin", "*");
+	// res.header("Access-Control-Allow-Origin", "*");
 	const { password, userid } = req.body;
 
 	log("/users/password")
@@ -612,7 +621,6 @@ app.post('/users/password',  authenticate, async (req, res) => {
 
 app.post('/users/info', authenticate, async (req, res) => {
 	// get the updated name and year only from the request body.
-	res.header("Access-Control-Allow-Origin", "*");
 	const { userid, email, address, creditCardNumber } = req.body;
 
 	log("/users/info")
@@ -641,7 +649,7 @@ app.post('/users/info', authenticate, async (req, res) => {
 
 app.post('/users/add-purchase', authenticate, async (req, res)=>{
 
-	res.header("Access-Control-Allow-Origin", "*");
+	// res.header("Access-Control-Allow-Origin", "*");
 	const { userid, orderid } = req.body;
 
 	if (!ObjectID.isValid(userid)) {
@@ -671,7 +679,7 @@ app.post('/users/add-purchase', authenticate, async (req, res)=>{
 
 app.post('/users/add-selling', authenticate, async (req, res)=>{
 
-	res.header("Access-Control-Allow-Origin", "*");
+	// res.header("Access-Control-Allow-Origin", "*");
 	const { userid, orderid } = req.body;
 
 	if (!ObjectID.isValid(userid)) {
@@ -693,3 +701,7 @@ app.post('/users/add-selling', authenticate, async (req, res)=>{
 		res.status(400).send(err);
 	}	
 })
+
+
+// console.log that your server is up and running
+app.listen(port, () => console.log(`Listening on port ${port}`));

@@ -63,7 +63,7 @@ class UserInfo extends React.Component {
   }
 
   render(){
-    const { currentUser } = this.props;
+    const { currentUser, updateUserFromServer } = this.props;
     const {showEdit} = this.state;
     let info;
     let edit;
@@ -81,7 +81,8 @@ class UserInfo extends React.Component {
           this.setState({
             showEdit: false,
           });
-          window.location.reload();
+          updateUserFromServer();
+          // window.location.reload();
         }
       } catch(err) {
         console.log(err)
@@ -128,12 +129,13 @@ class UserInfo extends React.Component {
 class ProfileDetail extends React.Component {
   
   render(){
-    const { currentUser } = this.props;
+    const { currentUser, updateUserFromServer } = this.props;
     if(currentUser) {
       // console.log(this.props);
       return (<div className = "ProfileDetail">
         <h2>Welcome, {currentUser.username} </h2>
         <UserInfo currentUser = {currentUser}
+        updateUserFromServer = {updateUserFromServer}
         />
       </div>);      
     } else {
@@ -346,7 +348,8 @@ class UserProfile extends React.Component {
       currentUser,
       handleUserLogIn,  
       handleUserSignUp,
-      handleUserSignOut        
+      handleUserSignOut,
+      updateUserFromServer        
     } = this.props;
 
     let setActive = this.setActive.bind(this);
@@ -365,7 +368,9 @@ class UserProfile extends React.Component {
            <div className="mainContent">
              <this.state.activePage  currentUser={currentUser}
                                       sellings={this.state.sellings}
-                                      purchases={this.state.purchases}/>
+                                      purchases={this.state.purchases}
+                                      updateUserFromServer={updateUserFromServer}
+                                      />
            </div>
           </div>          
         </div>         

@@ -23,6 +23,7 @@ export async function addUser(username, password) {
             'Accept': 'application/json, text/plain, */*',
             'Content-Type': 'application/json'
         }
+        ,credentials: "include"
     });
 
     // Send the request with fetch()
@@ -70,6 +71,7 @@ export async function loginUser(username, password) {
             'Accept': 'application/json, text/plain, */*',
             'Content-Type': 'application/json'
         }
+        ,credentials: "include"
     });
 
     // Send the request with fetch()
@@ -91,6 +93,7 @@ export function logoutUser(username, password) {
     // Create our request constructor with all the parameters we need
     const request = new Request(url, {
         method: 'get'
+        ,credentials: "include"
     });
 
     // Send the request with fetch()
@@ -122,6 +125,7 @@ export async function setUserPassword(userid, password) {
             'Accept': 'application/json, text/plain, */*',
             'Content-Type': 'application/json'
         }
+        ,credentials: "include"
     });
 
     // Send the request with fetch()
@@ -159,9 +163,10 @@ export async function setUserPassword(userid, password) {
         method: 'post', 
         body: JSON.stringify(user),
         headers: {
-            'Accept': 'application/json, text/plain, */*',
+            'Accept': 'application/json',
             'Content-Type': 'application/json'
-        }
+        },
+        credentials: "include"
     });
 
     // Send the request with fetch()
@@ -199,8 +204,28 @@ export async function setUserPassword(userid, password) {
 
 export function updateCurrentUser(user) {
     sessionStorage.setItem('user', JSON.stringify(user));
-
 }
+
+// A function to check if a user is logged in on the session cookie
+export const readCookie = async(app) => {
+    const url = "http://localhost:5000/users/check-session";
+    // const url = "/users/check-session";
+
+    try {
+        let res = await fetch(url, { credentials: 'include' });
+        if(res.status == 200) {
+            let tempUser = await res.json();
+            console.log("in readCookie")
+            console.log(tempUser);
+            return tempUser
+        } else {
+            return null;
+        }
+    } catch(error) {
+        console.log(error);
+        return null;
+    }
+};
 
 
 export async function addToPurchase(userid, orderid) {
@@ -216,6 +241,7 @@ export async function addToPurchase(userid, orderid) {
             'Accept': 'application/json, text/plain, */*',
             'Content-Type': 'application/json'
         }
+        ,credentials: "include"
     });
     try {
         let res = await fetch(request);
@@ -247,6 +273,7 @@ export async function addToSelling(userid, orderid) {
             'Accept': 'application/json, text/plain, */*',
             'Content-Type': 'application/json'
         }
+        ,credentials: "include"
     });
     try {
         let res = await fetch(request);

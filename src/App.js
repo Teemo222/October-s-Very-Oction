@@ -9,7 +9,7 @@ import SearchPage from './react-components/SearchPage';
 import ManagerProfile from './react-components/ManagerProfile';
 import { Route, Switch, BrowserRouter} from 'react-router-dom';
 // import {addUser, getUser, getAll} from './Model/User';
-import {addUser, loginUser} from './actions/handleUser';
+import {addUser, loginUser, readCookie} from './actions/handleUser';
 import UserProfile from './react-components/UserProfile';
 import {addItem} from './actions/handleMerchandise'
 import {addOrder} from './Model/Order'
@@ -51,36 +51,67 @@ class App extends React.Component {
     });
   };
 
-  getUserFromSessionStorage = async () => {
-    let tempUser = await JSON.parse(sessionStorage.getItem('user'));
+  // getUserFromSessionStorage = async () => {
+  //   let tempUser = await JSON.parse(sessionStorage.getItem('user'));
+  //   const { currentUser } = this.state;
+  //   console.log("on load: currentUser vs tempUser")
+  //   console.log(currentUser);
+  //   console.log(tempUser)
+  //   if (tempUser && !currentUser){
+  //     console.log("set user from session storage")
+  //     this.setState({
+  //       ["currentUser"]: tempUser
+  //     });
+  //   }
+  //   else if (tempUser && currentUser){
+  //     if(tempUser.purchaseHistory.length !== currentUser.purchaseHistory.length || tempUser.sellingHistory.length !== currentUser.sellingHistory.length){
+  //       console.log("set user from session storage")
+  //     this.setState({
+  //       ["currentUser"]: tempUser
+  //     });
+  //     }
+  //   }
+  // }
+  
+  getUserFromServerSession = async () => {
+    const tempUser =  await readCookie(this);
     const { currentUser } = this.state;
     console.log("on load: currentUser vs tempUser")
+    console.log("currentUser")
     console.log(currentUser);
+    console.log("tempUser")
     console.log(tempUser)
     if (tempUser && !currentUser){
-      console.log("set user from session storage")
+      console.log("set user from server session")
       this.setState({
         ["currentUser"]: tempUser
       });
     }
     else if (tempUser && currentUser){
       if(tempUser.purchaseHistory.length !== currentUser.purchaseHistory.length || tempUser.sellingHistory.length !== currentUser.sellingHistory.length){
-        console.log("set user from session storage")
+        console.log("set user from server session")
       this.setState({
         ["currentUser"]: tempUser
       });
       }
-    }
+    }    
+  }
+
+  updateUserFromServer = () => {
+    this.setState({
+      currentUser: null
+    });
+    this.getUserFromServerSession();
   }
 
   componentDidMount() {
     console.log("mount")
-    this.getUserFromSessionStorage();
+    this.getUserFromServerSession();
   }
 
   componentDidUpdate() {
     console.log("update")
-    this.getUserFromSessionStorage();
+    this.getUserFromServerSession();
     console.log(this.state.currentUser)
   }
 
@@ -193,12 +224,13 @@ class App extends React.Component {
                 handleUserSignUp = {this.handleUserSignUp}
                 handleUserSignOut = {this.handleUserSignOut}           
                 //more attributes
-                
+                updateUserFromServer = {this.updateUserFromServer}
                 />)}/>
             <Route exact path='/ManagerProfile' 
               render={() => (<ManagerProfile 
                 currentUser = {this.state.currentUser}
                 handleUserSignOut = {this.handleUserSignOut}
+                updateUserFromServer = {this.updateUserFromServer}
                 />)}/>
           </Switch>
         </BrowserRouter>
