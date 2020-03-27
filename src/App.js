@@ -29,7 +29,7 @@ class App extends React.Component {
   handleUserFunction = () => {
       let count = this.state.count + 1;
       this.setState({count: count})
-      getUserFromServerSession(); // or updateUserFromServer
+      this.getUserFromServerSession(); // or updateUserFromServer
   }
 
   handleSelectItem = (item) => {
