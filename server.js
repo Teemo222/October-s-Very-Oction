@@ -447,7 +447,7 @@ const sessionChecker = (req, res, next) => {
 
 const adminChecker = (req, res, next) => {
 	log("session in adminChecker")
-	log(req.session)
+	// log(req.session)
     if (req.session.isAdmin) {
         next();
     } else {
@@ -457,6 +457,8 @@ const adminChecker = (req, res, next) => {
 
 // Middleware for authentication of resources
 const authenticate = (req, res, next) => {
+	// console.log("here is the session");
+	// console.log(req.session);
 	if (req.session.userid) {
 		User.findById(req.session.userid).then((user) => {
 			if (!user) {
@@ -472,6 +474,11 @@ const authenticate = (req, res, next) => {
 		res.status(401).send("Unauthorized")
 	}
 }
+
+// test authentication
+app.get('/users/authtest', authenticate, (req, res) => {
+	res.end();
+})
 
 // a POST route to *create* a user
 app.post('/users/create', (req, res) => {
@@ -489,6 +496,7 @@ app.post('/users/create', (req, res) => {
 		req.session.username = user.username;
 		req.session.isAdmin = false;
 		user.isAdmin = false;
+		req.session.save()
 		console.log("/users/create");
 		console.log(result);
 		res.send(result)
@@ -519,6 +527,7 @@ app.post('/users/login', async (req, res) => {
 		});
 		req.session.userid = user._id;
 		req.session.username = user.username;
+		req.session.save();
 		// user.success = true;
 		log("session in user login:")
 		log(JSON.stringify(req.session))
@@ -544,11 +553,13 @@ app.post('/users/login', async (req, res) => {
 // A route to logout a user
 app.get('/users/logout', (req, res) => {
 	// Remove the session
+	console.log("here is the session");
+	console.log(req.session);
 	req.session.destroy((error) => {
 		if (error) {
 			res.status(500).send(error)
 		} else {
-			res.redirect('/')
+			res.end()
 		}
 	})
 })
@@ -565,7 +576,8 @@ app.get('/users/admin', (req, res) => {
 	}
 })
 
-app.get('/users/all', async (req, res) => {
+app.get('/users/all', adminChecker, async (req, res) => {
+	// only admin can get all uses' infomation
 	try {
 		let users = await User.find();
 		res.send(users);
@@ -574,7 +586,7 @@ app.get('/users/all', async (req, res) => {
 	}
 })
 
-app.post('/users/password',  async (req, res) => {
+app.post('/users/password',  authenticate, async (req, res) => {
 	// get the updated name and year only from the request body.
 	res.header("Access-Control-Allow-Origin", "*");
 	const { password, userid } = req.body;
@@ -598,7 +610,7 @@ app.post('/users/password',  async (req, res) => {
 	}
 })
 
-app.post('/users/info',  async (req, res) => {
+app.post('/users/info', authenticate, async (req, res) => {
 	// get the updated name and year only from the request body.
 	res.header("Access-Control-Allow-Origin", "*");
 	const { userid, email, address, creditCardNumber } = req.body;
@@ -627,7 +639,7 @@ app.post('/users/info',  async (req, res) => {
 })
 
 
-app.post('/users/add-purchase', async (req, res)=>{
+app.post('/users/add-purchase', authenticate, async (req, res)=>{
 
 	res.header("Access-Control-Allow-Origin", "*");
 	const { userid, orderid } = req.body;
@@ -657,7 +669,7 @@ app.post('/users/add-purchase', async (req, res)=>{
 })
 
 
-app.post('/users/add-selling', async (req, res)=>{
+app.post('/users/add-selling', authenticate, async (req, res)=>{
 
 	res.header("Access-Control-Allow-Origin", "*");
 	const { userid, orderid } = req.body;
