@@ -6,3 +6,6 @@ GET: /item-highest-bid/:id // return {highestBid, buyers} of item `id`
 POST: /reject-order/:id
 POST: /pass-order/:id
 POST: /receive-order/:id
+
+
+GET: /filter-items/:filter // filter: one of 'populartiy' 'time'
