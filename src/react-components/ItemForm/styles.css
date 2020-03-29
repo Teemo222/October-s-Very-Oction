@@ -13,7 +13,7 @@ button {
 } */
 
 label { 
-    clear:left; display:block; width:60px; 
+    clear:left; display:block; width: auto; 
 }
 
 fieldset {
