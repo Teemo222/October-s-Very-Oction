@@ -1,6 +1,6 @@
 import {addOrder} from "./Order";
 import {getItems, itemAddBid, itemAddAsk, itemRemoveBid, itemRemoveAsk, getItemsByKeyword, getItemsByKeywordAndCategory, getItemsByCategory, itemAddOrder} from '../actions/handleMerchandise'
-import {addToPurchase, addToSelling} from "../actions/handleUser"
+import {addToPurchase, addToSelling, addMessageToDb} from "../actions/handleUser"
 
 class Merchandise{
   constructor(itemId, itemName, itemCategory, itemDescription, itemImageSrc) {
@@ -73,9 +73,21 @@ class Merchandise{
       await itemAddOrder(this.itemId, order._id)
       await addToPurchase(userId, order._id)
       await addToSelling(sellerId, order._id)
+      const message = {
+        title: "New order Confirmation",
+        date: new Date(),
+        content: "You have successfully purchased"
+      }
+      await addMessageToDb(userId, message)
     }
     else{
       await itemAddBid(this.itemId, price, userId)
+      const message = {
+        title: "Bid Successfully placed",
+        date: new Date(),
+        content: "You have successfully place a bid"
+      }
+      await addMessageToDb(userId, message)
       if (price in this.bids){
         this.bids[price].push(userId)
       }
@@ -107,9 +119,21 @@ class Merchandise{
       await itemAddOrder(this.itemId, order._id)
       await addToPurchase(buyerId, order._id)
       await addToSelling(userId, order._id)
+      const message = {
+        title: "New order Confirmation",
+        date: new Date(),
+        content: "You have successfully sold"
+      }
+      await addMessageToDb(userId, message)
     }
     else{
       await itemAddAsk(this.itemId, price, userId)
+      const message = {
+        title: "Ask Successfully placed",
+        date: new Date(),
+        content: "You have successfully place an ask"
+      }
+      await addMessageToDb(userId, message)
       if (price in this.asks){
         this.asks[price].push(userId)
       }

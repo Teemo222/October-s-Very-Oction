@@ -8,7 +8,7 @@ import PriceRow from "../PriceRow"
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import PriceList from '../PriceList'
-import {setUserInfo} from '../../actions/handleUser'
+import {setUserInfo, addMessageToDb} from '../../actions/handleUser'
 
 
 /* The ItemView Component */
@@ -89,12 +89,10 @@ class ItemView extends React.Component {
       }
       if(this.state.bid){
         await item.addBid(price, currentUser._id) 
-        currentUser.addMessage("New order Confirmed", new Date(), "You have successfully purchased") 
         handleUserFunction()     
       }
       else{
         await item.addAsk(price, currentUser._id)
-        currentUser.addMessage("New order Confirmed", new Date(), "You have successfully sold") 
         handleUserFunction()   
       }
       alert("good");

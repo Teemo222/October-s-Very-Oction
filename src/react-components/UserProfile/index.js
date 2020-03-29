@@ -2,13 +2,12 @@ import React from "react";
 
 import "./styles.css";
 import Header from '../Header';
-import { getOrderBySeller, getOrderByBuyer, getOrderOfBuyer} from '../../Model/Order'
+import { getOrderBySeller, getOrderOfBuyer, getOrderOfSeller} from '../../Model/Order'
 import { getAllItems } from '../../Model/Merchandise'
 import Button from "@material-ui/core/Button";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import {setUserInfo} from '../../actions/handleUser';
-import {getOrderByOrderId} from '../../actions/handleOrder';
 import {getItemById} from '../../actions/handleMerchandise';
 
 
@@ -199,6 +198,29 @@ class Selling extends React.Component {
   }
 }
 
+class Message extends React.Component {
+
+  render() {
+    const {message} = this.props
+    return (
+      <TableRow className="row" >
+        <TableCell component="th" scope="row">
+          {message.title}
+        </TableCell>
+
+        <TableCell component="th" scope="row">
+          {message.date}
+        </TableCell>
+
+        <TableCell component="th" scope="row">
+          {message.content}
+        </TableCell>
+
+      </TableRow>
+    );
+  }
+}
+
 // // temporary function for hardcoding order
 // function hardcordOrder(user) {
 //   const orders = getOrderByUser(user);
@@ -307,9 +329,12 @@ class Inbox extends React.Component {
             Content
           </TableCell>
           </TableRow>
-          { purchases.map((purchase, index) => {
-            return (<Purchase order={purchase} key={index}/>);
+          { currentUser.inbox.map((message, index) => {
+            return (<Message message={message} key={index}/>);
           })
+        }
+        {
+          
         }
         </div>);
       }
@@ -341,29 +366,13 @@ class UserProfile extends React.Component {
   
 
   async loadHistory(){
-    const sellings = []
-    this.props.currentUser.sellingHistory.map(async (orderId) => {
-      const order = await getOrderByOrderId(orderId)
-      const item = await getItemById(order.item)
-      order.itemName = item.itemName
-      sellings.push(order)
-    })
-
-    const purchases = []
-    this.props.currentUser.purchaseHistory.map(async (orderId) => {
-      const order = await getOrderByOrderId(orderId)
-      const item = await getItemById(order.item)
-      order.itemName = item.itemName
-      purchases.push(order)
-    })
-
-
+    const sellings = await getOrderOfSeller(this.props.currentUser._id)
+    const purchases = await getOrderOfBuyer(this.props.currentUser._id)
     this.setState({sellings: sellings, purchases: purchases, sellingLength: this.props.currentUser.sellingHistory.length, purchaseLength: this.props.currentUser.purchaseHistory.length})
   }
 
 
   setActive(page){
-    console.log(this.props.currentUser)
     this.setState({activePage:page});
   }
 
