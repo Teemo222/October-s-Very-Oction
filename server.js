@@ -209,6 +209,109 @@ app.post('/items-add-ask/', async (req, res)=>{
 	});
 });
 
+app.get('/filter-items/:filter', async (req, res)=>{
+	const {filter} = req.params;
+	console.log(filter);
+	if(filter == "popularity"){
+		const items = await Merchandise.aggregate([
+			{
+				$project:{
+					asks:1,
+					bids:1,
+					orderHistory:1,
+					_id: 1,
+					itemName:1,
+					itemCategory:1,
+					itemDescription:1,
+					itemImageSrc:1,
+					score: {
+						$add: [{$size: {$objectToArray:"$bids"}},  {$size:{$objectToArray:"$asks"}},{$size:"$orderHistory"}]
+					}
+				}
+			},
+			{
+				$sort:{
+					score:-1
+				}
+			}
+		]);
+		res.send(items);
+	}else if(filter == "price"){
+		const items = await Merchandise.aggregate([
+			{
+				$project:{
+					asks:1,
+					bids:1,
+					orderHistory:1,
+					_id: 1,
+					itemName:1,
+					itemCategory:1,
+					itemDescription:1,
+					itemImageSrc:1,
+					priceKV:{$objectToArray:"$asks"}
+				}
+			},
+			{
+				$project:{
+					asks:1,
+					bids:1,
+					orderHistory:1,
+					_id: 1,
+					itemName:1,
+					itemCategory:1,
+					itemDescription:1,
+					itemImageSrc:1,
+					price:"$priceKV.k"
+				}
+			},
+			{
+				$unwind:{
+					path:"$price",
+					preserveNullAndEmptyArrays:true
+				}
+			},
+			{
+				$project:{
+					asks:1,
+					bids:1,
+					orderHistory:1,
+					_id: 1,
+					itemName:1,
+					itemCategory:1,
+					itemDescription:1,
+					itemImageSrc:1,
+					priceN:{$toInt:"$price"}
+				}
+			},
+			{
+				$group:{
+					_id:"$_id",
+					asks:{$first:"$asks"},
+					bids:{$first:"$bids"},
+					orderHistory:{$first:"$orderHistory"},
+					itemName:{$first:"$itemName"},
+					itemCategory:{$first:"$itemCategory"},
+					itemDescription:{$first:"$itemDescription"},
+					itemImageSrc:{$first:"$itemImageSrc"},
+					score:{$min:"$priceN"}
+				}
+			},
+			{
+				$match:{
+					score:{$ne:null}
+				}
+			},
+			{
+				$sort:{
+					score:1
+				}
+			}
+		]);
+		res.send(items);
+	}else{
+		res.send(400);
+	}
+});
 app.post('/items-add-order/', async (req, res)=>{
 	res.header("Access-Control-Allow-Origin", "*");
 	const { itemId, orderId} = req.body;
@@ -711,3 +814,76 @@ app.post('/users/add-selling', authenticate, async (req, res)=>{
 
 // console.log that your server is up and running
 app.listen(port, () => console.log(`Listening on port ${port}`));
+
+
+
+const addData = async ()=>{
+	const addItem = (a,b,c,d)=>{
+		const item = new Merchandise({
+			itemName: a,
+			itemCategory: b,
+			itemDescription: c,
+			itemImageSrc: d,
+			bids: [],
+			asks: [],
+			orderHistory: []
+		});
+		item.save();
+		return item;
+	}
+	let name = ['A','B','C','E','D'];
+	let category = ['Q','W','R','T','Y'];
+	let cnt =0 ;
+	const items = [];
+	name.forEach(e=>{
+		category.forEach(v=>{
+			const item = addItem(e,v,`item${cnt}`, "/img/14355271t.jpg");
+			cnt++;
+			items.push(item);
+		});
+	});
+	let users = await User.find();
+	
+	Promise.all(items.map(async item=>{
+		users.forEach(async user=>{
+			try{
+				let price = ''+Math.floor(Math.random() * 1000);
+				if(item.asks.get(price)){
+					item.asks.get(price).push(user.id);
+				}else{
+					item.asks.set(price,[user.id]);
+				}
+				
+			}catch(e){
+				console.log(e);
+			}
+		});		
+		item.markModified('asks');
+		await item.save();
+	})).then(_=>{
+
+		items.forEach(async item=>{
+			users.forEach(async user=>{
+				try{
+					let price = ''+Math.floor(Math.random() * 1000);
+					if(item.bids.get(price)){
+						item.bids.get(price).push(user.id);
+					}else{
+						item.bids.set(price,[user.id]);
+					}
+					
+				}catch(e){
+					console.log(e);
+				}
+			});		
+			item.markModified('bids');
+			await item.save();
+		});
+	});
+	await addItem('null','null',`item-null`, "/img/14355271t.jpg");
+};
+
+app.post('/test-add-data/',(req, res)=>{
+	addData();
+	res.send({});
+})

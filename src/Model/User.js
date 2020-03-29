@@ -1,3 +1,5 @@
+import {addMessageToDb} from '../actions/handleUser'
+
 class User{
   constructor(userId, username, password) {
     this.userId = userId;
@@ -5,10 +7,18 @@ class User{
     this.password = password;
     this.purchaseHistory = []
     this.sellingHistory = []
+    this.inbox = []
     this.address = ""
     this.creditCardNumber = ""
     this.email = ""
+  }
 
+  addMessage(title, date, content){
+    const message = {title: title,
+                     date: date,
+                     content: content}
+    this.inbox.push(message)
+    addMessageToDb(this.userId, message)
   }
 }
 
@@ -26,6 +36,7 @@ const authenticator = new Authenticator(0, "admin", "admin")
 let count = 1
 const users = [];
 const admin = [authenticator];
+
 
 
 

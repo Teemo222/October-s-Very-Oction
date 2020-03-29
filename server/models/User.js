@@ -22,6 +22,9 @@ const UserSchema = new mongoose.Schema({
 	sellingHistory: {
 		type: Array,
 	},
+	inbox:{
+		type: Array
+	},
 	address: {
 		type: String,
 		trim: true
