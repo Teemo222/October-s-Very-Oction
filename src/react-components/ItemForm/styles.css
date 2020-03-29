@@ -1,0 +1,21 @@
+
+form { 
+    width:50%; 
+    margin:0 auto;
+}
+
+label, input { 
+    float:left; 
+}
+/* 
+button {
+    float: left;
+} */
+
+label { 
+    clear:left; display:block; width:60px; 
+}
+
+fieldset {
+    border: 0 none;
+}

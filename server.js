@@ -11,7 +11,7 @@ const { Merchandise } = require('./server/models/Merchandise')
 const { User } = require('./server/models/User')
 const { Authenticator } = require('./server/models/Authenticator')
 const {Order} = require('./server/models/Order');
-const cors = require('cors');
+// const cors = require('cors');
 
 // to validate object IDs
 const { ObjectID } = require('mongodb')
