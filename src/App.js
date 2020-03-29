@@ -35,6 +35,7 @@ class App extends React.Component {
   handleSelectItem = (item) => {
     return (event) => {
       event.preventDefault();
+      console.log(item)
     
       this.setState({
         ["item"]: item
@@ -167,16 +168,16 @@ class App extends React.Component {
 
     if(this.state.count == 0){
       // Following 2 lines might add data multiple times if you run app multiple times, database error
-      addUser("user", "user");
-      addUser("user2", "user2");
-      addItem("Nike Kobe 7", "SNEAKERS", "This shoe is really cool", "/img/kobe.jpg");
-      addItem("UT Sweatshirt", "STREETWEAR", "WOW I love it so much", "/img/14355271t.jpg");
-      addItem("Nike Kobe 4", "SNEAKERS", "Nice shoe huh", "/img/kobe2.jpg");
-      addItem("Nike AF 1", "SNEAKERS", "God I'm in love", "/img/img01.jpg");
-      addItem("UT sticker", "COLLECTIONS", "Uoft compsci sticker", "/img/uoftcompsci.jpg");
-      addItem("N95 Mask", "COLLECTIONS", "Expensive", "/img/46457.jpg");
-      addItem("Nike SB Dunk", "SNEAKERS", "Great show", "/img/nikesb.jpg");
-      addItem("Nike Hoodie", "STREETWEAR", "Beautiful hoodie", "/img/nikehoodie.jpg");
+      // addUser("user", "user");
+      // addUser("user2", "user2");
+      // addItem("Nike Kobe 7", "SNEAKERS", "This shoe is really cool", "/img/kobe.jpg");
+      // addItem("UT Sweatshirt", "STREETWEAR", "WOW I love it so much", "/img/14355271t.jpg");
+      // addItem("Nike Kobe 4", "SNEAKERS", "Nice shoe huh", "/img/kobe2.jpg");
+      // addItem("Nike AF 1", "SNEAKERS", "God I'm in love", "/img/img01.jpg");
+      // addItem("UT sticker", "COLLECTIONS", "Uoft compsci sticker", "/img/uoftcompsci.jpg");
+      // addItem("N95 Mask", "COLLECTIONS", "Expensive", "/img/46457.jpg");
+      // addItem("Nike SB Dunk", "SNEAKERS", "Great show", "/img/nikesb.jpg");
+      // addItem("Nike Hoodie", "STREETWEAR", "Beautiful hoodie", "/img/nikehoodie.jpg");
       
 
       this.state.count += 1;

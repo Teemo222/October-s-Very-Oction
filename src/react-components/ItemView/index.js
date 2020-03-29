@@ -88,11 +88,13 @@ class ItemView extends React.Component {
         alert("invalid price")
       }
       if(this.state.bid){
-        await item.addBid(price, currentUser._id)  
+        await item.addBid(price, currentUser._id) 
+        currentUser.addMessage("New order Confirmed", new Date(), "You have successfully purchased") 
         handleUserFunction()     
       }
       else{
         await item.addAsk(price, currentUser._id)
+        currentUser.addMessage("New order Confirmed", new Date(), "You have successfully sold") 
         handleUserFunction()   
       }
       alert("good");
