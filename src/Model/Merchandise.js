@@ -65,8 +65,8 @@ class Merchandise{
             break;
         }
       }
-      if(this.bids[price].length == 0){
-        delete this.bids[price]
+      if(this.asks[price].length == 0){
+        delete this.asks[price]
       }
       const order = await addOrder(this.itemId, userId, sellerId, price)
       this.orderHistory.push(order._id)

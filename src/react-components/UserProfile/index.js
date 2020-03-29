@@ -274,11 +274,54 @@ class SellingHistory extends React.Component {
     }}
 }
 
+class Inbox extends React.Component {
+  render(){
+    const { currentUser , purchases} = this.props;
+    if(!currentUser){return (<div className = "InboxTable">
+                                <TableRow className="row" >
+                                  <TableCell component="th" scope="row">
+                                    Title
+                                  </TableCell>
+
+                                  <TableCell component="th" scope="row">
+                                    Date 
+                                  </TableCell>
+
+                                  <TableCell component="th" scope="row">
+                                    Content
+                                </TableCell>
+                                </TableRow>
+                            </div>)}
+    else{
+        return (
+        <div className = "InboxTable">
+          <TableRow className="row" >
+            <TableCell component="th" scope="row">
+              Title
+            </TableCell>
+          <TableCell component="th" scope="row">
+              Date 
+          </TableCell>
+
+          <TableCell component="th" scope="row">
+            Content
+          </TableCell>
+          </TableRow>
+          { purchases.map((purchase, index) => {
+            return (<Purchase order={purchase} key={index}/>);
+          })
+        }
+        </div>);
+      }
+    }
+}
+
 class Menu extends React.Component{
   render() {
     const {onClick } = this.props;
     return (<div >
       <MenuItem name="Profile" onClick={e=>{onClick(ProfileDetail)}}/>
+      <MenuItem name="Inbox" onClick={e=>{onClick(Inbox)}}/>
       <MenuItem name="Purchase History" onClick={e=>{onClick(PurchaseHistory)}}/>
       <MenuItem name="Selling History" onClick={e=>{onClick(SellingHistory)}}/>
     </div>);
