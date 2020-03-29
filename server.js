@@ -785,6 +785,29 @@ app.post('/users/add-purchase', authenticate, async (req, res)=>{
 	}	
 })
 
+app.post('/users/add-message', authenticate, async (req, res)=>{
+
+	// res.header("Access-Control-Allow-Origin", "*");
+	const { userid, message } = req.body;
+
+	if (!ObjectID.isValid(userid)) {
+		console.log(userid + 'hahhaa')
+		res.status(404).send()
+		return;
+	}
+
+	try {
+		let user = await User.findById(userid);
+		console.log(user)
+		user.inbox.push(message)
+		console.log(user)
+		user = await user.save();
+		res.send(user);
+	} catch(err) {
+		res.status(400).send(err);
+	}	
+})
+
 
 app.post('/users/add-selling', authenticate, async (req, res)=>{
 

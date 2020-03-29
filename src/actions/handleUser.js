@@ -291,14 +291,14 @@ export async function addToSelling(userid, orderid) {
 }
 
 export async function addMessageToDb(userId, message) {
-    const url = 'http://localhost:5000/users/add-selling';
-    let selling = {
-        userid: userid,
-        orderid: orderid
+    const url = 'http://localhost:5000/users/add-message';
+    let mes = {
+        userid: userId,
+        message: message
     };
     const request = new Request(url, {
         method: 'post',
-        body: JSON.stringify(selling),
+        body: JSON.stringify(mes),
         headers: {
             'Accept': 'application/json, text/plain, */*',
             'Content-Type': 'application/json'
@@ -307,7 +307,6 @@ export async function addMessageToDb(userId, message) {
     });
     try {
         let res = await fetch(request);
-        console.log(res)
         if(res.status != 200) {
             alert("operation failed");
             return;

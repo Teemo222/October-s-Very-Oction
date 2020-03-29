@@ -106,7 +106,7 @@ class SearchPage extends React.Component {
             </div>
             <div class="right">
               {this.state.displayed.map((item) => {    
-                return <SearchItem merchandise = {item} handleSelectItem = {handleSelectItem}/>;
+                return <SearchItem merchandise = {item} handleSelectItem = {handleSelectItem(item)}/>;
               })}
             </div>
             </div>
