@@ -9,6 +9,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import {setUserInfo} from '../../actions/handleUser';
 import {getItemById} from '../../actions/handleMerchandise';
+import {getOrderByOrderId} from '../../actions/handleOrder';
 
 
 class MenuItem extends React.Component {
@@ -366,8 +367,21 @@ class UserProfile extends React.Component {
   
 
   async loadHistory(){
-    const sellings = await getOrderOfSeller(this.props.currentUser._id)
-    const purchases = await getOrderOfBuyer(this.props.currentUser._id)
+    const sellings = []
+    this.props.currentUser.sellingHistory.map(async (orderId) => {
+      const order = await getOrderByOrderId(orderId)
+      const item = await getItemById(order.item)
+      order.itemName = item.itemName
+      sellings.push(order)
+    })
+
+    const purchases = []
+    this.props.currentUser.purchaseHistory.map(async (orderId) => {
+      const order = await getOrderByOrderId(orderId)
+      const item = await getItemById(order.item)
+      order.itemName = item.itemName
+      purchases.push(order)
+    })
     this.setState({sellings: sellings, purchases: purchases, sellingLength: this.props.currentUser.sellingHistory.length, purchaseLength: this.props.currentUser.purchaseHistory.length})
   }
 
