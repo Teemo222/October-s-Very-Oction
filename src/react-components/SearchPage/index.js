@@ -20,22 +20,7 @@ class SearchPage extends React.Component {
     searchString:"",
     count: 0
   }
-
-  renderItems(merchandise, handleSelectItem) {
-    return <SearchItem merchandise = {merchandise} handleSelectItem = {handleSelectItem}/>;
-  }
   
-  renderFilter(){
-    return <Filter handleFilterChange={this.handleFilterChange}/>;
-  }
-
-  renderSearchBox(){
-    return <SearchBox handleInputChange={this.handleInputChange} 
-                      searchInput={this.state.searchString} 
-                      handleClick={this.handleClick}
-            />;
-  }
-
   handleInputChange = (event) => {
     event.preventDefault();
     const target = event.target;
@@ -109,16 +94,19 @@ class SearchPage extends React.Component {
                   handleUserSignOut = {handleUserSignOut}
           />
           <div>
-            {this.renderSearchBox()}
+            <SearchBox handleInputChange={this.handleInputChange} 
+                        searchInput={this.state.searchString} 
+                        handleClick={this.handleClick}
+            />
             </div>
           <div class = "content">
             
             <div class="left">
-              {this.renderFilter()}
+              <Filter handleFilterChange={this.handleFilterChange}/>
             </div>
             <div class="right">
               {this.state.displayed.map((item) => {    
-                return this.renderItems(item, handleSelectItem(item));
+                return <SearchItem merchandise = {item} handleSelectItem = {handleSelectItem}/>;
               })}
             </div>
             </div>
