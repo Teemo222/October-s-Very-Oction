@@ -1,5 +1,3 @@
-import {addMessageToDb} from '../actions/handleUser'
-
 class User{
   constructor(userId, username, password) {
     this.userId = userId;
@@ -11,14 +9,6 @@ class User{
     this.address = ""
     this.creditCardNumber = ""
     this.email = ""
-  }
-
-  addMessage(title, date, content){
-    const message = {title: title,
-                     date: date,
-                     content: content}
-    this.inbox.push(message)
-    addMessageToDb(this.userId, message)
   }
 }
 
