@@ -166,6 +166,8 @@ class App extends React.Component {
 
   render() {
 
+    console.log(process.env.MONGODB_URI)
+
     if(this.state.count == 0){
       // Following 2 lines might add data multiple times if you run app multiple times, database error
       // addUser("user", "user");

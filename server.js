@@ -12,6 +12,8 @@ const { mongoose } = require('./server/db/mongoose')
 
 const log = console.log
 
+log(process.env.MONGODB_URI)
+
 // import the mongoose student
 const { Merchandise } = require('./server/models/Merchandise')
 const { User } = require('./server/models/User')
@@ -888,11 +890,6 @@ app.post('/users/add-selling', authenticate, async (req, res)=>{
 })
 
 
-// console.log that your server is up and running
-app.listen(port, () => console.log(`Listening on port ${port}`));
-
-
-
 const addData = async ()=>{
 	const addItem = (a,b,c,d)=>{
 		const item = new Merchandise({
@@ -963,3 +960,7 @@ app.post('/test-add-data/',(req, res)=>{
 	addData();
 	res.send({});
 })
+
+
+// console.log that your server is up and running
+app.listen(port, () => console.log(`Listening on port ${port}`));
