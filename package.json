@@ -36,9 +36,10 @@
     "uuidv4": "^6.0.6"
   },
   "scripts": {
-    "setup": "npm install",
-    "build-run": "npm run build && node server.js",
-    "start": "node server.js"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
