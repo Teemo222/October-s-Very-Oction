@@ -2,6 +2,12 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 5000;
 
+const multer = require('multer');
+const path = require('path');
+const { v4: uuidv4 } = require('uuid');
+const sharp = require('sharp');
+const fs = require('fs');
+
 const { mongoose } = require('./server/db/mongoose')
 
 const log = console.log
@@ -11,7 +17,7 @@ const { Merchandise } = require('./server/models/Merchandise')
 const { User } = require('./server/models/User')
 const { Authenticator } = require('./server/models/Authenticator')
 const {Order} = require('./server/models/Order');
-const cors = require('cors');
+// const cors = require('cors');
 
 // to validate object IDs
 const { ObjectID } = require('mongodb')
@@ -46,16 +52,67 @@ app.use(function(req, res, next) {
 
 // app.options('*', cors());
 
+app.use(express.static('images'));
+
 /** Items resource routes **/
 // a POST route to *create* a item
-app.post('/items', (req, res) => {
-	res.header("Access-Control-Allow-Origin", "*");
-	// Create a new student using the Student mongoose model
+// app.post('/items', (req, res) => {
+// 	res.header("Access-Control-Allow-Origin", "*");
+// 	// Create a new student using the Student mongoose model
+// 	const item = new Merchandise({
+// 		itemName: req.body.itemName,
+// 		itemCategory: req.body.itemCategory,
+// 		itemDescription: req.body.itemDescription,
+// 		itemImageSrc: req.body.itemImageSrc,
+// 		bids: [],
+// 		asks: [],
+// 		orderHistory: []
+// 	})
+
+// 	// Save student to the database
+// 	item.save().then((result) => {
+// 		res.send(result)
+// 	}, (error) => {
+// 		res.status(400).send(error) // 400 for bad request
+// 	})
+// })
+
+var storage = multer.diskStorage({
+	destination: function (req, file, cb) {
+	  cb(null, './images')
+	},
+	filename: function (req, file, cb) {
+	  // cb(null, uuidv4() + path.extname(file.originalname))
+	  cb(null, "IMAGE_" + Date.now() + "_" + file.originalname);
+	}
+  })
+  
+  var upload = multer({ storage: storage });
+  
+  app.post('/items', upload.single('itemImageSrc'), async (req, res, next) => {
+	console.log("here")
+	// req.file is the `avatar` file
+	// req.body will hold the text fields, if there were any
+	let itemImageSrc = uuidv4() + path.extname(req.file.originalname);
+	await sharp(req.file.path)
+	//   .resize(500, 500)
+	  .toFile(
+		path.resolve(req.file.destination, itemImageSrc)
+	  );
+	fs.unlinkSync(req.file.path);
+	const backendUrl = "http://localhost:5000/";
+	itemImageSrc = backendUrl + itemImageSrc;
+	console.log("In /items route");
+	console.log(req.body.itemName);
+	console.log(req.body.itemCategory);
+	console.log(req.body.itemDescription);
+	console.log(itemImageSrc);
+
 	const item = new Merchandise({
 		itemName: req.body.itemName,
 		itemCategory: req.body.itemCategory,
 		itemDescription: req.body.itemDescription,
-		itemImageSrc: req.body.itemImageSrc,
+		itemImageSrc: itemImageSrc,
 		bids: [],
 		asks: [],
 		orderHistory: []
@@ -67,7 +124,8 @@ app.post('/items', (req, res) => {
 	}, (error) => {
 		res.status(400).send(error) // 400 for bad request
 	})
-})
+  })
+
 
 // a GET route to get all items
 app.get('/items', (req, res) => {

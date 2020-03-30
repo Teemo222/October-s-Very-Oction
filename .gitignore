@@ -1,2 +1,5 @@
 node_modules/
 img/1501401.jpg
+
+images/*
+!images/.gitkeep 

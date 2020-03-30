@@ -5,6 +5,7 @@ import Header from '../Header';
 import UserTable from '../UserTable';
 import OrderTable from '../OrderTable';
 import AdminHeader from '../AdminHeader';
+import ItemForm from '../ItemForm'
 
 class ManagerProfile extends React.Component {
     render() {
@@ -21,9 +22,9 @@ class ManagerProfile extends React.Component {
             currentUser={currentUser}
             handleUserSignOut={handleUserSignOut}
           />
-          <div class='TableContainer'><OrderTable class="table"/></div>
-          <div class='TableContainer'><UserTable class="table2"/></div>
-          
+          <div class='TableContainer'><OrderTable className="table"/></div>
+          <div class='TableContainer'><UserTable className="table2"/></div>
+          <div class='table3'><ItemForm/></div>
           
         </div>
         
