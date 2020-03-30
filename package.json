@@ -1,7 +1,6 @@
 {
   "name": "oction",
   "version": "0.1.0",
-  "main": "server.js",
   "private": true,
   "dependencies": {
     "@google-cloud/pubsub": "^1.6.0",
@@ -38,7 +37,7 @@
   },
   "scripts": {
     "setup": "npm install",
-    "build-run": "npm run build",
+    "build-run": "npm run build && node server.js",
     "start": "node server.js"
   },
   "eslintConfig": {
