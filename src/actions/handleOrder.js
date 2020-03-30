@@ -1,8 +1,6 @@
-import {API_URL} from '../config';
-
 /* AJAX fetch() calls */
 const log = console.log
-
+import {API_URL} from '../config';
 export async function getOrderByOrderId(orderId) {
     const url = API_URL+'order/' + orderId;
 
