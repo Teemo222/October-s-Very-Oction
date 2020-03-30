@@ -1,3 +1,4 @@
+import {API_URL} from '../config';
 /* AJAX fetch() calls */
 const log = console.log
 
@@ -8,7 +9,7 @@ log('Loaded front-end javascript.')
 
 export async function getItemById(itemId) {
     // the URL for the request
-    const url = 'http://localhost:5000/items/' + itemId;
+    const url = API_URL+'items/' + itemId;
 
     console.log(111)
     // Since this is a GET request, simply call fetch on the URL
@@ -56,7 +57,7 @@ export async function getItems() {
 
 export async function getItemsByKeyword(word) {
     // the URL for the request
-    const url = 'http://localhost:5000/items-by-keyword/' + word;
+    const url = API_URL+'items-by-keyword/' + word;
 
     console.log(url)
 
@@ -85,7 +86,7 @@ export async function getItemsByKeyword(word) {
 
 export async function getItemsByCategory(category) {
     // the URL for the request
-    const url = 'http://localhost:5000/items-by-category/' + category;
+    const url = API_URL+'items-by-category/' + category;
 
     // Since this is a GET request, simply call fetch on the URL
     const items = await fetch(url)
@@ -108,7 +109,7 @@ export async function getItemsByCategory(category) {
 
 export async function getItemsByKeywordAndCategory(word, category) {
     // the URL for the request
-    const url = 'http://localhost:5000/items-by-keyword-and-category/' + word + '/' + category;
+    const url = API_URL+'items-by-keyword-and-category/' + word + '/' + category;
 
     // Since this is a GET request, simply call fetch on the URL
     const items = await fetch(url)
@@ -132,7 +133,7 @@ export async function getItemsByKeywordAndCategory(word, category) {
 // A function to send a POST request with a new student.
 export function addItem(itemName, itemCategory, itemDescription, itemImageSrc) {
     // the URL for the request
-    const url = 'http://localhost:5000/items';
+    const url = API_URL+'items';
 
     // The data we are going to send in our request
     let item = {
@@ -164,7 +165,7 @@ export function addItem(itemName, itemCategory, itemDescription, itemImageSrc) {
 
 export async function itemAddOrder(itemId, orderId) {
     // the URL for the request
-    const url = "http://localhost:5000/items-add-order/";
+    const url = API_URL+"items-add-order/";
 
     // The data we are going to send in our request
     let act = {
@@ -194,7 +195,7 @@ export async function itemAddOrder(itemId, orderId) {
 
 export async function itemAddBid(itemId, price, userId) {
     // the URL for the request
-    const url = "http://localhost:5000/items-add-bid/";
+    const url = API_URL+"items-add-bid/";
 
     // The data we are going to send in our request
     let act = {
@@ -226,7 +227,7 @@ export async function itemAddBid(itemId, price, userId) {
 
 export async function itemRemoveBid(itemId, price, userId) {
     // the URL for the request
-    const url = "http://localhost:5000/items-remove-bid/";
+    const url = API_URL+"items-remove-bid/";
 
     // The data we are going to send in our request
     let act = {
@@ -258,7 +259,7 @@ export async function itemRemoveBid(itemId, price, userId) {
 
 export async function itemAddAsk(itemId, price, userId) {
     // the URL for the request
-    const url = "http://localhost:5000/items-add-ask/";
+    const url = API_URL+"items-add-ask/";
 
     // The data we are going to send in our request
     let act = {
@@ -290,7 +291,7 @@ export async function itemAddAsk(itemId, price, userId) {
 
 export async function itemRemoveAsk(itemId, price, userId) {
     // the URL for the request
-    const url = "http://localhost:5000/items-remove-ask/";
+    const url = API_URL+"items-remove-ask/";
 
     // The data we are going to send in our request
     let act = {

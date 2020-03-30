@@ -1,8 +1,9 @@
+import {API_URL} from '../config';
 /* AJAX fetch() calls */
 const log = console.log
 
 export async function getOrderByOrderId(orderId) {
-    const url = 'http://localhost:5000/order/' + orderId;
+    const url = API_URL+'order/' + orderId;
 
     const order = await fetch(url)
     .then((res) => { 
@@ -24,7 +25,7 @@ export async function getOrderByOrderId(orderId) {
 
 
 export async function getOrderByBuyer(buyerId) {
-    const url = 'http://localhost:5000/order-buyer/' + buyerId;
+    const url = API_URL+'order-buyer/' + buyerId;
 
     const orders = await fetch(url)
     .then((res) => { 
@@ -45,7 +46,7 @@ export async function getOrderByBuyer(buyerId) {
 }
 
 export async function getOrderBySeller(sellerId) {
-    const url = 'http://localhost:5000/order-seller/' + sellerId;
+    const url = API_URL+'order-seller/' + sellerId;
 
     const orders = await fetch(url)
     .then((res) => { 
@@ -66,7 +67,7 @@ export async function getOrderBySeller(sellerId) {
 }
 
 export async function addOrderDb(itemId, buyerId, sellerId, price, time, status){
-    const url = 'http://localhost:5000/order';
+    const url = API_URL+'order';
 
     const act = {
         item:itemId,
@@ -102,7 +103,7 @@ export async function addOrderDb(itemId, buyerId, sellerId, price, time, status)
 }
 
 export async function getAllOrders() {
-    const url = 'http://localhost:5000/all-order';
+    const url = API_URL+'all-order';
     try {
         let res = await fetch(url);
         if(res.status === 200) {
@@ -122,11 +123,11 @@ export async function handleItemStatus(orderId, action) {
     let url;
     switch(action){
         case "pass":
-            url = "http://localhost:5000/pass-order/" + orderId;
+            url = API_URL+"pass-order/" + orderId;
         case "receive":
-            url = "http://localhost:5000/receive-order/" + orderId;
+            url = API_URL+"receive-order/" + orderId;
         case "reject":
-            url = "http://localhost:5000/reject-order/" + orderId;
+            url = API_URL+"reject-order/" + orderId;
     }  
 
     // Create our request constructor with all the parameters we need

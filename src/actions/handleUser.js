@@ -1,3 +1,5 @@
+import {API_URL} from '../config';
+
 /* AJAX fetch() calls */
 const log = console.log;
 
@@ -6,7 +8,7 @@ log('Loaded front-end javascript.');
 // A function to send a POST request with a new student.
 export async function addUser(username, password) {
     // the URL for the request
-    const url = 'http://localhost:5000/users/create';
+    const url = API_URL+'users/create';
 
     // The data we are going to send in our request
     let user = {
@@ -54,7 +56,7 @@ export async function addUser(username, password) {
 
 export async function loginUser(username, password) {
     // the URL for the request
-    const url = 'http://localhost:5000/users/login';
+    const url = API_URL+'users/login';
 
     // The data we are going to send in our request
     let user = {
@@ -86,7 +88,7 @@ export async function loginUser(username, password) {
 
 export function logoutUser() {
     // the URL for the request
-    const url = 'http://localhost:5000/users/logout';
+    const url = API_URL+'users/logout';
 
     // Create our request constructor with all the parameters we need
     const request = new Request(url, {
@@ -106,7 +108,7 @@ export function logoutUser() {
 
 export async function setUserPassword(userid, password) {
     // assume userId exists
-    const url = 'http://localhost:5000/users/password';
+    const url = API_URL+'users/password';
 
     // The data we are going to send in our request
     let user = {
@@ -145,7 +147,7 @@ export async function setUserPassword(userid, password) {
 
   export async function setUserInfo(userid, email, address, creditCardNumber) {
     // assume userId exists
-    const url = 'http://localhost:5000/users/info';
+    const url = API_URL+'users/info';
 
     // The data we are going to send in our request
     let user = {
@@ -185,7 +187,7 @@ export async function setUserPassword(userid, password) {
   }
   
   export async function getAllUsers(){
-    const url = 'http://localhost:5000/users/all';
+    const url = API_URL+'users/all';
 
     // Create our request constructor with all the parameters we need
     const request = new Request(url);
@@ -206,7 +208,7 @@ export async function setUserPassword(userid, password) {
 
 // A function to check if a user is logged in on the session cookie
 export const readCookie = async(app) => {
-    const url = "http://localhost:5000/users/check-session";
+    const url = API_URL+"users/check-session";
     // const url = "/users/check-session";
 
     try {
@@ -227,7 +229,7 @@ export const readCookie = async(app) => {
 
 
 export async function addToPurchase(userid, orderid) {
-    const url = 'http://localhost:5000/users/add-purchase';
+    const url = API_URL+'users/add-purchase';
     let purchase = {
         userid: userid,
         orderid: orderid
@@ -259,7 +261,7 @@ export async function addToPurchase(userid, orderid) {
 }
 
 export async function addToSelling(userid, orderid) {
-    const url = 'http://localhost:5000/users/add-selling';
+    const url = API_URL+'users/add-selling';
     let selling = {
         userid: userid,
         orderid: orderid
@@ -291,7 +293,7 @@ export async function addToSelling(userid, orderid) {
 }
 
 export async function addMessageToDb(userId, message) {
-    const url = 'http://localhost:5000/users/add-message';
+    const url = API_URL+'users/add-message';
     let mes = {
         userid: userId,
         message: message
@@ -324,7 +326,7 @@ export async function addMessageToDb(userId, message) {
   
 //   export async function isAdmin(){
 //       // the URL for the request
-//       const url = 'http://localhost:5000/users/admin';
+//       const url = API_URL+'users/admin';
 
 //       // Create our request constructor with all the parameters we need
 //       const request = new Request(url);
