@@ -1,10 +1,10 @@
 
-form { 
+.item-form { 
     width:50%; 
     margin:0 auto;
 }
 
-label, input { 
+.item-form-input, .item-form-input { 
     float:left; 
 }
 /* 
@@ -12,7 +12,7 @@ button {
     float: left;
 } */
 
-label { 
+.item-form-input { 
     clear:left; display:block; width: auto; 
 }
 

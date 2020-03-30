@@ -56,16 +56,16 @@ class ItemForm extends React.Component {
 						<input type="text" id="name"></input>
 					</fieldset>   
           <fieldset>
-						<label htmlFor="category">Item Category: &nbsp;</label>
-						<input type="text" id="category"></input>
+						<label className = "item-form-label" htmlFor="category">Item Category: &nbsp;</label>
+						<input className = "item-form-input" type="text" id="category"></input>
 					</fieldset>  
           <fieldset>
-						<label htmlFor="description">Item Description: &nbsp;</label>
-						<input type="text" id="description"></input>
+						<label className = "item-form-label" htmlFor="description">Item Description: &nbsp;</label>
+						<input className = "item-form-input" type="text" id="description"></input>
 					</fieldset>                             
 					<fieldset>
-						<label htmlFor="image">Choose avatar: &nbsp;</label>
-						<input type="file" onChange={this.handleChoose} name="image" id="image"></input>	
+						<label className = "item-form-label" htmlFor="image">Choose avatar: &nbsp;</label>
+						<input className = "item-form-input" type="file" onChange={this.handleChoose} name="image" id="image"></input>	
 					</fieldset>
           <fieldset>
             <button>Submit</button>

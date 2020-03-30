@@ -14,7 +14,6 @@ class SearchPage extends React.Component {
 
   state={
     displayed:[],
-    searched:[],
     searchString:"",
     count: 0
   }
@@ -34,7 +33,6 @@ class SearchPage extends React.Component {
     let lst = await getFilterItems(this.state.searchString, null);
     this.setState({
       ["displayed"]: lst,
-      ["searched"]: lst,
     })
   }
 
@@ -43,7 +41,6 @@ class SearchPage extends React.Component {
     let a = this.state.count + 1
     this.setState({
       ["displayed"]: lst,
-      ["searched"]: lst,
       ["count"]: a
     })
    
@@ -52,10 +49,7 @@ class SearchPage extends React.Component {
   handleFilterChange = (cat) =>{
     return async (event) => {
       event.preventDefault();
-      console.log(cat)
-      console.log(this.state.searchString)
       let lst = await getFilterItems(this.state.searchString, cat)
-      console.log(lst)
       this.setState({
         ["displayed"]: lst,
       });
@@ -64,7 +58,64 @@ class SearchPage extends React.Component {
   }
 
   handleSortingChange = (event) =>{
-      alert(event.target.value)
+      const value = event.target.value
+      if (value == "Popularity"){
+        const result = this.state.displayed.sort(function compare(a, b) {
+          if (a.orderHistory.length < b.orderHistory.length) {
+            console.log(a.orderHistory)
+            console.log(b.orderHistory)
+            return -1;
+          }
+          if (a.orderHistory.length > b.orderHistory.length) {
+            return 1;
+          }
+          return 0;
+        })
+        this.setState({
+          ["displayed"]: result.reverse()
+        });
+      }
+      else if (value == "Price high to low"){
+        const result = this.state.displayed.sort(function compare(a, b) {
+          if (a.getLowestAsk() == "N/A"){
+            return -1
+          }
+          if (b.getLowestAsk() == "N/A"){
+            return 1
+          }
+          if (a.getLowestAsk() < b.getLowestAsk()) {
+            return -1;
+          }
+          if (a.getLowestAsk() > b.getLowestAsk()) {
+            return 1;
+          }
+          return 0; 
+        })
+        this.setState({
+          ["displayed"]: result.reverse()
+        });
+      }
+      else if (value == "Price low to high"){
+        const result = this.state.displayed.sort(function compare(a, b) {
+          if (a.getLowestAsk() == "N/A"){
+            return -1
+          }
+          if (b.getLowestAsk() == "N/A"){
+            return 1
+          }
+          if (a.getLowestAsk() < b.getLowestAsk()) {
+            return 1;
+          }
+          if (a.getLowestAsk() > b.getLowestAsk()) {
+            return -1;
+          }
+          return 0; 
+        })
+        this.setState({
+          ["displayed"]: result.reverse()
+        });
+      }
+
   }
 
 

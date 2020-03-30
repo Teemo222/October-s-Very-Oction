@@ -14,7 +14,7 @@ class SearchBox extends React.Component {
 
     return (
       <div className = "searchDiv">
-      <form id = "searchBox"class="search">
+      <form id = "searchBox">
       <input
         id = "searchBoxInput" 
         type="text" 

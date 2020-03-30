@@ -166,11 +166,6 @@ app.get('/items-by-category/:cat',(req, res)=>{
 
 app.get('/items-by-keyword-and-category/:kw/:cat',(req, res)=>{
 	res.header("Access-Control-Allow-Origin", "*");
-
-	console.log(req.params.kw)
-	console.log(req.params.cat)
-
-
 	Merchandise.find(
 		{
 			itemName:{$regex: new RegExp(`.*${req.params.kw}.*`,'i')},
