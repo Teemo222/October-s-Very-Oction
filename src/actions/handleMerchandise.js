@@ -31,7 +31,7 @@ export async function getItemById(itemId) {
 
 export async function getItems() {
     // the URL for the request
-    const url = 'http://localhost:5000/items';
+    const url = '/items';
 
     console.log(111)
     // Since this is a GET request, simply call fetch on the URL
@@ -48,6 +48,7 @@ export async function getItems() {
         return json.items
     }).catch((error) => {
         log(error)
+        return []
     })
     console.log(items)
     return items;

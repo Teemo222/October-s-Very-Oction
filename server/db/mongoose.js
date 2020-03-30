@@ -7,6 +7,7 @@ const mongoose = require('mongoose')
 // Get the URI of the local database, or the one specified on deployment.
 
 
+process.env.MONGODB_URI = 'mongodb+srv://teemo222:Donotgoaway2@cluster0-xvltq.mongodb.net/test?retryWrites=true&w=majority'
 const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/test'
 
 mongoose.connect(mongoURI, 
