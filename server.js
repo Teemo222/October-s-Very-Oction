@@ -55,7 +55,7 @@ app.use(function(req, res, next) {
 // app.options('*', cors());
 
 app.use(express.static('images'));
-app.use(express.static(__dirname + "/build"));
+app.use(express.static(__dirname + "	/build"));
 /** Items resource routes **/
 // a POST route to *create* a item
 // app.post('/items', (req, res) => {
