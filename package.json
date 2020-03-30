@@ -35,9 +35,11 @@
     "uuid": "^7.0.2",
     "uuidv4": "^6.0.6"
   },
+  "main": "server.js",
   "scripts": {
     "setup": "npm install",
     "build-run": "npm run build && node server.js",
+    "heroku-postbuild": "npm install && npm run build",
     "start": "node server.js"
   },
   "eslintConfig": {
