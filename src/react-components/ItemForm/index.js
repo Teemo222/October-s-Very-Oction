@@ -1,6 +1,7 @@
 import { FormControl, InputLabel, Input, Button } from '@material-ui/core';
 import React from "react";
 import "./styles.css";
+import {API_URL} from '../../config';
 
 class ItemForm extends React.Component {
 
@@ -30,7 +31,7 @@ class ItemForm extends React.Component {
 
     console.log("submit new item");
     
-    const url = "http://localhost:5000/items"
+    const url = API_URL+"items"
     const response = await fetch(url, {
       method: 'POST',
       body: formData

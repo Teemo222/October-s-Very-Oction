@@ -1,6 +1,8 @@
+import {API_URL} from '../config';
+
 /* AJAX fetch() calls */
 const log = console.log;
-import {API_URL} from '../config';
+
 log('Loaded front-end javascript.');
 
 // A function to send a POST request with a new student.
@@ -206,7 +208,7 @@ export async function setUserPassword(userid, password) {
 
 // A function to check if a user is logged in on the session cookie
 export const readCookie = async(app) => {
-    const url = "http://localhost:5000/users/check-session";
+    const url = API_URL+"users/check-session";
     // const url = "/users/check-session";
 
     try {

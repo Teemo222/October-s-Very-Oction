@@ -1,6 +1,7 @@
+import {API_URL} from '../config';
 /* AJAX fetch() calls */
 const log = console.log
-import {API_URL} from '../config';
+
 export async function getOrderByOrderId(orderId) {
     const url = API_URL+'order/' + orderId;
 
@@ -122,11 +123,11 @@ export async function handleItemStatus(orderId, action) {
     let url;
     switch(action){
         case "pass":
-            url = "http://localhost:5000/pass-order/" + orderId;
+            url = API_URL+"pass-order/" + orderId;
         case "receive":
-            url = "http://localhost:5000/receive-order/" + orderId;
+            url = API_URL+"receive-order/" + orderId;
         case "reject":
-            url = "http://localhost:5000/reject-order/" + orderId;
+            url = API_URL+"reject-order/" + orderId;
     }  
 
     // Create our request constructor with all the parameters we need
