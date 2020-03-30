@@ -35,11 +35,12 @@
     "uuid": "^7.0.2",
     "uuidv4": "^6.0.6"
   },
+  "main": "server.js",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "setup": "npm install",
+    "build-run": "npm run build && node server.js",
+    "heroku-postbuild": "npm install && npm run build",
+    "start": "node server.js"
   },
   "eslintConfig": {
     "extends": "react-app"
