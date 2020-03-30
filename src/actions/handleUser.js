@@ -1,6 +1,8 @@
+import {API_URL} from '../config';
+
 /* AJAX fetch() calls */
 const log = console.log;
-import {API_URL} from '../config';
+
 log('Loaded front-end javascript.');
 
 // A function to send a POST request with a new student.
