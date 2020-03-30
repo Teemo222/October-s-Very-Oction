@@ -15,7 +15,7 @@ class DataBox extends React.Component {
 
     return(<div className = "databox">
         <h2 className = "dataName">{dataName}</h2>
-        <h2 className = "data">{stats}</h2>
+        <h2 className = "data-number">{stats}</h2>
     </div>)
   }
 }
@@ -91,7 +91,7 @@ class ItemData extends React.Component {
     }
 
      return (
-      <div className="wrapper">
+      <div className="data-wrapper">
         <div className="leftPart">
                <Line
                 options = {{reponsive: true}}
@@ -100,10 +100,12 @@ class ItemData extends React.Component {
         </div>
       
         <div className="rightPart">
-          <DataBox dataName = {"Total Sales"}
+          <DataBox className = "databox"
+                   dataName = {"Total Sales"}
                    stats = {this.state.item.orderHistory.length}
           />
-          <DataBox dataName = {"Average Price"}
+          <DataBox className = "databox"
+                   dataName = {"Average Price"}
                    stats = {this.state.average}
           />
         </div>

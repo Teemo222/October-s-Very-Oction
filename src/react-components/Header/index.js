@@ -21,8 +21,8 @@ class Header extends React.Component {
     return (
       <div className="header">
         <div className = "logoDiv" >
-        <Link to={"/"}>
-          <img className = "logo" src="/img/logo.png"></img>
+        <Link className = "logoLink" to={"/"}>
+          <img className = "mylogo" src="/img/logo.png"></img>
           </Link> 
         </div>
 

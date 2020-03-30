@@ -56,6 +56,7 @@ class SignUp extends React.Component {
     }
 
     const SignUpOrSignOut = (event) => {
+      event.preventDefault()
       if (currentUser){
         event.preventDefault()
         handleUserSignOut();
@@ -69,7 +70,7 @@ class SignUp extends React.Component {
       popup = (
         <div className="signup-popup-background" id="background-div" onClick={cancelPopUp}>
           <div className="signup-popup" id="login-div">
-          <form onSubmit={submit}>
+          <form className = "sign-up-form"onSubmit={submit}>
             <label htmlFor="username">Username</label>
             <input type="text" id="username" name="username"></input><br />
             <label htmlFor="password">Password</label>
@@ -92,7 +93,8 @@ class SignUp extends React.Component {
     }
     
   
-    let button = (<a onClick={SignUpOrSignOut}>{buttonText}</a>);
+    let button = (<a href = '/' 
+                     onClick={SignUpOrSignOut}>{buttonText}</a>);
 
     return (  
      <div>

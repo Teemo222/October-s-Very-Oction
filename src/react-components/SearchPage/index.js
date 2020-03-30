@@ -6,10 +6,8 @@ import Header from '../Header';
 import SearchItem from '../SearchItem';
 import SearchBox from '../SearchBox';
 import Filter from '../Filter';
-import {addItem, getAllItems, getFilterItems} from '../../Model/Merchandise';
-
-
-
+import {getFilterItems} from '../../Model/Merchandise';
+import DropDown from '../DropDown'
 
 /* The SearchPage Component */
 class SearchPage extends React.Component {
@@ -65,6 +63,12 @@ class SearchPage extends React.Component {
     }
   }
 
+  handleSortingChange = (event) =>{
+      alert(event.target.value)
+  }
+
+
+
   render() {
     const { currentUser,
             searchInput,
@@ -83,7 +87,6 @@ class SearchPage extends React.Component {
       }
     }
     test()
-    
           
     return (
 
@@ -103,8 +106,10 @@ class SearchPage extends React.Component {
             
             <div class="left">
               <Filter handleFilterChange={this.handleFilterChange}/>
+              <DropDown handleSortingChange={this.handleSortingChange}/>
             </div>
             <div class="right">
+
               {this.state.displayed.map((item) => {    
                 return <SearchItem merchandise = {item} handleSelectItem = {handleSelectItem(item)}/>;
               })}

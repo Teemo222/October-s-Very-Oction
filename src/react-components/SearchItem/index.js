@@ -17,7 +17,7 @@ class SearchItem extends React.Component {
                     <img class="img-1" src={merchandise.itemImageSrc}/>
                 </div>
                 <div class="item-info">
-                  <h3 class="name">{merchandise.itemName}</h3>
+                  <h3 class="item-name">{merchandise.itemName}</h3>
                 </div>
                
              </div>

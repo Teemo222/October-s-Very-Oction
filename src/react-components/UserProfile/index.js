@@ -2,9 +2,6 @@ import React from "react";
 
 import "./styles.css";
 import Header from '../Header';
-import { getOrderBySeller, getOrderOfBuyer, getOrderOfSeller} from '../../Model/Order'
-import { getAllItems } from '../../Model/Merchandise'
-import Button from "@material-ui/core/Button";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import {setUserInfo} from '../../actions/handleUser';

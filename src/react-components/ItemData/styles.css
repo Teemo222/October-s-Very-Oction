@@ -1,4 +1,4 @@
-.wrapper {
+.data-wrapper {
   width: 100%;
   margin: 0 auto;
   display: flex;
@@ -17,8 +17,9 @@
 }
 
 .rightPart {
-  padding: 0px;
-  width: 25%;
+  padding: 20px;
+  margin-left: 20px;
+  width: 35%;
   
 }
 
@@ -27,11 +28,17 @@
   border-bottom: 3px solid #E1E8EE;
 }
 
+.databox{
+  margin-top: 10px;
+}
+
 .dataName {
+  font-size: 25px;
   color: black
 }
 
-.data {
-
+.data-number {
+  margin-top: 10px;
+  font-size: 25px;
   color: pink;
 }

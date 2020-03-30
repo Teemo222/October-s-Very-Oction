@@ -155,7 +155,7 @@ class ItemView extends React.Component {
 
     return (
       <div>
-        <div className="container">
+        <div className="item-container">
           <div className="left-column">
                   <img src={item.itemImageSrc}/>
               </div>
