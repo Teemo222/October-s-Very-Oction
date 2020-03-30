@@ -1,6 +1,6 @@
 /* AJAX fetch() calls */
 const log = console.log
-
+import {API_URL} from '../config';
 log('Loaded front-end javascript.')
 
 // A function to send a GET request to the web server,
@@ -8,7 +8,7 @@ log('Loaded front-end javascript.')
 
 export async function getItemById(itemId) {
     // the URL for the request
-    const url = 'http://localhost:5000/items/' + itemId;
+    const url = API_URL+'items/' + itemId;
 
     console.log(111)
     // Since this is a GET request, simply call fetch on the URL
@@ -56,7 +56,7 @@ export async function getItems() {
 
 export async function getItemsByKeyword(word) {
     // the URL for the request
-    const url = 'http://localhost:5000/items-by-keyword/' + word;
+    const url = API_URL+'items-by-keyword/' + word;
 
     console.log(url)
 
@@ -85,7 +85,7 @@ export async function getItemsByKeyword(word) {
 
 export async function getItemsByCategory(category) {
     // the URL for the request
-    const url = 'http://localhost:5000/items-by-category/' + category;
+    const url = API_URL+'items-by-category/' + category;
 
     // Since this is a GET request, simply call fetch on the URL
     const items = await fetch(url)
@@ -108,7 +108,7 @@ export async function getItemsByCategory(category) {
 
 export async function getItemsByKeywordAndCategory(word, category) {
     // the URL for the request
-    const url = 'http://localhost:5000/items-by-keyword-and-category/' + word + '/' + category;
+    const url = API_URL+'items-by-keyword-and-category/' + word + '/' + category;
 
     // Since this is a GET request, simply call fetch on the URL
     const items = await fetch(url)
@@ -132,7 +132,7 @@ export async function getItemsByKeywordAndCategory(word, category) {
 // A function to send a POST request with a new student.
 export function addItem(itemName, itemCategory, itemDescription, itemImageSrc) {
     // the URL for the request
-    const url = 'http://localhost:5000/items';
+    const url = API_URL+'items';
 
     // The data we are going to send in our request
     let item = {

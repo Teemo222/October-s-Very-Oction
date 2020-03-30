@@ -1,8 +1,8 @@
 /* AJAX fetch() calls */
 const log = console.log
-
+import {API_URL} from '../config';
 export async function getOrderByOrderId(orderId) {
-    const url = 'http://localhost:5000/order/' + orderId;
+    const url = API_URL+'order/' + orderId;
 
     const order = await fetch(url)
     .then((res) => { 
@@ -24,7 +24,7 @@ export async function getOrderByOrderId(orderId) {
 
 
 export async function getOrderByBuyer(buyerId) {
-    const url = 'http://localhost:5000/order-buyer/' + buyerId;
+    const url = API_URL+'order-buyer/' + buyerId;
 
     const orders = await fetch(url)
     .then((res) => { 
@@ -45,7 +45,7 @@ export async function getOrderByBuyer(buyerId) {
 }
 
 export async function getOrderBySeller(sellerId) {
-    const url = 'http://localhost:5000/order-seller/' + sellerId;
+    const url = API_URL+'order-seller/' + sellerId;
 
     const orders = await fetch(url)
     .then((res) => { 
@@ -66,7 +66,7 @@ export async function getOrderBySeller(sellerId) {
 }
 
 export async function addOrderDb(itemId, buyerId, sellerId, price, time, status){
-    const url = 'http://localhost:5000/order';
+    const url = API_URL+'order';
 
     const act = {
         item:itemId,
@@ -102,7 +102,7 @@ export async function addOrderDb(itemId, buyerId, sellerId, price, time, status)
 }
 
 export async function getAllOrders() {
-    const url = 'http://localhost:5000/all-order';
+    const url = API_URL+'all-order';
     try {
         let res = await fetch(url);
         if(res.status === 200) {
