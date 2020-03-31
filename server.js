@@ -44,7 +44,14 @@ app.use(session({
 }));
 
 app.use(function(req, res, next) {
-	res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+	var allowedOrigins = ['http://localhost:3000', 'https://mighty-reef-32514.herokuapp.com'];
+	var origin = req.headers.origin;
+	console.log(origin);
+	if(allowedOrigins.indexOf(origin) > -1){
+		 res.setHeader('Access-Control-Allow-Origin', origin);
+	}
+	// res.header("Access-Control-Allow-Origin", "https://localhost:3000"); 
+	// res.header("Access-Control-Allow-Origin", "https://mighty-reef-32514.herokuapp.com"); // update to match the domain you will make the request from
 	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 	res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS, PATCH');
 	res.header("Access-Control-Allow-Credentials", true);
