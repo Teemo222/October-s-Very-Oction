@@ -8,6 +8,8 @@ import SearchBox from '../SearchBox';
 import Filter from '../Filter';
 import {getFilterItems} from '../../Model/Merchandise';
 import DropDown from '../DropDown'
+import { getContrastRatio } from "@material-ui/core";
+import { ConnectionStates } from "mongoose";
 
 /* The SearchPage Component */
 class SearchPage extends React.Component {
@@ -138,7 +140,7 @@ class SearchPage extends React.Component {
       }
     }
     test()
-          
+    
     return (
 
         <div className="search__bg-image center">
