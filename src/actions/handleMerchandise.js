@@ -32,7 +32,7 @@ export async function getItemById(itemId) {
 
 export async function getItems() {
     // the URL for the request
-    const url = '/items';
+    const url = API_URL + 'items';
 
     console.log(111)
     // Since this is a GET request, simply call fetch on the URL
