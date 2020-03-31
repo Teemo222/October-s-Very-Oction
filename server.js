@@ -102,8 +102,8 @@ var storage = multer.diskStorage({
 		path.resolve(req.file.destination, itemImageSrc)
 	  );
 	fs.unlinkSync(req.file.path);
-	const backendUrl = "http://localhost:5000/";
-	itemImageSrc = backendUrl + itemImageSrc;
+	// const backendUrl = "http://localhost:5000/";
+	// itemImageSrc = backendUrl + itemImageSrc;
 	console.log("In /items route");
 	console.log(req.body.itemName);
 	console.log(req.body.itemCategory);
