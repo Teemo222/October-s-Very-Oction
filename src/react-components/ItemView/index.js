@@ -9,6 +9,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import PriceList from '../PriceList'
 import {setUserInfo, addMessageToDb} from '../../actions/handleUser'
+import { API_URL } from '../../config'
 
 
 /* The ItemView Component */
@@ -151,13 +152,15 @@ class ItemView extends React.Component {
       );
     };
 
-    
-
+    let imageSrc = item.itemImageSrc;     
+    if(API_URL !== '/') {
+      imageSrc = API_URL + imageSrc;
+    }
     return (
       <div>
         <div className="item-container">
           <div className="left-column">
-                  <img src={item.itemImageSrc}/>
+                  <img src={imageSrc}/>
               </div>
         
               

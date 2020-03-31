@@ -4,7 +4,7 @@
     margin:0 auto;
 }
 
-.item-form-input, .item-form-input { 
+.item-form-label{ 
     float:left; 
 }
 /* 
@@ -13,7 +13,7 @@ button {
 } */
 
 .item-form-input { 
-    clear:left; display:block; width: auto; 
+    clear:left; display:inline-block; width: auto; 
 }
 
 fieldset {
