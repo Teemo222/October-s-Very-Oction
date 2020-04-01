@@ -608,6 +608,19 @@ app.post('/pass-order/:id', async (req, res)=>{
 		}
 		log("user required in handout: ")
 		log(demoUser)
+		let user2 = await User.findOne({
+			"username": "user2",
+			"password": "user2"
+		})
+		if(!user2) {
+			user2 = new User({
+				"username": "user2",
+				"password": "user2"
+			});
+			user2 = await user2.save();			
+		}
+		log("user2 in readme: ")
+		log(user2)
 	} catch(e) {
 		log("create default user failed");
 		log(e);
