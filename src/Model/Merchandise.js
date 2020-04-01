@@ -73,12 +73,18 @@ class Merchandise{
       await itemAddOrder(this.itemId, order._id)
       await addToPurchase(userId, order._id)
       await addToSelling(sellerId, order._id)
-      const message = {
+      const messageToBuyer = {
         title: "New order Confirmation",
         date: new Date(),
         content: "You have successfully purchased"
       }
-      await addMessageToDb(userId, message)
+      await addMessageToDb(userId, messageToBuyer)
+      const messageToSeller = {
+        title: "New order Confirmation",
+        date: new Date(),
+        content: "Your item has been purchased. Please deliver your item to Bahen Center."
+      }
+      await addMessageToDb(sellerId, messageToSeller)
     }
     else{
       await itemAddBid(this.itemId, price, userId)
@@ -119,12 +125,18 @@ class Merchandise{
       await itemAddOrder(this.itemId, order._id)
       await addToPurchase(buyerId, order._id)
       await addToSelling(userId, order._id)
-      const message = {
+      const messageToSeller = {
         title: "New order Confirmation",
         date: new Date(),
-        content: "You have successfully sold"
+        content: "Your item has been purchased. Please deliver your item to Bahen Center."
       }
-      await addMessageToDb(userId, message)
+      await addMessageToDb(userId, messageToSeller)
+      const messageToBuyer = {
+        title: "New order Confirmation",
+        date: new Date(),
+        content: "You have successfully purchased"
+      }
+      await addMessageToDb(buyerId, messageToBuyer)
     }
     else{
       await itemAddAsk(this.itemId, price, userId)

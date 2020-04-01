@@ -101,17 +101,54 @@ export function getAction(order){
 
 export async function passItem(order){
     if(order.status == AUTHENTICATING){order.status = DELIVERING}
-    handleItemStatus(order.orderId, "pass")
+    await handleItemStatus(order.orderId, "pass")
+    const messageToSeller = {
+        title: "Authentication passed",
+        date: new Date(),
+        content: "The item you delivered to us has passed the authentication."
+      }
+    await addMessageToDb(order.seller, messageToSeller)
+    const messageToBuyer = {
+        title: "Authentication passed",
+        date: new Date(),
+        content: "The item you purchased has passed the authentication."
+      }
+    await addMessageToDb(order.seller, messageToBuyer)
 }
 
 export async function receiveItem(order){
     if(order.status == ORDERPLACED){order.status = AUTHENTICATING}
-    handleItemStatus(order.orderId, "receive")
+    await handleItemStatus(order.orderId, "receive")
+    const messageToSeller = {
+        title: "Merchandise Received",
+        date: new Date(),
+        content: "The item you delivered to us has been received."
+      }
+    await addMessageToDb(order.seller, messageToSeller)
+    const messageToBuyer = {
+        title: "Authentication passed",
+        date: new Date(),
+        content: "The item you purchased has been delivered and waiting to be authenticated."
+      }
+    await addMessageToDb(order.seller, messageToBuyer)
 }
 
 export async function rejectItem(order){
     if(order.status == AUTHENTICATING){order.status = RETURNING}
-    handleItemStatus(order.orderId, "reject")
+    await handleItemStatus(order.orderId, "reject")
+    const messageToSeller = {
+        title: "Authentication failed",
+        date: new Date(),
+        content: "The item you delivered to us has failed the authentication."
+      }
+    await addMessageToDb(order.seller, messageToSeller)
+    const messageToBuyer = {
+        title: "Authentication failed",
+        date: new Date(),
+        content: "The item you purchased has failed the authentication."
+      }
+    await addMessageToDb(order.seller, messageToBuyer)
+
 }
 
 export function getColumns(){
