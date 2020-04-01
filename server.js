@@ -17,7 +17,7 @@ log(process.env.MONGODB_URI)
 // import the mongoose student
 const { Merchandise } = require('./server/models/Merchandise')
 const { User } = require('./server/models/User')
-const { Authenticator } = require('./server/models/Authenticator')
+// const { Authenticator } = require('./server/models/Authenticator')
 const {Order} = require('./server/models/Order');
 // const cors = require('cors');
 
@@ -568,24 +568,24 @@ app.post('/pass-order/:id', async (req, res)=>{
 ;( async () => {
 	// create admin in handout
 	try {
-		let authenticator;
-		authenticator = await User.findOne({
+		let admin;
+		admin = await User.findOne({
 			username: "admin"
 		});
-		if(!authenticator) {
-			authenticator = new User({
+		if(!admin) {
+			admin = new User({
 				username: "admin", 
 				password: "admin",
 				isAdmin: true
 			});
-			authenticator = await authenticator.save();
-			let admin_task = new Authenticator({
-				userId: authenticator._id
-			});
-			await admin_task.save();
+			admin = await admin.save();
+			// let admin_task = new Authenticator({
+			// 	userId: authenticator._id
+			// });
+			// await admin_task.save();
 		} 
-		log("admin: ");
-		log(authenticator);
+		log("admin required in handout: ");
+		log(admin);
 		// create user in handout
 		let demoUser = await User.findOne({
 			"username": "user"
@@ -597,10 +597,10 @@ app.post('/pass-order/:id', async (req, res)=>{
 			});
 			demoUser = await demoUser.save();
 		}
-		log("user: ")
+		log("user required in handout: ")
 		log(demoUser)
 	} catch(e) {
-		log("create admin failed");
+		log("create default user failed");
 		log(e);
 	}
 }) ();
@@ -702,9 +702,6 @@ app.post('/users/login', async (req, res) => {
 				success: false
 			})			
 		}
-		let admin_task = await Authenticator.findOne({
-			userId: user._id
-		});
 		req.session.userid = user._id;
 		req.session.username = user.username;
 		req.session.save();
@@ -713,16 +710,8 @@ app.post('/users/login', async (req, res) => {
 		log(JSON.stringify(req.session))
 		// log(admin_task);
 		// log(user);
-		if(admin_task) {
-			req.session.isAdmin = true;
-			// user.isAdmin = true;
-			log(user);
-			res.send(user);
-		} else {
-			req.session.isAdmin = false;
-			// user.isAdmin = false;
-			res.send(user);
-		}
+		req.session.isAdmin = user.isAdmin;
+		res.send(user);
 	} catch(e) {
 		res.status(400).send({
 			success: false

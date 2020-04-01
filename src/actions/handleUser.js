@@ -79,8 +79,13 @@ export async function loginUser(username, password) {
     // Send the request with fetch()
     try {
         let res = await fetch(request);
-        let data = await res.json();
-        return data;
+        let data;
+        if(res.status === 200) {
+            data = await res.json();
+            return data;
+        } else {
+            log("login user fail, response status: ", res.status)
+        }
     } catch(err) {
         log(err)
     }  
