@@ -111,11 +111,11 @@ var storage = multer.diskStorage({
 	fs.unlinkSync(req.file.path);
 	// const backendUrl = "http://localhost:5000/";
 	// itemImageSrc = backendUrl + itemImageSrc;
-	console.log("In /items route");
-	console.log(req.body.itemName);
-	console.log(req.body.itemCategory);
-	console.log(req.body.itemDescription);
-	console.log(itemImageSrc);
+	// console.log("In /items route");
+	// console.log(req.body.itemName);
+	// console.log(req.body.itemCategory);
+	// console.log(req.body.itemDescription);
+	// console.log(itemImageSrc);
 
 	const item = new Merchandise({
 		itemName: req.body.itemName,
@@ -191,7 +191,7 @@ app.get('/items-by-keyword-and-category/:kw/:cat',(req, res)=>{
 // id is treated as a wildcard parameter, which is why there is a colon : beside it.
 // (in this case, the database id, but you can make your own id system for your project)
 app.get('/items/:id', (req, res) => {
-	console.log(req);
+	// console.log(req);
 	res.header("Access-Control-Allow-Origin", "*");
 	/// req.params has the wildcard parameters in the url, in this case, id.
 	// log(req.params.id)
@@ -547,18 +547,27 @@ const RETURNING = 3;
 
 app.post('/reject-order/:id', async (req, res)=>{
 	const order = await Order.findById(req.params.id);
+	if(!order){
+		res.send(400);
+	}
 	if(order.status == AUTHENTICATING){order.status = RETURNING}
 	await order.save();
 	res.send(order);
 });
 app.post('/receive-order/:id', async (req, res)=>{
 	const order = await Order.findById(req.params.id);
+	if(!order){
+		res.send(400);
+	}
 	if(order.status == ORDERPLACED){order.status = AUTHENTICATING}
 	await order.save();
 	res.send(order);
 });
 app.post('/pass-order/:id', async (req, res)=>{
 	const order = await Order.findById(req.params.id);
+	if(!order){
+		res.send(400);
+	}
 	if(order.status == AUTHENTICATING){order.status = DELIVERING}
 	await order.save();
 	res.send(order);
@@ -584,8 +593,8 @@ app.post('/pass-order/:id', async (req, res)=>{
 			});
 			await admin_task.save();
 		} 
-		log("admin: ");
-		log(authenticator);
+		// log("admin: 
+		// log(authenticator);
 		// create user in handout
 		let demoUser = await User.findOne({
 			"username": "user"
@@ -628,7 +637,7 @@ const adminChecker = (req, res, next) => {
 // Middleware for authentication of resources
 const authenticate = (req, res, next) => {
 	console.log("here is the session in authenticate");
-	console.log(req.session);
+	// console.log(req.session);
 	if (req.session.userid) {
 		User.findById(req.session.userid).then((user) => {
 			if (!user) {
@@ -677,12 +686,12 @@ app.post('/users/create', (req, res) => {
 		req.session.isAdmin = false;
 		user.isAdmin = false;
 		req.session.save()
-		console.log("/users/create");
-		console.log(result);
+		// console.log("/users/create");
+		// console.log(result);
 		res.send(result)
 	}, (error) => {
-		console.log("Error")
-		console.log(error)
+		// console.log("Error")
+		// console.log(error)
 		res.status(400).send(error) // 400 for bad request
 	})
 });
@@ -774,7 +783,7 @@ app.post('/users/password',  authenticate, async (req, res) => {
 	log("/users/password")
 	log(password)
 	log(userid)
-	console.log(ObjectID.isValid(userid))
+	// console.log(ObjectID.isValid(userid))
 	// if (!ObjectID.isValid(userid)) {
 	// 	res.status(404).send()
 	// 	return;  // so that we don't run the rest of the handler.
@@ -798,7 +807,7 @@ app.post('/users/info', authenticate, async (req, res) => {
 	log(email)
 	log(address)
 	log(creditCardNumber)
-	console.log(ObjectID.isValid(userid))
+	// console.log(ObjectID.isValid(userid))
 	if (!ObjectID.isValid(userid)) {
 		res.status(404).send()
 		return;  // so that we don't run the rest of the handler.
@@ -810,7 +819,7 @@ app.post('/users/info', authenticate, async (req, res) => {
 		user.address = address;
 		user.creditCardNumber = creditCardNumber;
 		user = await user.save();
-		console.log(user)
+		// console.log(user)
 		res.send(user);
 	} catch(err) {
 		res.status(400).send(err);
@@ -824,22 +833,22 @@ app.post('/users/add-purchase', authenticate, async (req, res)=>{
 	const { userid, orderid } = req.body;
 
 	if (!ObjectID.isValid(userid)) {
-		console.log(userid + 'hahhaa')
+		// console.log(userid + 'hahhaa')
 		res.status(404).send()
 		return;
 	}
 
 	if (!ObjectID.isValid(orderid)) {
-		console.log(itemid + 'rinima')
+		// console.log(itemid + 'rinima')
 		res.status(404).send()
 		return;
 	}
 
 	try {
 		let user = await User.findById(userid);
-		console.log(user)
+		// console.log(user)
 		user.purchaseHistory.push(orderid)
-		console.log(user)
+		// console.log(user)
 		user = await user.save();
 		res.send(user);
 	} catch(err) {
@@ -853,16 +862,16 @@ app.post('/users/add-message', authenticate, async (req, res)=>{
 	const { userid, message } = req.body;
 
 	if (!ObjectID.isValid(userid)) {
-		console.log(userid + 'hahhaa')
+		// console.log(userid + 'hahhaa')
 		res.status(404).send()
 		return;
 	}
 
 	try {
 		let user = await User.findById(userid);
-		console.log(user)
+		// console.log(user)
 		user.inbox.push(message)
-		console.log(user)
+		// console.log(user)
 		user = await user.save();
 		res.send(user);
 	} catch(err) {

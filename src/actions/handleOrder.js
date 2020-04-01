@@ -104,10 +104,15 @@ export async function addOrderDb(itemId, buyerId, sellerId, price, time, status)
 
 export async function getAllOrders() {
     const url = API_URL+'all-order';
+   
     try {
         let res = await fetch(url);
         if(res.status === 200) {
             let orders = await res.json();
+            console.log(orders);
+            orders.forEach(e => {
+                e.orderId = e._id;
+            });
             return orders
         } else {
             console.log(res)
@@ -124,10 +129,13 @@ export async function handleItemStatus(orderId, action) {
     switch(action){
         case "pass":
             url = API_URL+"pass-order/" + orderId;
+            break;
         case "receive":
             url = API_URL+"receive-order/" + orderId;
+            break;
         case "reject":
             url = API_URL+"reject-order/" + orderId;
+            break;
     }  
 
     // Create our request constructor with all the parameters we need
