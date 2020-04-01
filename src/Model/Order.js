@@ -1,4 +1,5 @@
 import {getAllOrders, addOrderDb, getOrderByBuyer, getOrderBySeller, handleItemStatus} from '../actions/handleOrder.js'
+import {addMessageToDb} from '../actions/handleUser'
 
 const ORDERPLACED = 0;
 const AUTHENTICATING = 1;
