@@ -76,13 +76,13 @@ class Merchandise{
       const messageToBuyer = {
         title: "New order Confirmation",
         date: new Date(),
-        content: "You have successfully purchased"
+        content: "You have successfully purchased " + this.itemName + " for $" + price + ". You will receive further notices from us once the item has been shipped to us."
       }
       await addMessageToDb(userId, messageToBuyer)
       const messageToSeller = {
         title: "New order Confirmation",
         date: new Date(),
-        content: "Your item has been purchased. Please deliver your item to Bahen Center."
+        content: "Your listed item " + this.itemName + " has been purchased. Please deliver your item to Bahen Center."
       }
       await addMessageToDb(sellerId, messageToSeller)
     }
@@ -91,7 +91,7 @@ class Merchandise{
       const message = {
         title: "Bid Successfully placed",
         date: new Date(),
-        content: "You have successfully place a bid"
+        content: "You have successfully place a bid of $" + price + " on " + this.itemName
       }
       await addMessageToDb(userId, message)
       if (price in this.bids){
@@ -119,22 +119,20 @@ class Merchandise{
         delete this.bids[price]
       }
       const order = await addOrder(this.itemId, buyerId, userId, price)
-      console.log(order._id)
       this.orderHistory.push(order._id)
-      console.log(this.orderHistory)
       await itemAddOrder(this.itemId, order._id)
       await addToPurchase(buyerId, order._id)
       await addToSelling(userId, order._id)
       const messageToSeller = {
         title: "New order Confirmation",
         date: new Date(),
-        content: "Your item has been purchased. Please deliver your item to Bahen Center."
+        content: "Your listed item " + this.itemName + " has been purchased. Please deliver your item to Bahen Center."
       }
       await addMessageToDb(userId, messageToSeller)
       const messageToBuyer = {
         title: "New order Confirmation",
         date: new Date(),
-        content: "You have successfully purchased"
+        content: "You have successfully purchased " + this.itemName + " for $" + price + ". You will receive further notices from us once the item has been shipped to us."
       }
       await addMessageToDb(buyerId, messageToBuyer)
     }
@@ -143,14 +141,13 @@ class Merchandise{
       const message = {
         title: "Ask Successfully placed",
         date: new Date(),
-        content: "You have successfully place an ask"
+        content: "You have successfully place an ask of $" + price + " on " + this.itemName
       }
       await addMessageToDb(userId, message)
       if (price in this.asks){
         this.asks[price].push(userId)
       }
       else{
-        console.log("fuckuckujsjjs")
         this.asks[price] = [userId]
       }
     }  

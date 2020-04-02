@@ -37,7 +37,6 @@ class Order {
 
 export async function addOrder(itemId, buyerId, sellerId, price){
     const result = await addOrderDb(itemId, buyerId, sellerId, price, new Date(), ORDERPLACED);
-    console.log(result)
     return result
 }
 
@@ -48,7 +47,6 @@ export async function getOrderOfBuyer(buyerId) {
   orders.map((order) => {
     let obj = new Order(order._id, order.item, order.buyer, order.seller, order.price)
     obj.transactionTime = order.time;
-    console.log(order.time)
     obj.status = order.status
     result.push(obj)
   })
@@ -61,7 +59,6 @@ export async function getOrderOfSeller(sellerId) {
     orders.map((order) => {
       let obj = new Order(order._id, order.item, order.buyer, order.seller, order.price)
       obj.transactionTime = order.time;
-      console.log(order.time)
       obj.status = order.status
       result.push(obj)
     })
@@ -102,53 +99,56 @@ export function getAction(order){
 
 export async function passItem(order){
     if(order.status == AUTHENTICATING){order.status = DELIVERING}
+    else{return}
     await handleItemStatus(order.orderId, "pass")
     const messageToSeller = {
         title: "Authentication passed",
         date: new Date(),
-        content: "The item you delivered to us has passed the authentication."
+        content: "The merchandise you delivered to us, " + order.item.itemName + ", has passed the authentication. It will be shipped to the buyer within a few business days"
       }
-    await addMessageToDb(order.seller, messageToSeller)
+    await addMessageToDb(order.seller._id, messageToSeller)
     const messageToBuyer = {
         title: "Authentication passed",
         date: new Date(),
-        content: "The item you purchased has passed the authentication."
+        content: "The merchandise you purchased, " + order.item.itemName + ", has passed the authentication. It will be shipped to you within a few business days"
       }
-    await addMessageToDb(order.seller, messageToBuyer)
+    await addMessageToDb(order.buyer._id, messageToBuyer)
 }
 
 export async function receiveItem(order){
     if(order.status == ORDERPLACED){order.status = AUTHENTICATING}
+    else{return}
     await handleItemStatus(order.orderId, "receive")
     const messageToSeller = {
         title: "Merchandise Received",
         date: new Date(),
-        content: "The item you delivered to us has been received."
+        content: "The merchandise you sent to us, " + order.item.itemName + ", has been received by our authentication team. It will be processed within a few business days"
       }
-    await addMessageToDb(order.seller, messageToSeller)
+    await addMessageToDb(order.seller._id, messageToSeller)
     const messageToBuyer = {
         title: "Authentication passed",
         date: new Date(),
-        content: "The item you purchased has been delivered and waiting to be authenticated."
+        content: "The merchandise you purchased, " + order.item.itemName + ", has been delivered to us and waiting to be authenticated."
       }
-    await addMessageToDb(order.seller, messageToBuyer)
+    await addMessageToDb(order.buyer._id, messageToBuyer)
 }
 
 export async function rejectItem(order){
     if(order.status == AUTHENTICATING){order.status = RETURNING}
+    else{return}
     await handleItemStatus(order.orderId, "reject")
     const messageToSeller = {
         title: "Authentication failed",
         date: new Date(),
-        content: "The item you delivered to us has failed the authentication."
+        content: "Unfortunately, the merchandise you sent to us, " + order.item.itemName + ", is returned by our authentication team. It will be shipped back to you within a few business days"
       }
-    await addMessageToDb(order.seller, messageToSeller)
+    await addMessageToDb(order.seller._id, messageToSeller)
     const messageToBuyer = {
         title: "Authentication failed",
         date: new Date(),
-        content: "The item you purchased has failed the authentication."
+        content: "Unfortunately, the merchandise you purchased, " + order.item.itemName + ", is returned by our authentication team. The order is cancelled."
       }
-    await addMessageToDb(order.seller, messageToBuyer)
+    await addMessageToDb(order.buyer._id, messageToBuyer)
 
 }
 
