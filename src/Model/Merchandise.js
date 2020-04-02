@@ -73,6 +73,12 @@ class Merchandise{
       await itemAddOrder(this.itemId, order._id)
       await addToPurchase(userId, order._id)
       await addToSelling(sellerId, order._id)
+      const message = {
+        title: "Bid Successfully placed",
+        date: new Date(),
+        content: "You have successfully place a bid of $" + price + " on " + this.itemName
+      }
+      await addMessageToDb(userId, message)
       const messageToBuyer = {
         title: "New order Confirmation",
         date: new Date(),
@@ -123,6 +129,12 @@ class Merchandise{
       await itemAddOrder(this.itemId, order._id)
       await addToPurchase(buyerId, order._id)
       await addToSelling(userId, order._id)
+      const message = {
+        title: "Ask Successfully placed",
+        date: new Date(),
+        content: "You have successfully place an ask of $" + price + " on " + this.itemName
+      }
+      await addMessageToDb(userId, message)
       const messageToSeller = {
         title: "New order Confirmation",
         date: new Date(),

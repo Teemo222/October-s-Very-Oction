@@ -84,6 +84,11 @@ class ItemView extends React.Component {
         this.closePopUp()
         return
       }
+      if(!currentUser.creditCardNumber || !currentUser.address || !currentUser.email || currentUser.creditCardNumber === "" || currentUser.address ===  "" || currentUser.email === ""){
+        alert("please fill out your personal info")
+        this.closePopUp()
+        return
+      }
       const price = parseInt(document.querySelector("#price").value);
       if(price <= 0){
         alert("invalid price")

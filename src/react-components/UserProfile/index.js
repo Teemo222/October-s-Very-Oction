@@ -361,7 +361,6 @@ class UserProfile extends React.Component {
       purchaseLength: 0,
       activePage: ProfileDetail
     }
-  
 
   async loadHistory(){
     const sellings = []
@@ -388,10 +387,6 @@ class UserProfile extends React.Component {
   }
 
   render() {  
-
-    console.log("re-render here")
-    console.log(this.props.currentUser)
-
     let flag = false;
 
     if(this.props.currentUser != null && (this.state.sellings == null || this.state.purchases == null)){
@@ -400,7 +395,7 @@ class UserProfile extends React.Component {
     else if(this.props.currentUser != null && this.state.sellingLength != this.props.currentUser.sellingHistory.length){
         flag = true
     }
-    else if(this.props.currentUser != null && this.state.purchaseLength != this.props.currentUser.sellingHistory.length){
+    else if(this.props.currentUser != null && this.state.purchaseLength != this.props.currentUser.purchaseHistory.length){
         flag = true
     }
     if (flag){
