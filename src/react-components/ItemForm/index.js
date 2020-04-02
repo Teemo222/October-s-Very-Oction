@@ -2,14 +2,21 @@ import { FormControl, InputLabel, Input, Button } from '@material-ui/core';
 import React from "react";
 import "./styles.css";
 import {API_URL} from '../../config';
+import DropDown from '../DropDown'
 
 class ItemForm extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      file: null
+      file: null,
+      category: null
     }
+  }
+
+  handleDropdownChange = (event) =>{
+    const value = event.target.value
+    this.setState({category: value})
   }
 
 	handleSubmit = async (e) => {
@@ -17,7 +24,7 @@ class ItemForm extends React.Component {
     let formData = new FormData();
 
     const itemName = document.querySelector("#name").value;
-    const itemCategory = document.querySelector("#category").value;
+    const itemCategory = this.state.category;
     const itemDescription = document.querySelector("#description").value;
 		formData.append('itemName', itemName);
 		formData.append('itemCategory', itemCategory);
@@ -50,25 +57,27 @@ class ItemForm extends React.Component {
   render() {
     return (
 			<div>
-        <h4>Add Item</h4>
+        <h3 className = "item-form-title">Add Item</h3>
 				<form id="item-form" onSubmit={this.handleSubmit}>
-          <fieldset>
+          <fieldset className = "item-form-fieldset">
 						<label htmlFor="name">Item Name: &nbsp;</label>
 						<input type="text" id="name"></input>
 					</fieldset>   
-          <fieldset>
-						<label className = "item-form-label" htmlFor="category">Item Category: &nbsp;</label>
-						<input className = "item-form-input" type="text" id="category"></input>
+          <fieldset className = "item-form-fieldset">
+						<label className = "item-form-label" htmlFor="category">Item Category: &nbsp;</label> 
+            <DropDown options = {["SNEAKERS", "STREETWEAR"]}
+                      labelName = {"Category"}
+                      handleDropdownChange={this.handleDropdownChange}/>
 					</fieldset>  
-          <fieldset>
+          <fieldset className = "item-form-fieldset">
 						<label className = "item-form-label" htmlFor="description">Item Description: &nbsp;</label>
 						<input className = "item-form-input" type="text" id="description"></input>
 					</fieldset>                             
-					<fieldset>
-						<label className = "item-form-label" htmlFor="image">Choose avatar: &nbsp;</label>
+					<fieldset className = "item-form-fieldset">
+						<label className = "item-form-label" htmlFor="image">Upload a picture: &nbsp;</label>
 						<input className = "item-form-input" type="file" onChange={this.handleChoose} name="image" id="image"></input>	
 					</fieldset>
-          <fieldset>
+          <fieldset className = "item-form-fieldset">
             <button>Submit</button>
           </fieldset>
 				</form>				

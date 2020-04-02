@@ -8,8 +8,6 @@ import SearchBox from '../SearchBox';
 import Filter from '../Filter';
 import {getFilterItems} from '../../Model/Merchandise';
 import DropDown from '../DropDown'
-import { getContrastRatio } from "@material-ui/core";
-import { ConnectionStates } from "mongoose";
 
 /* The SearchPage Component */
 class SearchPage extends React.Component {
@@ -159,7 +157,9 @@ class SearchPage extends React.Component {
             
             <div class="left">
               <Filter handleFilterChange={this.handleFilterChange}/>
-              <DropDown handleSortingChange={this.handleSortingChange}/>
+              <DropDown options = {['Popularity', 'Price high to low', 'Price low to high',]}
+                        labelName = {"Sort by"}
+                        handleDropdownChange={this.handleSortingChange}/>
             </div>
             <div class="right">
 

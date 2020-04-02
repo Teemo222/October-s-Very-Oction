@@ -2,18 +2,20 @@
 import * as React from 'react';
 
 import { DropDownList } from '@progress/kendo-react-dropdowns';
-import { options } from './options';
 
 class DropDown extends React.Component {
 
     render() {
+
+        const {options, labelName} = this.props
+
         return (
             <div className="dropdown">
-                <DropDownList className = "SortingDropDown"
-                      label="Sort By"
+                <DropDownList
+                      label={labelName}
                       name="sort"
                       data={options}
-                      onChange={this.props.handleSortingChange}
+                      onChange={this.props.handleDropdownChange}
                 />
             </div>
          

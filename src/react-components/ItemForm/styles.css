@@ -1,4 +1,8 @@
 
+.item-form-title{
+    padding: 10px
+}
+
 .item-form { 
     width:50%; 
     margin:0 auto;
@@ -7,15 +11,13 @@
 .item-form-label{ 
     float:left; 
 }
-/* 
-button {
-    float: left;
-} */
 
 .item-form-input { 
-    clear:left; display:inline-block; width: auto; 
+    clear:left; 
+    display:inline-block; 
+    width: auto; 
 }
 
-fieldset {
+.item-form-fieldset {
     border: 0 none;
 }
