@@ -32,6 +32,10 @@ const session = require('express-session')
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
+app.get('/*', (req, res) => {
+	res.sendFile(path.join(__dirname, '/public/index.html'));
+});
+
 /*** Session handling **************************************/
 // Create a session cookie
 app.use(session({
