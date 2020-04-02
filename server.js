@@ -99,7 +99,6 @@ var storage = multer.diskStorage({
   var upload = multer({ storage: storage });
   
   app.post('/items', upload.single('itemImageSrc'), async (req, res, next) => {
-	console.log("here")
 	// req.file is the `avatar` file
 	// req.body will hold the text fields, if there were any
 	let itemImageSrc = uuidv4() + path.extname(req.file.originalname);
@@ -191,7 +190,6 @@ app.get('/items-by-keyword-and-category/:kw/:cat',(req, res)=>{
 // id is treated as a wildcard parameter, which is why there is a colon : beside it.
 // (in this case, the database id, but you can make your own id system for your project)
 app.get('/items/:id', (req, res) => {
-	// console.log(req);
 	res.header("Access-Control-Allow-Origin", "*");
 	/// req.params has the wildcard parameters in the url, in this case, id.
 	// log(req.params.id)
@@ -205,7 +203,6 @@ app.get('/items/:id', (req, res) => {
 
 	// Otherwise, findById
 	Merchandise.findById(id).then((item) => {
-		console.log(item);
 		if (!item) {
 			res.status(404).send()  // could not find this student
 		} else {
@@ -235,10 +232,8 @@ app.post('/items-add-bid/', async (req, res)=>{
 	res.header("Access-Control-Allow-Origin", "*");
 	const { itemId, price, userId} = req.body;
 	Merchandise.findById(itemId).then(async(item)=>{
-		console.log(item);
 		const p = '' + price;
 		const user = new mongoose.Types.ObjectId(userId);
-		console.log(item.bids.keys());
 		if(item.bids.get(p)){
 			item.bids.get(p).push(user)
 		}
@@ -247,7 +242,6 @@ app.post('/items-add-bid/', async (req, res)=>{
 		}
 		item.markModified('bids');
 		await item.save();
-		console.log(item)
 		res.send(item);
 	});
 });
@@ -256,7 +250,6 @@ app.post('/items-add-ask/', async (req, res)=>{
 	res.header("Access-Control-Allow-Origin", "*");
 	const { itemId, price, userId} = req.body;
 	Merchandise.findById(itemId).then(async(item)=>{
-		console.log(item);
 		const p = '' + price;
 		const user = new mongoose.Types.ObjectId(userId);
 		if(item.asks.get(p)){
@@ -266,14 +259,12 @@ app.post('/items-add-ask/', async (req, res)=>{
 			item.asks.set(p, [user]);
 		}
 		await item.save();
-		console.log(item)
 		res.send(item);
 	});
 });
 
 app.get('/filter-items/:filter', async (req, res)=>{
 	const {filter} = req.params;
-	console.log(filter);
 	if(filter == "popularity"){
 		const items = await Merchandise.aggregate([
 			{
@@ -388,10 +379,8 @@ app.post('/items-add-order/', async (req, res)=>{
 app.post('/items-remove-bid/', async (req, res)=>{
 	res.header("Access-Control-Allow-Origin", "*");
 	const { itemId, price, userId} = req.body;
-	console.log(userId)
 	Merchandise.findById(itemId).then(async(item)=>{
 		const p = '' + price;
-		console.log(item.bids.get(p))
 		for (let i = 0; i < item.bids.get(p).length; i++){
 			if (item.bids.get(p)[i] == userId){
 				item.bids.get(p).splice(i, 1)
@@ -407,7 +396,6 @@ app.post('/items-remove-bid/', async (req, res)=>{
 app.post('/items-remove-ask/', async (req, res)=>{
 	res.header("Access-Control-Allow-Origin", "*");
 	const { itemId, price, userId} = req.body;
-	console.log(userId)
 	Merchandise.findById(itemId).then(async(item)=>{
 		const p = '' + price;
 		for (let i = 0; i < item.asks.get(p).length; i++){
@@ -430,8 +418,6 @@ app.get('/all-order', async (req, res)=>{
 	.populate("buyer")
 	.populate("seller")
 	.then((orders) => {
-		console.log("backend all-order")
-		console.log(orders)
 		res.send(orders) // can wrap in object if want to add more properties
 	}, (error) => {
 		res.status(500).send(error) // server error
@@ -440,7 +426,6 @@ app.get('/all-order', async (req, res)=>{
 
 app.post('/order', async (req, res)=>{
 	res.header("Access-Control-Allow-Origin", "*");
-	console.log('add order');
 	const {item, buyer, seller, price, time, status} = req.body;
 	const order = new Order({
 		item,
@@ -673,8 +658,8 @@ app.get('/users/authtest', authenticate, (req, res) => {
 })
 
 app.get("/users/check-session", authenticate, (req, res) => {
-	log(' -- check -- session')
-	log(req.session)
+	// log(' -- check -- session')
+	// log(req.session)
     if (req.user) {
         res.send(req.user);
     } else {
@@ -728,8 +713,8 @@ app.post('/users/login', async (req, res) => {
 		req.session.username = user.username;
 		req.session.save();
 		// user.success = true;
-		log("session in user login:")
-		log(JSON.stringify(req.session))
+		// log("session in user login:")
+		// log(JSON.stringify(req.session))
 		// log(admin_task);
 		// log(user);
 		req.session.isAdmin = user.isAdmin;
