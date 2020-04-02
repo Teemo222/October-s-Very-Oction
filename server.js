@@ -594,8 +594,7 @@ app.post('/pass-order/:id', async (req, res)=>{
 		log("user required in handout: ")
 		log(demoUser)
 		let user2 = await User.findOne({
-			"username": "user2",
-			"password": "user2"
+			"username": "user2"
 		})
 		if(!user2) {
 			user2 = new User({
