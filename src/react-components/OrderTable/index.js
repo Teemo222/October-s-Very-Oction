@@ -1,7 +1,6 @@
 import React from "react";
 
 import "./styles.css";
-import Header from './../Header';
 import TableBody from "@material-ui/core/TableBody";
 import TableHead from "@material-ui/core/TableBody";
 import OrderRow from '../OrderRow';
@@ -26,8 +25,6 @@ class OrderTable extends React.Component {
     componentDidMount() {
       getAllOrders()
       .then((allOrders) => {
-        console.log("componentDidMount");
-        console.log(allOrders)
         this.setState({
           allOrders
         })

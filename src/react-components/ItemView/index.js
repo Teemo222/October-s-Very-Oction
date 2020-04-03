@@ -8,7 +8,6 @@ import PriceRow from "../PriceRow"
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import PriceList from '../PriceList'
-import {setUserInfo, addMessageToDb} from '../../actions/handleUser'
 import { API_URL } from '../../config'
 
 
@@ -124,7 +123,6 @@ class ItemView extends React.Component {
     };
 
     if(this.state.showBids) {
-      console.log('dasdasdasdasdasdsad')
       bidsTable = (
         <div className="table-background" id="background-div" onClick={this.cancelPopUp}>
           <Table>

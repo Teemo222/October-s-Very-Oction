@@ -16,7 +16,6 @@ export async function addUser(username, password) {
         password : password
     };
 
-    // log(JSON.stringify(user));
     // Create our request constructor with all the parameters we need
     const request = new Request(url, {
         method: 'post', 
@@ -32,26 +31,14 @@ export async function addUser(username, password) {
     try {
         // https://stackoverflow.com/questions/38235715/fetch-reject-promise-and-catch-the-error-if-status-is-not-ok
         let res = await fetch(request);
-        console.log("!!! status");
-        console.log(res);
         if(res.status !== 200) {
             return false;
         }
         let data = await res.json();
-        log(data);
         return true;
     } catch(err) {
-        console.log("signup ERROR");
-        // log(err);
         return false;
     }
-    // fetch(request)
-    // .then(function(res) {
-    //         log(res)
-    //         console.log('Added User')
-    // }).catch((error) => {
-    //     log(error)
-    // });
 };
 
 export async function loginUser(username, password) {
@@ -64,7 +51,6 @@ export async function loginUser(username, password) {
         password : password
     };
 
-    // log(JSON.stringify(user));
     // Create our request constructor with all the parameters we need
     const request = new Request(url, {
         method: 'post', 
@@ -104,8 +90,7 @@ export function logoutUser() {
     // Send the request with fetch()
     fetch(request)
     .then(function(res) {
-            log(res)
-            console.log('User Logout')
+        
     }).catch((error) => {
         log(error)
     });    
@@ -121,7 +106,6 @@ export async function setUserPassword(userid, password) {
         password : password
     };
 
-    log(JSON.stringify(user));
     // Create our request constructor with all the parameters we need
     const request = new Request(url, {
         method: 'post', 
@@ -142,8 +126,6 @@ export async function setUserPassword(userid, password) {
         }
         let data = await res.json();
         // updateCurrentUser(data);
-        log(data);
-        console.log('User Password Updated');
         return data;
     } catch(err) {
         log(err);
@@ -162,7 +144,6 @@ export async function setUserPassword(userid, password) {
         creditCardNumber
     };
 
-    log(JSON.stringify(user));
     // Create our request constructor with all the parameters we need
     const request = new Request(url, {
         method: 'post', 
@@ -182,9 +163,6 @@ export async function setUserPassword(userid, password) {
             return;
         }
         let data = await res.json();
-        // updateCurrentUser(data)
-        log(data);
-        console.log('User Info Updated');
         return data;
     } catch(err) {
         log(err);
@@ -220,14 +198,11 @@ export const readCookie = async(app) => {
         let res = await fetch(url, { credentials: 'include' });
         if(res.status == 200) {
             let tempUser = await res.json();
-            console.log("in readCookie")
-            console.log(tempUser);
             return tempUser
         } else {
             return null;
         }
     } catch(error) {
-        console.log(error);
         return null;
     }
 };
@@ -256,8 +231,6 @@ export async function addToPurchase(userid, orderid) {
         }
         let data = await res.json();
         // updateCurrentUser(data)
-        log(data);
-        console.log('User Info Updated');
         return data;
     } catch(err) {
         log(err);
@@ -289,8 +262,6 @@ export async function addToSelling(userid, orderid) {
         }
         let data = await res.json();
         // updateCurrentUser(data)
-        log(data);
-        console.log('User Info Updated');
         return data;
     } catch(err) {
         log(err);
@@ -320,8 +291,6 @@ export async function addMessageToDb(userId, message) {
         }
         let data = await res.json();
         // updateCurrentUser(data)
-        log(data);
-        console.log('User Info Updated');
         return data;
     } catch(err) {
         log(err);

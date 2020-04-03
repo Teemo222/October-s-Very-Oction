@@ -5,7 +5,6 @@ import Header from '../Header';
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import {setUserInfo} from '../../actions/handleUser';
-import {getItemById} from '../../actions/handleMerchandise';
 import {getOrderByOrderId} from '../../actions/handleOrder';
 import {formatDateToDateTime} from '../../actions/formatDate'
 import {getStatus} from '../../Model/Order'
@@ -75,8 +74,6 @@ class UserInfo extends React.Component {
       try {
         let data = await setUserInfo(currentUser._id, email, address, creditCardNumber);
         if(data) {
-          console.log("updated user");
-          console.log(data)
           this.setState({
             showEdit: false,
           });

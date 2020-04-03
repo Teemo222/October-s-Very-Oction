@@ -109,7 +109,6 @@ export async function getAllOrders() {
         let res = await fetch(url);
         if(res.status === 200) {
             let orders = await res.json();
-            console.log(orders);
             orders.forEach(e => {
                 e.orderId = e._id;
             });

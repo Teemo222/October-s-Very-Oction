@@ -238,11 +238,7 @@ class ItemData extends React.Component {
   }
 
   render() {
-
-    console.log("re-rendering")
-
     if(this.state.length != this.state.item.orderHistory.length){
-      console.log("reset data")
       this.componentDidMount()
     }
 

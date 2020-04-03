@@ -3,8 +3,6 @@ import React from "react";
 import "./styles.css";
 
 import { Link } from "react-router-dom";
-import SignUp from '../SignUp';
-import Login from '../Login';
 
 /* The Header Component */
 class AdminHeader extends React.Component {

@@ -2,11 +2,9 @@ import React from "react";
 
 import "./styles.css";
 import TableBody from "@material-ui/core/TableBody";
-import TableHead from "@material-ui/core/TableBody";
 import TableRow from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableBody";
 import Table from "@material-ui/core/Table";
-import { getAllOrders }from "../../Model/Order.js"
 import sort from 'fast-sort';
 
 

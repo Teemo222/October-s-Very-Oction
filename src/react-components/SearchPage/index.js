@@ -25,7 +25,6 @@ class SearchPage extends React.Component {
     this.setState({
       ["searchString"]: value
     })
-    console.log(value)
   };
 
   handleClick = async (event) => {
@@ -62,8 +61,6 @@ class SearchPage extends React.Component {
       if (value == "Popularity"){
         const result = this.state.displayed.sort(function compare(a, b) {
           if (a.orderHistory.length < b.orderHistory.length) {
-            console.log(a.orderHistory)
-            console.log(b.orderHistory)
             return -1;
           }
           if (a.orderHistory.length > b.orderHistory.length) {

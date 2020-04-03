@@ -1,7 +1,6 @@
 import React from "react";
 
 import "./styles.css";
-import { Link } from "react-router-dom";
 
 /* The Header Component */
 class SearchBox extends React.Component {

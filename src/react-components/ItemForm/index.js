@@ -1,4 +1,3 @@
-import { FormControl, InputLabel, Input, Button } from '@material-ui/core';
 import React from "react";
 import "./styles.css";
 import {API_URL} from '../../config';
@@ -35,8 +34,6 @@ class ItemForm extends React.Component {
       alert("please fill in all the fields");
       return;
     }
-
-    console.log("submit new item");
     
     const url = API_URL+"items"
     const response = await fetch(url, {

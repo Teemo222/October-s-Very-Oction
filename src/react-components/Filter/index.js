@@ -2,8 +2,6 @@ import React from "react";
 
 import "./style.css";
 
-import Header from '../Header';
-
 /* The ItemPage Component */
 class Filter extends React.Component {
     

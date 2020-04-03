@@ -1,6 +1,4 @@
 import React from 'react';
-
-// import User, {getAll, setUserPassword} from '../../Model/User'
 import {setUserPassword, getAllUsers} from '../../actions/handleUser'
 import MaterialTable from 'material-table';
 
@@ -28,8 +26,6 @@ class UserTable extends React.Component {
 
     async componentDidMount() {
       let allUsers = await getAllUsers();
-      console.log("here");
-      console.log(allUsers);
       let strippedUser = this.getDisplayableData(allUsers);
       this.setState({
         data: allUsers,
@@ -68,10 +64,6 @@ class UserTable extends React.Component {
                     {
                       const strippedUser = this.state.strippedUser;
                       const index = strippedUser.indexOf(oldData);
-    
-                      // TODO? await?
-                      console.log("new Data");
-                      console.log(newData);
                       let changedUser = await setUserPassword(newData.userId, newData.password)
                       newData.password = changedUser.password;
                       

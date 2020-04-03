@@ -11,7 +11,6 @@ export async function getItemById(itemId) {
     // the URL for the request
     const url = API_URL+'items/' + itemId;
 
-    console.log(111)
     // Since this is a GET request, simply call fetch on the URL
     const item = await fetch(url)
     .then((res) => { 
@@ -34,7 +33,6 @@ export async function getItems() {
     // the URL for the request
     const url = API_URL + 'items';
 
-    console.log(111)
     // Since this is a GET request, simply call fetch on the URL
     const items = await fetch(url)
     .then((res) => { 
@@ -51,15 +49,12 @@ export async function getItems() {
         log(error)
         return []
     })
-    console.log(items)
     return items;
 }
 
 export async function getItemsByKeyword(word) {
     // the URL for the request
     const url = API_URL+'items-by-keyword/' + word;
-
-    console.log(url)
 
     // Since this is a GET request, simply call fetch on the URL
     const items = await fetch(url)
@@ -72,14 +67,10 @@ export async function getItemsByKeyword(word) {
        }                
     })
     .then((json) => {  // the resolved promise with the JSON body
-        console.log()
         return json.items
     }).catch((error) => {
         log(error)
     })
-
-    console.log(items)
-    
     return items;
 }
 
@@ -143,7 +134,6 @@ export function addItem(itemName, itemCategory, itemDescription, itemImageSrc) {
         itemImageSrc : itemImageSrc
     }
 
-    log(JSON.stringify(item))
     // Create our request constructor with all the parameters we need
     const request = new Request(url, {
         method: 'post', 
