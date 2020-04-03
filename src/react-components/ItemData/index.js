@@ -161,13 +161,80 @@ class ItemData extends React.Component {
     return Math.round(acc/count)
   }
 
+  maxPrice(){
+    let max = 0
+    for (let i = 0; i<this.state.displayedOrders.length; i++){
+        if(this.state.displayedOrders[i].price > max){
+          max = this.state.displayedOrders[i].price
+        }
+    }
+    return max
+  }
+
+  minPrice(){
+    let min = 0
+    for (let i = 0; i<this.state.displayedOrders.length; i++){
+        if(min === 0 || this.state.displayedOrders[i].price < min){
+          min = this.state.displayedOrders[i].price
+        }
+    }
+    return min
+  }
+
+
   async componentDidMount() {
     await this.processItemOrderHistory()
 
   }
 
   handleDropdownChange = (event) =>{
+    const datetime = require('date-and-time')
     const value = event.target.value
+    let newOrders;
+    if(value === "All"){
+      newOrders = this.state.orders
+    }
+    else if(value === "Past hour"){
+      newOrders = this.state.orders.filter((order) => {
+        const diff = datetime.subtract(new Date(), new Date(order.time)).toSeconds(); 
+        return diff >= 0 && diff <= 3600
+      }) 
+    }
+    else if(value === "Past 24 hours"){
+      newOrders = this.state.orders.filter((order) => {
+        const diff = datetime.subtract(new Date(), new Date(order.time)).toHours(); 
+        return diff >= 0 && diff <= 24
+      }) 
+    }
+    else if(value === "Past week"){
+      newOrders = this.state.orders.filter((order) => {
+        const diff = datetime.subtract(new Date(), new Date(order.time)).toDays(); 
+        return diff >= 0 && diff <= 7
+      }) 
+    }
+    else if(value === "Past month"){
+      newOrders = this.state.orders.filter((order) => {
+        const diff = datetime.subtract(new Date(), new Date(order.time)).toDays(); 
+        return diff >= 0 && diff <= 30
+      }) 
+    }
+    const data = {
+      labels: [],
+      datasets: [
+        {label: "price",
+        fill: false, 
+        borderColor: "purple",
+        backgroundColor: "pink", 
+        data: []
+        }
+      ]
+    }
+    for (let i = 0; i<newOrders.length; i++){
+        data.labels.push(formatDateToDateTime(newOrders[i].time).toString())
+        data.datasets[0].data.push({x: formatDateToDateTime(newOrders[i].time).toString, y: newOrders[i].price})
+    }
+    this.setState({displayedOrders: newOrders, 
+                   data: data})
   }
 
   render() {
@@ -213,16 +280,24 @@ class ItemData extends React.Component {
         </div>
       
         <div className="rightPart">
-          <Dropdown options = {["All"]} 
+          <Dropdown options = {["All", "Past hour", "Past 24 hours", "Past week", "Past month"]} 
                     labelName = "Choose Time Period"
                     handleDropdownChange = {this.handleDropdownChange}/>
           <DataBox className = "databox"
                    dataName = {"Total Sales"}
-                   stats = {this.state.item.orderHistory.length}
+                   stats = {this.state.displayedOrders.length}
           />
           <DataBox className = "databox"
                    dataName = {"Average Price"}
                    stats = {average}
+          />
+          <DataBox className = "databox"
+                   dataName = {"Max Price"}
+                   stats = {this.maxPrice()}
+          />
+          <DataBox className = "databox"
+                   dataName = {"Min Price"}
+                   stats = {this.minPrice()}
           />
         </div>
         
