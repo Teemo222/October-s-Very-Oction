@@ -2,14 +2,7 @@ import React from 'react';
 
 // import User, {getAll, setUserPassword} from '../../Model/User'
 import {setUserPassword, getAllUsers} from '../../actions/handleUser'
-import Table from "@material-ui/core/Table";
-import TableCell from "@material-ui/core/TableCell";
-import TableRow from "@material-ui/core/TableRow";
-import TableBody from "@material-ui/core/TableBody";
-import useTable from "react-table";
 import MaterialTable from 'material-table';
-import { render } from '@testing-library/react';
-import { Component } from 'react';
 
 class UserTable extends React.Component {
     getDisplayableData(users){

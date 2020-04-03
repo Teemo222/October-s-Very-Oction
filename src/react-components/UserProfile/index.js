@@ -156,7 +156,7 @@ class Purchase extends React.Component {
     return (
       <TableRow className="row" >
         <TableCell component="th" scope="row">
-          {order.itemName}
+          {order.item.itemName}
         </TableCell>
 
         <TableCell component="th" scope="row">
@@ -180,7 +180,7 @@ class Selling extends React.Component {
     return (
       <TableRow className="row" >
         <TableCell component="th" scope="row">
-          {order.itemName}
+          {order.item.itemName}
         </TableCell>
 
         <TableCell component="th" scope="row">
@@ -366,16 +366,12 @@ class UserProfile extends React.Component {
     const sellings = []
     this.props.currentUser.sellingHistory.map(async (orderId) => {
       const order = await getOrderByOrderId(orderId)
-      const item = await getItemById(order.item)
-      order.itemName = item.itemName
       sellings.push(order)
     })
 
     const purchases = []
     this.props.currentUser.purchaseHistory.map(async (orderId) => {
       const order = await getOrderByOrderId(orderId)
-      const item = await getItemById(order.item)
-      order.itemName = item.itemName
       purchases.push(order)
     })
     this.setState({sellings: sellings, purchases: purchases, sellingLength: this.props.currentUser.sellingHistory.length, purchaseLength: this.props.currentUser.purchaseHistory.length})

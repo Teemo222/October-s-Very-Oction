@@ -4,6 +4,13 @@ import "./styles.css";
 
 import {Line} from 'react-chartjs-2';
 import {getOrderByOrderId} from '../../actions/handleOrder'
+import TableBody from "@material-ui/core/TableBody";
+import TableHead from "@material-ui/core/TableBody";
+import Table from "@material-ui/core/Table";
+import { TableCell } from "@material-ui/core";
+import TableRow from "@material-ui/core/TableRow";
+import {formatDateToDateTime} from '../../actions/formatDate'
+import Dropdown from '../DropDown'
 
 class DataBox extends React.Component {
 
@@ -20,6 +27,70 @@ class DataBox extends React.Component {
   }
 }
 
+class OrderHistoryRow extends React.Component {
+
+    render() {
+      const {
+        order
+      } = this.props;
+
+      return (
+        <TableRow key={order.item.itemId}>
+            <TableCell component="th" scope="row">
+                {order.buyer.username}
+            </TableCell>
+            <TableCell component="th" scope="row">
+                {order.seller.username}
+            </TableCell>
+            <TableCell component="th" scope="row">
+                {order.price}
+            </TableCell>
+            <TableCell component="th" scope="row">
+                {formatDateToDateTime(order.time)}
+            </TableCell>
+        </TableRow>
+      )
+    }
+  }
+
+class OrderHistoryTable extends React.Component {
+  renderOrderHistoryRow(order, idx){
+    return <OrderHistoryRow order={order} key={idx}/>
+  }
+
+
+  render() {
+    const { 
+      itemOrders, 
+      handleViewAllButton
+    } = this.props;
+
+    return (
+      <div className="order-history-table-wrapper">
+      <Table>
+        <TableHead>
+          <TableRow id="order-table-title">
+           Latest Sales <button onClick={handleViewAllButton}>View all sales</button>
+          </TableRow>
+          <TableRow>
+            <TableCell>Buyer Username</TableCell>
+            <TableCell>Seller Username</TableCell>
+            <TableCell>Price</TableCell>
+            <TableCell>Date</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+            {itemOrders.map((order,idx) => {
+                return this.renderOrderHistoryRow(order, idx);
+            })}
+          </TableBody>
+      </Table>
+      </div>
+    )
+  }
+}
+
+
 
 /* The ItemData Component */
 class ItemData extends React.Component {
@@ -28,7 +99,7 @@ class ItemData extends React.Component {
     data: {
       labels: [],
       datasets: [
-        {label: "purchases",
+        {label: "price",
         fill: false, 
         borderColor: "purple",
         backgroundColor: "pink", 
@@ -36,8 +107,20 @@ class ItemData extends React.Component {
         }
       ]
     },
-    average: 0,
-    length: 0
+    orders: [],
+    length: 0,
+    showAll: false,
+    displayedOrders: []
+  }
+
+  handleViewAllButton = (event) =>{
+    if(this.state.showAll){
+      event.target.innerText = "View all sales"
+    }
+    else{
+      event.target.innerText = "View recent sales"
+    }
+    this.setState({showAll: !this.state.showAll})
   }
 
   async processItemOrderHistory(){
@@ -45,7 +128,7 @@ class ItemData extends React.Component {
     const data = {
       labels: [],
       datasets: [
-        {label: "purchases",
+        {label: "price",
         fill: false, 
         borderColor: "purple",
         backgroundColor: "pink", 
@@ -53,32 +136,38 @@ class ItemData extends React.Component {
         }
       ]
     }
+    const orders = []
     for (let i = 0; i<itemHistory.length; i++){
       await getOrderByOrderId(itemHistory[i]).then((order) => {
-        data.labels.push(order.time)
-        data.datasets[0].data.push({x: order.time, y: order.price})
+        data.labels.push(formatDateToDateTime(order.time).toString())
+        data.datasets[0].data.push({x: formatDateToDateTime(order.time).toString, y: order.price})
+        orders.push(order)
       })
     }
-    this.setState({data: data, length: this.state.item.orderHistory.length})
+    this.setState({data: data, 
+                  length: this.state.item.orderHistory.length, 
+                  orders: orders,
+                  displayedOrders: orders})
   }
 
-  async averagePrice(){
-    const itemHistory = this.state.item.orderHistory;
+  averagePrice(){
     let count = 0;
     let acc= 0
-    for (let i = 0; i<itemHistory.length; i++){
-      await getOrderByOrderId(itemHistory[i]).then((order) => {
-        acc += order.price;
+    for (let i = 0; i<this.state.displayedOrders.length; i++){
+        acc += this.state.displayedOrders[i].price;
         count += 1;
-      })
     }
     if (count == 0){return 0.0}
-    this.setState({average: acc/count})
+    return Math.round(acc/count)
   }
 
   async componentDidMount() {
     await this.processItemOrderHistory()
-    await this.averagePrice()
+
+  }
+
+  handleDropdownChange = (event) =>{
+    const value = event.target.value
   }
 
   render() {
@@ -90,6 +179,28 @@ class ItemData extends React.Component {
       this.componentDidMount()
     }
 
+    const average = this.averagePrice()
+
+    let itemOrders;
+    if(this.state.showAll){
+      itemOrders = this.state.displayedOrders.sort((a, b) => {
+        const dateOfA = new Date(a.time)
+        const dateOfB = new Date(b.time)
+        if(dateOfA > dateOfB){return -1}
+        else if(dateOfA < dateOfB){return 1}
+        else{return 0}
+      })
+    }
+    else{
+      itemOrders = this.state.displayedOrders.sort((a, b) => {
+        const dateOfA = new Date(a.time)
+        const dateOfB = new Date(b.time)
+        if(dateOfA > dateOfB){return -1}
+        else if(dateOfA < dateOfB){return 1}
+        else{return 0}
+      }).slice(0,5)
+    }
+
      return (
       <div className="data-wrapper">
         <div className="leftPart">
@@ -97,16 +208,21 @@ class ItemData extends React.Component {
                 options = {{reponsive: true}}
                 data = {this.state.data}
                /> 
+               <OrderHistoryTable handleViewAllButton = {this.handleViewAllButton}
+                                  itemOrders = {itemOrders}/>
         </div>
       
         <div className="rightPart">
+          <Dropdown options = {["All"]} 
+                    labelName = "Choose Time Period"
+                    handleDropdownChange = {this.handleDropdownChange}/>
           <DataBox className = "databox"
                    dataName = {"Total Sales"}
                    stats = {this.state.item.orderHistory.length}
           />
           <DataBox className = "databox"
                    dataName = {"Average Price"}
-                   stats = {this.state.average}
+                   stats = {average}
           />
         </div>
         

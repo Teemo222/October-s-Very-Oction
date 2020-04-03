@@ -65,7 +65,7 @@ class ItemForm extends React.Component {
 					</fieldset>   
           <fieldset className = "item-form-fieldset">
 						<label className = "item-form-label" htmlFor="category">Item Category: &nbsp;</label> 
-            <DropDown options = {["SNEAKERS", "STREETWEAR"]}
+            <DropDown options = {["SNEAKERS", "STREETWEAR", "COLLECTIONS", "WATCHES", "BAGS"]}
                       labelName = {"Category"}
                       handleDropdownChange={this.handleDropdownChange}/>
 					</fieldset>  

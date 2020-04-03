@@ -12,8 +12,6 @@ const { mongoose } = require('./server/db/mongoose')
 
 const log = console.log
 
-log(process.env.MONGODB_URI)
-
 // import the mongoose student
 const { Merchandise } = require('./server/models/Merchandise')
 const { User } = require('./server/models/User')
@@ -448,7 +446,7 @@ app.get('/order/:id', async (req, res)=>{
 	}
 
 	// Otherwise, findById
-	Order.findById(id).then((order) => {
+	Order.findById(id).populate("item").populate("buyer").populate("seller").then((order) => {
 		if (!order) {
 			res.status(404).send()  // could not find this student
 		} else {
@@ -465,8 +463,7 @@ app.get('/order-seller/:id', async (req, res)=>{
 	const buyerId = req.params.id;
 	Order.find({
 		seller: new mongoose.Types.ObjectId(buyerId)
-	}).then((orders) => {
-		console.log(orders)
+	}).populate("item").populate("buyer").populate("seller").then((orders) => {
 		res.send(orders) // can wrap in object if want to add more properties
 	}, (error) => {
 		res.status(500).send(error) // server error
@@ -477,20 +474,7 @@ app.get('/order-buyer/:id', async (req, res)=>{
 	const buyerId = req.params.id;
 	Order.find({
 		buyer: new mongoose.Types.ObjectId(buyerId)
-	}).then((orders) => {
-		console.log(orders)
-		res.send(orders) // can wrap in object if want to add more properties
-	}, (error) => {
-		res.status(500).send(error) // server error
-	})
-});
-
-app.get('/order-seller/:id', async (req, res)=>{
-	const buyerId = req.params.id;
-	Order.find({
-		seller: new mongoose.Types.ObjectId(buyerId)
-	}).then((orders) => {
-		console.log(orders)
+	}).populate("item").populate("buyer").populate("seller").then((orders) => {
 		res.send(orders) // can wrap in object if want to add more properties
 	}, (error) => {
 		res.status(500).send(error) // server error
@@ -520,9 +504,6 @@ app.get('/unwind-order/:id', async (req, res)=>{
 			}
 		}
 	]);
-
-	console.log(orders)
-
 	res.send(orders);
 });
 

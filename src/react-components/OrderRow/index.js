@@ -3,7 +3,7 @@ import Button from "@material-ui/core/Button";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 
-import {getAll, getStatus, passItem, receiveItem, rejectItem} from "../../Model/Order"
+import {getStatus, passItem, receiveItem, rejectItem} from "../../Model/Order"
 
 class OrderRow extends React.Component {
 

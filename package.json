@@ -18,6 +18,7 @@
     "chart.js": "^2.9.3",
     "cors": "^2.8.5",
     "cross-env": "^7.0.2",
+    "date-and-time": "^0.13.1",
     "express": "^4.17.1",
     "express-session": "^1.17.0",
     "fast-sort": "^2.1.1",
