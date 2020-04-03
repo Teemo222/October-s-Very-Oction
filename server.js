@@ -62,7 +62,19 @@ app.use(function(req, res, next) {
 app.use(express.static('images'));
 app.use(express.static(__dirname + "/build"));
 
-app.get('*', (req, res) =>{
+app.get('/searchpage', (req, res) =>{
+	res.sendFile(path.resolve(__dirname, 'build', 'index.html'))
+})
+
+app.get('/userprofile', (req, res) =>{
+	res.sendFile(path.resolve(__dirname, 'build', 'index.html'))
+})
+
+app.get('/managerprofile', (req, res) =>{
+	res.sendFile(path.resolve(__dirname, 'build', 'index.html'))
+})
+
+app.get('/itemview', (req, res) =>{
 	res.sendFile(path.resolve(__dirname, 'build', 'index.html'))
 })
 
