@@ -7,6 +7,8 @@ import TableRow from "@material-ui/core/TableRow";
 import {setUserInfo} from '../../actions/handleUser';
 import {getItemById} from '../../actions/handleMerchandise';
 import {getOrderByOrderId} from '../../actions/handleOrder';
+import {formatDateToDateTime} from '../../actions/formatDate'
+import {getStatus} from '../../Model/Order'
 
 
 class MenuItem extends React.Component {
@@ -111,9 +113,6 @@ class UserInfo extends React.Component {
         </div>
         </div>);
       }
-
-
-
     return (<div>
       {info}
       {edit}
@@ -149,7 +148,6 @@ class ProfileDetail extends React.Component {
 
 
 class Purchase extends React.Component {
-
   render() {
 
     const {order} = this.props
@@ -162,9 +160,11 @@ class Purchase extends React.Component {
         <TableCell component="th" scope="row">
           {order.price}
         </TableCell>
-
         <TableCell component="th" scope="row">
-          {order.time}
+          {formatDateToDateTime(order.time)}
+        </TableCell>
+        <TableCell component="th" scope="row">
+          {getStatus(order)}
         </TableCell>
 
       </TableRow>
@@ -188,7 +188,10 @@ class Selling extends React.Component {
         </TableCell>
 
         <TableCell component="th" scope="row">
-          {order.time}
+          {formatDateToDateTime(order.time)}
+        </TableCell>
+        <TableCell component="th" scope="row">
+        {getStatus(order)}{}
         </TableCell>
 
       </TableRow>
@@ -207,7 +210,7 @@ class Message extends React.Component {
         </TableCell>
 
         <TableCell component="th" scope="row">
-          {message.date}
+          {formatDateToDateTime(message.date)}
         </TableCell>
 
         <TableCell component="th" scope="row">
@@ -218,17 +221,6 @@ class Message extends React.Component {
     );
   }
 }
-
-// // temporary function for hardcoding order
-// function hardcordOrder(user) {
-//   const orders = getOrderByUser(user);
-//   const items = getAllItems();
-//   if(orders.length === 0) {
-//       for(let i = 0; i < 3 && i < items.length; i++) {
-//         addOrder(items[i], user, Math.random() * 100);
-//       }
-//   }
-// }
 
 class PurchaseHistory extends React.Component {
   render(){
@@ -263,6 +255,9 @@ class TableLabels extends React.Component{
 
         <TableCell component="th" scope="row">
           Transaction Date
+      </TableCell>
+      <TableCell component="th" scope="row">
+          Order Status
       </TableCell>
       </TableRow>
       )

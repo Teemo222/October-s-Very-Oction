@@ -14,7 +14,7 @@
   }
 
 .table{
-    height: 400px;
+    max-height: 400px;
     overflow: auto;
     width: 900px;
     margin: 0 auto;
@@ -23,7 +23,7 @@
 
 .table2{
     overflow: auto;
-    height: 400px;
+    max-height: 400px;
     width: 900px;
     margin: 0 auto;
     border: 5px solid orange;
