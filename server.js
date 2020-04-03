@@ -902,10 +902,10 @@ const addData = async ()=>{
 		item.save();
 		return item;
 	}
-	let name = ['Nike Kobe 7','UT Sweatshirt','Nike Kobe 4','Nike AF 1','UT sticker', "N95 Mask", "Nike SB Dunk", "Nike Hoodie"];
-	let category = ['SNEAKERS','STREETWEAR','SNEAKERS','SNEAKERS','COLLECTIONS', 'COLLECTIONS','SNEAKERS', 'STREETWEAR'];
-	let description = ['This shoe is really cool', 'WOW I love it so much', 'Nice shoe huh',"God I'm in love",'It is kinda cute', 'Expensive','Great shoe','Beautiful hoodie']
-	let imgSrc = ['/img/kobe.jpg',  "/img/14355271t.jpg", "/img/kobe2.jpg", "/img/img01.jpg", "/img/uoftcompsci.jpg", "/img/46457.jpg", "/img/nikesb.jpg", "/img/nikehoodie.jpg"]
+	let name = ["Grace's sketch", 'Nike Kobe 7','UT Sweatshirt','Nike Kobe 4','Nike AF 1','UT sticker', "N95 Mask", "Nike SB Dunk", "Nike Hoodie"];
+	let category = ['COLLECTIONS','SNEAKERS','STREETWEAR','SNEAKERS','SNEAKERS','COLLECTIONS', 'COLLECTIONS','SNEAKERS', 'STREETWEAR'];
+	let description = ["Geez, this is best thing ever",'This shoe is really cool', 'WOW I love it so much', 'Nice shoe huh',"God I'm in love",'It is kinda cute', 'Expensive','Great shoe','Beautiful hoodie']
+	let imgSrc = ['img/IMG_4342.JPG','/img/kobe.jpg',  "/img/14355271t.jpg", "/img/kobe2.jpg", "/img/img01.jpg", "/img/uoftcompsci.jpg", "/img/46457.jpg", "/img/nikesb.jpg", "/img/nikehoodie.jpg"]
 
 	const items = [];
 	for (let i = 0; i<name.length; i++){
