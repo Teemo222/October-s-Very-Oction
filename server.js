@@ -61,6 +61,11 @@ app.use(function(req, res, next) {
 
 app.use(express.static('images'));
 app.use(express.static(__dirname + "/build"));
+
+app.get('*', (req, res) =>{
+	res.sendFile(path.resolve(__dirname, 'build', 'index.html'))
+})
+
 /** Items resource routes **/
 // a POST route to *create* a item
 // app.post('/items', (req, res) => {
