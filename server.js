@@ -48,8 +48,6 @@ app.use(function(req, res, next) {
 	if(allowedOrigins.indexOf(origin) > -1){
 		 res.setHeader('Access-Control-Allow-Origin', origin);
 	}
-	// res.header("Access-Control-Allow-Origin", "https://localhost:3000"); 
-	// res.header("Access-Control-Allow-Origin", "https://mighty-reef-32514.herokuapp.com"); // update to match the domain you will make the request from
 	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 	res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS, PATCH');
 	res.header("Access-Control-Allow-Credentials", true);
@@ -889,14 +887,14 @@ app.post('/users/add-selling', authenticate, async (req, res)=>{
 	}	
 })
 
-
+//used to load data for testing purposes
 const addData = async ()=>{
-	const addItem = (a,b,c,d)=>{
+	const addItem = (name,category,description,imgSrc)=>{
 		const item = new Merchandise({
-			itemName: a,
-			itemCategory: b,
-			itemDescription: c,
-			itemImageSrc: d,
+			itemName: name,
+			itemCategory: category,
+			itemDescription: description,
+			itemImageSrc: imgSrc,
 			bids: [],
 			asks: [],
 			orderHistory: []
@@ -904,56 +902,54 @@ const addData = async ()=>{
 		item.save();
 		return item;
 	}
-	let name = ['A','B','C','E','D'];
-	let category = ['Q','W','R','T','Y'];
-	let cnt =0 ;
-	const items = [];
-	name.forEach(e=>{
-		category.forEach(v=>{
-			const item = addItem(e,v,`item${cnt}`, "/img/14355271t.jpg");
-			cnt++;
-			items.push(item);
-		});
-	});
-	let users = await User.find();
-	
-	Promise.all(items.map(async item=>{
-		users.forEach(async user=>{
-			try{
-				let price = ''+Math.floor(Math.random() * 1000);
-				if(item.asks.get(price)){
-					item.asks.get(price).push(user.id);
-				}else{
-					item.asks.set(price,[user.id]);
-				}
-				
-			}catch(e){
-				console.log(e);
-			}
-		});		
-		item.markModified('asks');
-		await item.save();
-	})).then(_=>{
+	let name = ['Nike Kobe 7','UT Sweatshirt','Nike Kobe 4','Nike AF 1','UT sticker', "N95 Mask", "Nike SB Dunk", "Nike Hoodie"];
+	let category = ['SNEAKERS','STREETWEAR','SNEAKERS','SNEAKERS','COLLECTIONS', 'COLLECTIONS','SNEAKERS', 'STREETWEAR'];
+	let description = ['This shoe is really cool', 'WOW I love it so much', 'Nice shoe huh',"God I'm in love",'It is kinda cute', 'Expensive','Great shoe','Beautiful hoodie']
+	let imgSrc = ['/img/kobe.jpg',  "/img/14355271t.jpg", "/img/kobe2.jpg", "/img/img01.jpg", "/img/uoftcompsci.jpg", "/img/46457.jpg", "/img/nikesb.jpg", "/img/nikehoodie.jpg"]
 
-		items.forEach(async item=>{
-			users.forEach(async user=>{
-				try{
-					let price = ''+Math.floor(Math.random() * 1000);
-					if(item.bids.get(price)){
-						item.bids.get(price).push(user.id);
-					}else{
-						item.bids.set(price,[user.id]);
-					}
+	const items = [];
+	for (let i = 0; i<name.length; i++){
+		let item = await addItem(name[i], category[i], description[i], imgSrc[i])
+		items.push(item)
+	}
+	// let users = await User.find();
+	
+	// Promise.all(items.map(async item=>{
+	// 	users.forEach(async user=>{
+	// 		try{
+	// 			let price = ''+Math.floor(Math.random() * 1000);
+	// 			if(item.asks.get(price)){
+	// 				item.asks.get(price).push(user.id);
+	// 			}else{
+	// 				item.asks.set(price,[user.id]);
+	// 			}
+				
+	// 		}catch(e){
+	// 			console.log(e);
+	// 		}
+	// 	});		
+	// 	item.markModified('asks');
+	// 	await item.save();
+	// })).then(_=>{
+
+	// 	items.forEach(async item=>{
+	// 		users.forEach(async user=>{
+	// 			try{
+	// 				let price = ''+Math.floor(Math.random() * 1000);
+	// 				if(item.bids.get(price)){
+	// 					item.bids.get(price).push(user.id);
+	// 				}else{
+	// 					item.bids.set(price,[user.id]);
+	// 				}
 					
-				}catch(e){
-					console.log(e);
-				}
-			});		
-			item.markModified('bids');
-			await item.save();
-		});
-	});
-	await addItem('null','null',`item-null`, "/img/14355271t.jpg");
+	// 			}catch(e){
+	// 				console.log(e);
+	// 			}
+	// 		});		
+	// 		item.markModified('bids');
+	// 		await item.save();
+	// 	});
+	// });
 };
 
 app.post('/test-add-data/',(req, res)=>{
