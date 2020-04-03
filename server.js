@@ -74,7 +74,7 @@ app.get('/managerprofile', (req, res) =>{
 	res.sendFile(path.resolve(__dirname, 'build', 'index.html'))
 })
 
-app.get('/itemview', (req, res) =>{
+app.get('/itempage', (req, res) =>{
 	res.sendFile(path.resolve(__dirname, 'build', 'index.html'))
 })
 
