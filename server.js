@@ -655,9 +655,9 @@ app.get('/users/authtest', authenticate, (req, res) => {
 	res.end();
 })
 
-app.get("/users/check-session", authenticate, (req, res) => {
-	// log(' -- check -- session')
-	// log(req.session)
+app.get("/users/check-session/:hash", authenticate, (req, res) => {
+	log(' -- check -- session')
+	log(req.session)
     if (req.user) {
 		console.log("/users/check-session")
 		console.log(req.user)
@@ -676,7 +676,7 @@ app.post('/users/create', (req, res) => {
 		username,
 		password
 	})
-
+	console.log('create ' + user._id);
 	// Save student to the database
 	user.save().then((result) => {
 		req.session.userid = user._id;
@@ -698,7 +698,7 @@ app.post('/users/create', (req, res) => {
 app.post('/users/login', async (req, res) => {
 	const username = req.body.username
     const password = req.body.password
-
+	console.log('fuck');
     // Use the static method on the User model to find a user
 	// by their email and password
 	let user;
@@ -709,6 +709,7 @@ app.post('/users/login', async (req, res) => {
 				success: false
 			})			
 		}
+		console.log("login " + user._id);
 		req.session.userid = user._id;
 		req.session.username = user.username;
 		// user.success = true;

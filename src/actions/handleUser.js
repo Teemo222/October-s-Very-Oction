@@ -1,5 +1,5 @@
 import {API_URL} from '../config';
-
+const { v4: uuidv4 } = require('uuid');
 /* AJAX fetch() calls */
 const log = console.log;
 
@@ -191,7 +191,7 @@ export async function setUserPassword(userid, password) {
 
 // A function to check if a user is logged in on the session cookie
 export const readCookie = async(app) => {
-    const url = API_URL+"users/check-session";
+    const url = API_URL+"users/check-session/" + uuidv4();
     // const url = "/users/check-session";
 
     try {
