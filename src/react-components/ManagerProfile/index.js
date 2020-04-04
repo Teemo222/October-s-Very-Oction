@@ -14,6 +14,11 @@ class ManagerProfile extends React.Component {
         handleUserSignOut  
       } = this.props;
 
+      if(!currentUser) {
+        return <div>
+          <h3>Unauthorized access</h3>
+        </div>;
+      }
       return (
         <div className="search__bg-image center">
           <AdminHeader
