@@ -124,7 +124,6 @@ class ProfileDetail extends React.Component {
   render(){
     const { currentUser, updateUserFromServer } = this.props;
     if(currentUser) {
-      // console.log(this.props);
       return (<div className = "ProfileDetail">
         <h2>Welcome, {currentUser.username} </h2>
         <UserInfo currentUser = {currentUser}
@@ -265,10 +264,7 @@ class TableLabels extends React.Component{
 
 class SellingHistory extends React.Component {
   render(){
-    console.log(this.props)
     const { currentUser, sellings} = this.props;
-
-    console.log(sellings)
 
     if(!currentUser){return (<div className = "orderTable">
                                <TableLabels/>

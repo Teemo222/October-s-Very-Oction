@@ -14,7 +14,6 @@ class ManagerProfile extends React.Component {
         handleUserSignOut  
       } = this.props;
 
-      console.log(currentUser);
 
       if(!currentUser) {
         return <div>

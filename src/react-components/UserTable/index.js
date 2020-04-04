@@ -74,7 +74,6 @@ class UserTable extends React.Component {
                         strippedUser:this.getDisplayableData(allUsers) }, 
                         resolve);
 
-                      // console.log("Check: getAll() again; update lost if you go to new page since no backend")
 
                     }
                     resolve()

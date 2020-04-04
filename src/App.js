@@ -47,28 +47,6 @@ class App extends React.Component {
       ["searchInput"]: value 
     });
   };
-
-  // getUserFromSessionStorage = async () => {
-  //   let tempUser = await JSON.parse(sessionStorage.getItem('user'));
-  //   const { currentUser } = this.state;
-  //   console.log("on load: currentUser vs tempUser")
-  //   console.log(currentUser);
-  //   console.log(tempUser)
-  //   if (tempUser && !currentUser){
-  //     console.log("set user from session storage")
-  //     this.setState({
-  //       ["currentUser"]: tempUser
-  //     });
-  //   }
-  //   else if (tempUser && currentUser){
-  //     if(tempUser.purchaseHistory.length !== currentUser.purchaseHistory.length || tempUser.sellingHistory.length !== currentUser.sellingHistory.length){
-  //       console.log("set user from session storage")
-  //     this.setState({
-  //       ["currentUser"]: tempUser
-  //     });
-  //     }
-  //   }
-  // }
   
   getUserFromServerSession = async () => {
     const tempUser =  await readCookie(this);

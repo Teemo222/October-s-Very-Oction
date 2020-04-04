@@ -78,27 +78,6 @@ app.get('/itempage', (req, res) =>{
 
 /** Items resource routes **/
 // a POST route to *create* a item
-// app.post('/items', (req, res) => {
-// 	res.header("Access-Control-Allow-Origin", "*");
-// 	// Create a new student using the Student mongoose model
-// 	const item = new Merchandise({
-// 		itemName: req.body.itemName,
-// 		itemCategory: req.body.itemCategory,
-// 		itemDescription: req.body.itemDescription,
-// 		itemImageSrc: req.body.itemImageSrc,
-// 		bids: [],
-// 		asks: [],
-// 		orderHistory: []
-// 	})
-
-// 	// Save student to the database
-// 	item.save().then((result) => {
-// 		res.send(result)
-// 	}, (error) => {
-// 		res.status(400).send(error) // 400 for bad request
-// 	})
-// })
-
 var storage = multer.diskStorage({
 	destination: function (req, file, cb) {
 	  cb(null, './images')
@@ -121,13 +100,6 @@ var storage = multer.diskStorage({
 		path.resolve(req.file.destination, itemImageSrc)
 	  );
 	fs.unlinkSync(req.file.path);
-	// const backendUrl = "http://localhost:5000/";
-	// itemImageSrc = backendUrl + itemImageSrc;
-	// console.log("In /items route");
-	// console.log(req.body.itemName);
-	// console.log(req.body.itemCategory);
-	// console.log(req.body.itemDescription);
-	// console.log(itemImageSrc);
 
 	const item = new Merchandise({
 		itemName: req.body.itemName,
@@ -629,8 +601,7 @@ const adminChecker = (req, res, next) => {
 
 // Middleware for authentication of resources
 const authenticate = (req, res, next) => {
-	console.log("here is the session in authenticate");
-	// console.log(req.session);
+
 	if (req.session.userid) {
 		User.findById(req.session.userid).then((user) => {
 			if (!user) {
@@ -656,11 +627,8 @@ app.get('/users/authtest', authenticate, (req, res) => {
 })
 
 app.get("/users/check-session/:hash", authenticate, (req, res) => {
-	log(' -- check -- session')
-	log(req.session)
+
     if (req.user) {
-		console.log("/users/check-session")
-		console.log(req.user)
         res.send(req.user);
     } else {
         res.status(401).send();
@@ -676,7 +644,7 @@ app.post('/users/create', (req, res) => {
 		username,
 		password
 	})
-	console.log('create ' + user._id);
+	
 	// Save student to the database
 	user.save().then((result) => {
 		req.session.userid = user._id;
@@ -684,12 +652,8 @@ app.post('/users/create', (req, res) => {
 		req.session.isAdmin = false;
 		user.isAdmin = false;
 		req.session.save()
-		// console.log("/users/create");
-		// console.log(result);
 		res.send(result)
 	}, (error) => {
-		// console.log("Error")
-		// console.log(error)
 		res.status(400).send(error) // 400 for bad request
 	})
 });
@@ -698,7 +662,7 @@ app.post('/users/create', (req, res) => {
 app.post('/users/login', async (req, res) => {
 	const username = req.body.username
     const password = req.body.password
-	console.log('fuck');
+
     // Use the static method on the User model to find a user
 	// by their email and password
 	let user;
@@ -709,7 +673,7 @@ app.post('/users/login', async (req, res) => {
 				success: false
 			})			
 		}
-		console.log("login " + user._id);
+		
 		req.session.userid = user._id;
 		req.session.username = user.username;
 		// user.success = true;
@@ -730,8 +694,6 @@ app.post('/users/login', async (req, res) => {
 // A route to logout a user
 app.get('/users/logout', (req, res) => {
 	// Remove the session
-	// console.log("here is the session");
-	// console.log(req.session);
 	req.session.destroy((error) => {
 		if (error) {
 			res.status(500).send(error)
@@ -769,15 +731,6 @@ app.post('/users/password',  authenticate, async (req, res) => {
 	// res.header("Access-Control-Allow-Origin", "*");
 	const { password, userid } = req.body;
 
-	log("/users/password")
-	log(password)
-	log(userid)
-	// console.log(ObjectID.isValid(userid))
-	// if (!ObjectID.isValid(userid)) {
-	// 	res.status(404).send()
-	// 	return;  // so that we don't run the rest of the handler.
-	// }
-
 	try {
 		let user = await User.findById(userid);
 		user.password = password;
@@ -792,11 +745,6 @@ app.post('/users/info', authenticate, async (req, res) => {
 	// get the updated name and year only from the request body.
 	const { userid, email, address, creditCardNumber } = req.body;
 
-	log("/users/info")
-	log(email)
-	log(address)
-	log(creditCardNumber)
-	// console.log(ObjectID.isValid(userid))
 	if (!ObjectID.isValid(userid)) {
 		res.status(404).send()
 		return;  // so that we don't run the rest of the handler.
@@ -808,7 +756,7 @@ app.post('/users/info', authenticate, async (req, res) => {
 		user.address = address;
 		user.creditCardNumber = creditCardNumber;
 		user = await user.save();
-		// console.log(user)
+		
 		res.send(user);
 	} catch(err) {
 		res.status(400).send(err);
@@ -822,22 +770,20 @@ app.post('/users/add-purchase', authenticate, async (req, res)=>{
 	const { userid, orderid } = req.body;
 
 	if (!ObjectID.isValid(userid)) {
-		// console.log(userid + 'hahhaa')
+		
 		res.status(404).send()
 		return;
 	}
 
 	if (!ObjectID.isValid(orderid)) {
-		// console.log(itemid + 'rinima')
+		
 		res.status(404).send()
 		return;
 	}
 
 	try {
-		let user = await User.findById(userid);
-		// console.log(user)
+		let user = await User.findById(userid);	
 		user.purchaseHistory.push(orderid)
-		// console.log(user)
 		user = await user.save();
 		res.send(user);
 	} catch(err) {
@@ -851,16 +797,13 @@ app.post('/users/add-message', authenticate, async (req, res)=>{
 	const { userid, message } = req.body;
 
 	if (!ObjectID.isValid(userid)) {
-		// console.log(userid + 'hahhaa')
 		res.status(404).send()
 		return;
 	}
 
 	try {
 		let user = await User.findById(userid);
-		// console.log(user)
 		user.inbox.push(message)
-		// console.log(user)
 		user = await user.save();
 		res.send(user);
 	} catch(err) {

@@ -198,8 +198,7 @@ export const readCookie = async(app) => {
         let res = await fetch(url, { credentials: 'include' });
         if(res.status == 200) {
             let tempUser = await res.json();
-            console.log("readCookie");
-            console.log(tempUser)
+
             return tempUser
         } else {
             return null;
@@ -232,7 +231,7 @@ export async function addToPurchase(userid, orderid) {
             return;
         }
         let data = await res.json();
-        // updateCurrentUser(data)
+        
         return data;
     } catch(err) {
         log(err);
@@ -257,7 +256,7 @@ export async function addToSelling(userid, orderid) {
     });
     try {
         let res = await fetch(request);
-        console.log(res)
+ 
         if(res.status != 200) {
             alert("operation failed");
             return;
@@ -298,20 +297,3 @@ export async function addMessageToDb(userId, message) {
         log(err);
     } 
 }
-
-  
-//   export async function isAdmin(){
-//       // the URL for the request
-//       const url = API_URL+'users/admin';
-
-//       // Create our request constructor with all the parameters we need
-//       const request = new Request(url);
-  
-//       // Send the request with fetch()
-//       try {
-//         let res = await fetch(request);
-//         return res.isAdmin;  
-//       } catch(err) {
-//           log(err);
-//       }
-//   }

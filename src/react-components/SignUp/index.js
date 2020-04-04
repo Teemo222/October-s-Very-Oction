@@ -85,7 +85,6 @@ class SignUp extends React.Component {
     let buttonText;
 
     if (currentUser){
-      // console.log("signup page")
       buttonText = "Sign Out";
     }
     else{
