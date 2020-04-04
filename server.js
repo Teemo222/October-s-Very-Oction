@@ -634,15 +634,18 @@ const authenticate = (req, res, next) => {
 	if (req.session.userid) {
 		User.findById(req.session.userid).then((user) => {
 			if (!user) {
+				req.user = null;
 				return Promise.reject()
 			} else {
-				req.user = user
+				req.user = user;
 				next()
 			}
 		}).catch((error) => {
+			req.user = null;
 			res.status(401).send("Unauthorized")
 		})
 	} else {
+		req.user = null;
 		res.status(401).send("Unauthorized")
 	}
 }
@@ -656,6 +659,8 @@ app.get("/users/check-session", authenticate, (req, res) => {
 	// log(' -- check -- session')
 	// log(req.session)
     if (req.user) {
+		console.log("/users/check-session")
+		console.log(req.user)
         res.send(req.user);
     } else {
         res.status(401).send();
@@ -706,13 +711,13 @@ app.post('/users/login', async (req, res) => {
 		}
 		req.session.userid = user._id;
 		req.session.username = user.username;
-		req.session.save();
 		// user.success = true;
 		// log("session in user login:")
 		// log(JSON.stringify(req.session))
 		// log(admin_task);
 		// log(user);
 		req.session.isAdmin = user.isAdmin;
+		req.session.save();
 		res.send(user);
 	} catch(e) {
 		res.status(400).send({
@@ -730,6 +735,7 @@ app.get('/users/logout', (req, res) => {
 		if (error) {
 			res.status(500).send(error)
 		} else {
+			req.user = null;
 			res.end()
 		}
 	})

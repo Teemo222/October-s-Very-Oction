@@ -198,6 +198,8 @@ export const readCookie = async(app) => {
         let res = await fetch(url, { credentials: 'include' });
         if(res.status == 200) {
             let tempUser = await res.json();
+            console.log("readCookie");
+            console.log(tempUser)
             return tempUser
         } else {
             return null;
