@@ -229,6 +229,14 @@ class ItemData extends React.Component {
         }
       ]
     }
+    newOrders.sort((a, b) => {
+      const dateOfA = new Date(a.time)
+      const dateOfB = new Date(b.time)
+      if(dateOfA > dateOfB){return -1}
+      else if(dateOfA < dateOfB){return 1}
+      else{return 0}
+    })
+    newOrders.reverse()
     for (let i = 0; i<newOrders.length; i++){
         data.labels.push(formatDateToDateTime(newOrders[i].time).toString())
         data.datasets[0].data.push({x: formatDateToDateTime(newOrders[i].time).toString, y: newOrders[i].price})
