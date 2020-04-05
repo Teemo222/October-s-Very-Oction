@@ -20,7 +20,7 @@ Admin Functions:
    In the admin page, there are two tables, one for managing all the transactions actions and the other for managing user infos. The administrator is able to change the status of order, from initially "Order Placed". The admin supposedly should change the status to "Received" and then "Passed" or "Rejected". Once the admin has changed the status of an order, both the buyer and seller will receive notifications in the "My Account" Page, either through buying or selling history, or inbox.
    
    All passwords in the system will be hashed so even admin is not able to see users’ password. However, admin is able to reset a certain user’s password. User authentication is also provided. Normal users can only perform user actions while admin is able to perform some privileged actions. 
-   The admin is also able to add a merchandise than is supported by the site. A picture may be uploaded along with the basic merchandise info.  
+   The admin is also able to add a merchandise than is supported by the site. A picture may be uploaded along with the basic merchandise info. However, admin only exists for administrative purpose and should not bid/sell.
 
 The server backend used in our program is primarily supported by Express. 
 In our server.js file, we provided the following GET/POST requests.
