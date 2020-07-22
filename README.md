@@ -1,3 +1,5 @@
+#This is a course project for CSC309
+
 Introduction:
     Oction is an online marketplace and platform that conducts auctions between sellers and buyers. It provides services for transactions of those merchandise that can be authenticated by our authenticator team, primarily clothing, sneakers and delicate collection. 
     Here is the process of a transaction: Users may place bids or asks on merchandise and a transaction is generated once a bid and a ask matches. Then, the seller is supposed to send the merchadise to our authencation team. Once the item has pass our quality test, it will be delivered to the buyer. 
