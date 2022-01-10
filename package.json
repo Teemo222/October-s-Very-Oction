@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node": "12.16.x"
+    "node": "12.16.2"
   },
   "dependencies": {
     "@google-cloud/pubsub": "^1.6.0",
@@ -42,16 +42,10 @@
   },
   "main": "server.js",
   "scripts": {
-    "setup": "npm install",
-    "build-run": "npm run build && node server.js",
-    "heroku-postbuild": "npm install && npm run build",
-    "start": "node server.js",
-    "start-frontend": "react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "run-dev": "export NODE_ENV=development; node server.js",
-    "run-win-dev": "cross-env NODE_ENV=\"development\" node server.js"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"

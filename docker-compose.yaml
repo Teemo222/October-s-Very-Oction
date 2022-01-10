@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    command: mongod --dbpath /data/db --bind_ip mongo,localhost
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongo
+      MONGO_INITDB_ROOT_PASSWORD: mongo
+    volumes:
+      - ${PWD}/data/mongo:/data/db
+
+  oction:
+    build:
+      dockerfile: Dockerfile
+    container_name: oction
+    image: oction
+    ports:
+      - 5000:5000
